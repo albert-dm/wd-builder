@@ -7,7 +7,7 @@ import * as Acorn from "acorn";
 
 import { generate as generateJs } from 'escodegen';
 import { transform as babelTransform } from "@babel/standalone";
-import { CanvasComponentList } from "../editor-components/canvas";
+import { CanvasComponentList } from "../types";
 
 // TODO: type this function
 function isReactNode(node: any) {
@@ -41,7 +41,7 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
   function getWrapperFunction(code: string) {
     try {
       // 1. transform code
-      const tcode = babelTransform(code, { presets: ["es2015", "react"] }).code;
+      const tcode = babelTransform(code, { presets: ["es2015", "react"] }).code || '';
 
       // 2. get AST
       const ast: any = Acorn.parse(tcode, { ecmaVersion: 6 });

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactNode } from "react"
 
 export type ComponentData = {
   text: string
@@ -16,11 +16,6 @@ export type ComponentTree = ComponentData[]
 
 export interface CanvasComponentList {
   [CollectionName: string]: {
-    [key: string]: CanvasComponent<any>;
+    [key: string]: (React.FC<any> | ReactNode | Element | React.Component) & {defaultProps?: ComponentData['data']['props']};
   };
-}
-
-// TODO: otimizar esses tipos
-export class CanvasComponent<T> extends React.Component<T>{
-  defaultData?: ComponentData;
 }

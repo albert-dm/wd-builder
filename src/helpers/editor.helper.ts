@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import { ComponentData, ComponentTree } from '../types';
 
 export const componentToJsx = (component: ComponentData, tree: ComponentTree) => {

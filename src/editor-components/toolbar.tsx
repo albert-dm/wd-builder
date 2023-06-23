@@ -1,7 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { CanvasComponentList, ComponentData, ComponentTree } from "../types";
 import { AddComponentMenu } from "./addComponentMenu";
-import { ComponentTreeDisplay } from "./componentTree";
 
 interface ToolbarProps {
   components: CanvasComponentList;
@@ -31,12 +30,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   return (
     <aside className={className}>
       <AddComponentMenu components={components} onAdd={handleComponentAdd} />
-      <ComponentTreeDisplay
-        treeData={tree}
-        setTreeData={setTree}
-        selectedComponentId={selectedComponentId}
-        setSelectedComponentId={setSelectedComponentId}
-      />
+      <button onClick={() => console.log(tree)} >
+            Exportar árvore
+          </button>
     </aside>
   );
 };
