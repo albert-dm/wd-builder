@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react"
 
 export type ComponentData = {
-  text: string
-  id: string | number
-  parent?: string | number
+  label: string
+  id: string
+  parent?: string
   droppable: boolean
   data: {
     componentCollection: string,

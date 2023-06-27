@@ -1,7 +1,8 @@
 import React from "react";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 // import { PlusIcon } from "@radix-ui/react-icons";
-import { CanvasComponentList, ComponentData } from "../types";
+import { CanvasComponentList, ComponentData } from "../types/component";
+import { button } from "./button.style";
 
 interface AddComponentMenuProps {
   components: CanvasComponentList;
@@ -15,10 +16,10 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   const handleComponentAdd = (componentCollection: string, componentName: string) => {
     const component = components[componentCollection][componentName];
     const defaultComponentData: ComponentData = {
-      id: Math.random(),
+      id: Math.random().toString(),
       droppable: true,
-      text: 'New ' + componentName,
-      parent: 0,
+      label: 'New ' + componentName,
+      parent: '0',
       data: {
         componentName,
         componentCollection,
@@ -32,7 +33,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <button>
+        <button style={button('primary')}>
           Add Component {/* <PlusIcon /> */}
         </button>
       </DropdownMenu.Trigger>

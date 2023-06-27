@@ -7,7 +7,7 @@ import * as Acorn from "acorn";
 
 import { generate as generateJs } from 'escodegen';
 import { transform as babelTransform } from "@babel/standalone";
-import { CanvasComponentList } from "../types";
+import { CanvasComponentList } from "../types/component";
 
 // TODO: type this function
 function isReactNode(node: any) {

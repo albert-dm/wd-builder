@@ -1,9 +1,9 @@
-import { ComponentData, ComponentTree } from '../types';
+import { ComponentData, ComponentTree } from '../types/component';
 
 export const componentToJsx = (component: ComponentData, tree: ComponentTree) => {
   const children = tree.filter(childBlock => childBlock.parent === component.id);
 
-  const tab = component.id !== 0 && Number.isInteger(component.parent) ? Array(Number(component.parent) + 1).fill('  ').join('') : '';
+  const tab = component.id !== '0' && Number.isInteger(component.parent) ? Array(Number(component.parent) + 1).fill('  ').join('') : '';
 
   const propNames = Object.keys(component.data.props || {})
     .filter(attr => attr !== 'componentName')
