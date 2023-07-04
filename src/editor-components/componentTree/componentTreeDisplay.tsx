@@ -2,11 +2,8 @@ import React, { useMemo } from "react";
 import { ComponentData, ComponentTree } from "../../types/component.js";
 import { ComponentTreeItem } from "./componentTreeItem";
 import {
-  pointerWithin,
   DndContext,
   DragEndEvent,
-  DragMoveEvent,
-  DragOverEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -58,28 +55,24 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
   );
 
   const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over, delta } = event;
-
-    const leftOffset = delta.x;
+    const { active, over, collisions } = event;
 
     if (over && active.id !== over.id) {
-      const overParentId = treeData.find(
-        (comp) => comp.id === over.id
-      )?.parentId;
       const oldIndex = treeData.findIndex((comp) => comp.id === active.id);
-      const newIndex = treeData.findIndex((comp) => comp.id === over.id);
+      const overIndex = treeData.findIndex((comp) => comp.id === over.id);
 
-      const overChildren = childrenMap[over.id];
+      const touchingSibling = collisions?.find(item => item.id !== active.id && item.id !== over.id && item.id !== '0');
+      const touchingSiblingIndex = treeData.findIndex((comp) => comp.id === touchingSibling?.id);
 
-      const insertAsChildren = (overChildren.length === 0 && leftOffset >= 50) || (overChildren.length > 0 && leftOffset >= 0);
+      const newIndex = touchingSibling ? touchingSiblingIndex : overIndex;
 
-      const newTreeData = arrayMove(treeData, oldIndex, newIndex + 1);
+      const newTreeData = arrayMove(treeData, oldIndex, newIndex);
       setTreeData(
         newTreeData.map((comp) => {
           if (comp.id === active.id) {
             return {
               ...comp,
-              parentId: insertAsChildren ? over.id as string : overParentId,
+              parentId: over.id as string,
             };
           }
           return comp;
@@ -94,20 +87,13 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
       <DndContext
         onDragEnd={handleDragEnd}
         sensors={sensors}
-        collisionDetection={pointerWithin}
       >
         <ComponentTreeRoot tree={treeData}>
-          {treeData
-            .filter((comp) => comp.id !== "0")
-            .map((comp) => (
               <ComponentTreeItem
-                label={comp.label}
-                key={comp.id}
-                componentId={comp.id}
-                depth={depthMap[comp.id]}
-                childrenComponents={childrenMap[comp.id]}
+                key={'0'}
+                componentId={'0'}
+                treeData={treeData}
               />
-            ))}
         </ComponentTreeRoot>
       </DndContext>
     </>
