@@ -9,4 +9,5 @@ export const button = (type: string): CSSProperties => ({
   fontWeight: "bold",
   color: "#000000",
   backgroundColor: "#ffffff",
+  cursor: "pointer",
 });

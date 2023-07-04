@@ -2,12 +2,18 @@ import React from "react";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 // import { PlusIcon } from "@radix-ui/react-icons";
 import { CanvasComponentList, ComponentData } from "../types/component";
-import { button } from "./button.style";
+import { button } from "../wd-components/button.style";
 
 interface AddComponentMenuProps {
   components: CanvasComponentList;
   onAdd: (componentData: ComponentData) => void;
 }
+
+const menuStyles = {
+  backgroundColor: 'white',
+  boxShadow: '0 0 10px rgba(0,0,0,.1)',
+  color: 'black',
+};
 
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   components,
@@ -32,7 +38,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   }
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
+      <DropdownMenu.Trigger asChild>
         <button style={button('primary')}>
           Add Component {/* <PlusIcon /> */}
         </button>
@@ -40,21 +46,22 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="min-w-[220px] bg-white rounded-md p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform] data-[side=top]:animate-slideDownAndFade data-[side=right]:animate-slideLeftAndFade data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade"
+          style={menuStyles}
           sideOffset={5}
         >
           {Object.keys(components).map((componentCollection) => (
             <>
               <DropdownMenu.Sub>
-                <DropdownMenu.SubTrigger>
+                <DropdownMenu.SubTrigger style={button('primary')}>
                   {componentCollection}
                 </DropdownMenu.SubTrigger>
                 <DropdownMenu.Portal>
-                  <DropdownMenu.SubContent>
+                  <DropdownMenu.SubContent style={menuStyles}>
                     {Object.keys(components[componentCollection]).map(
                       (componentName) => (
                         <DropdownMenu.Item
                           key={componentName}
+                          style={button('primary')}
                           onClick={() =>
                             handleComponentAdd(componentCollection, componentName)
                           }

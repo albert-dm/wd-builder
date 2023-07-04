@@ -74,11 +74,6 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
     marginTop: '0.5rem',
   });
 
-  const placeHolderStyle = {
-    height: "2px",
-    backGroundColor: "black",
-  };
-
   const { label } = useMemo(() => {
     return treeData.find((comp) => comp.id === componentId)!;
   }, [treeData, componentId]);
@@ -103,9 +98,9 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
               ? itemIcons.open
               : itemIcons.noChildren}
             </button>
-           
+
             <header {...listeners} {...attributes} style={{flex: 1}}>
-              {label} - ({componentId})
+              {label}
             </header>
           </section>
         )}

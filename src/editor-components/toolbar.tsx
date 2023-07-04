@@ -7,7 +7,7 @@ import {
 import { AddComponentMenu } from "./addComponentMenu";
 import { ComponentTreeDisplay } from "./componentTree/componentTreeDisplay";
 import { toolbarWrapper, aside } from "./toolbar.style";
-import { button } from "./button.style";
+import { button } from "../wd-components/button.style";
 
 interface ToolbarProps {
   components: CanvasComponentList;
