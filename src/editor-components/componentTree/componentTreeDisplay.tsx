@@ -1,14 +1,23 @@
-import React from "react";
-import { ComponentTree } from "../../types/component.js";
-import { MouseEvent } from "react";
+import React, { useMemo } from "react";
+import { ComponentData, ComponentTree } from "../../types/component.js";
 import { ComponentTreeItem } from "./componentTreeItem";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
-
-function arraymove(arr: Array<any>, fromIndex: number, toIndex: number) {
-  var element = arr[fromIndex];
-  arr.splice(fromIndex, 1);
-  arr.splice(toIndex, 0, element);
-}
+import {
+  pointerWithin,
+  DndContext,
+  DragEndEvent,
+  DragMoveEvent,
+  DragOverEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
+import { ComponentTreeRoot } from "./componentTreeRoot.js";
+import {
+  getComponentChildren,
+  getComponentDepth,
+} from "../../helpers/tree.helper.js";
 
 interface ComponentTreeDisplayProps {
   treeData: ComponentTree;
@@ -23,47 +32,84 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
   selectedComponentId,
   setSelectedComponentId,
 }) => {
+  const depthMap = useMemo(() => {
+    return treeData.reduce<{ [compId: string]: number }>((acc, comp) => {
+      const newAcc = { ...acc };
+      newAcc[comp.id] = getComponentDepth(treeData, comp.id);
+      return newAcc;
+    }, {});
+  }, [treeData]);
+  const childrenMap = useMemo(() => {
+    return treeData.reduce<{ [compId: string]: ComponentData[] }>(
+      (acc, comp) => {
+        const newAcc = { ...acc };
+        newAcc[comp.id] = getComponentChildren(treeData, comp.id);
+        return newAcc;
+      },
+      {}
+    );
+  }, [treeData]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const handleDragEnd = (event: DragEndEvent) => {
-    const { over, active } = event;
-    if (!over || over.id === active.id) {
-      return;
+    const { active, over, delta } = event;
+
+    const leftOffset = delta.x;
+
+    if (over && active.id !== over.id) {
+      const overParentId = treeData.find(
+        (comp) => comp.id === over.id
+      )?.parentId;
+      const oldIndex = treeData.findIndex((comp) => comp.id === active.id);
+      const newIndex = treeData.findIndex((comp) => comp.id === over.id);
+
+      const overChildren = childrenMap[over.id];
+
+      const insertAsChildren = (overChildren.length === 0 && leftOffset >= 50) || (overChildren.length > 0 && leftOffset >= 0);
+
+      const newTreeData = arrayMove(treeData, oldIndex, newIndex + 1);
+      setTreeData(
+        newTreeData.map((comp) => {
+          if (comp.id === active.id) {
+            return {
+              ...comp,
+              parentId: insertAsChildren ? over.id as string : overParentId,
+            };
+          }
+          return comp;
+        })
+      );
     }
-    const newTree = treeData.map((c) => {
-      if (c.id === active.id) {
-        return {
-          ...c,
-          parent: over.id as string,
-        };
-      }
-      return c;
-    });
-
-    const touchingSibling = event.collisions?.find(item => item.id !== active.id && item.id !== over.id && item.id !== '0');
-
-    if (touchingSibling) {
-      const activeIndex = newTree.findIndex((c) => c.id === active.id);
-      const touchingSiblingIndex = newTree.findIndex((c) => c.id === touchingSibling.id);
-      arraymove(newTree, activeIndex, touchingSiblingIndex);
-    }
-
-    console.info({ endEvent: event, touchingSibling });
-
-    setTreeData(newTree);
   };
 
-  const handleSelectComponent = (e: MouseEvent, id: string) => {
-    e.stopPropagation();
-    setSelectedComponentId(id);
-  };
-  const handleSelectRootComponent = () => {
-    setSelectedComponentId("0");
-  };
   return (
     <>
-    <h3>Component Tree</h3>
-    <DndContext onDragEnd={handleDragEnd}>
-      <ComponentTreeItem componentId={"0"} treeData={treeData} />
-    </DndContext>
+      <h3>Component Tree</h3>
+      <DndContext
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+        collisionDetection={pointerWithin}
+      >
+        <ComponentTreeRoot tree={treeData}>
+          {treeData
+            .filter((comp) => comp.id !== "0")
+            .map((comp) => (
+              <ComponentTreeItem
+                label={comp.label}
+                key={comp.id}
+                componentId={comp.id}
+                depth={depthMap[comp.id]}
+                childrenComponents={childrenMap[comp.id]}
+              />
+            ))}
+        </ComponentTreeRoot>
+      </DndContext>
     </>
   );
 };

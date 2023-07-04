@@ -1,7 +1,6 @@
 import React, { CSSProperties, useMemo } from "react";
-import * as Collapsible from '@radix-ui/react-collapsible';
 import { ComponentData, ComponentTree } from "../../types/component";
-import { useDroppable, useDraggable } from "@dnd-kit/core";
+import { useSortable } from "@dnd-kit/sortable";
 import {
   MinusCircledIcon,
   PlusCircledIcon,
@@ -15,89 +14,45 @@ const itemIcons = {
   noChildren: <DotFilledIcon width={18} height={18} />,
 };
 
-const childrenSectionStyle = (isOver: Boolean) => ({
-  paddingLeft: "1rem",
-  paddingTop: "1rem",
-  paddingBottom: "1rem",
-  border: isOver ? "1px solid red" : "1px solid white",
-});
-
 interface ComponentTreeItemProps {
+  label: string;
   componentId: ComponentData["id"];
-  treeData: ComponentTree;
+  depth: number;
+  childrenComponents: ComponentData[];
 }
 
 export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
+  label,
   componentId,
-  treeData,
+  depth,
+  childrenComponents,
 }) => {
-  const [showChildren, setShowChildren] = React.useState(true);
-  const isRoot = componentId === "0";
-  const componentData = useMemo(
-    () => treeData.find((component) => component.id === componentId),
-    [treeData, componentId]
-  );
-  const componentChildren = useMemo(
-    () => treeData.filter((component) => component.parent === componentId),
-    [treeData, componentId]
-  );
-
-  const { isOver, setNodeRef: setDroppableRef } = useDroppable({
-    id: componentId.toString(),
-  });
-
-  const {
-    attributes,
-    listeners,
-    setNodeRef: setDraggableRef,
-    transform,
-    isDragging,
-  } = useDraggable({
-    id: componentId.toString(),
-  });
+  const { attributes, listeners, setNodeRef, isDragging, transform, isOver, transition } =
+    useSortable({ id: componentId.toString() });
 
   const itemStyle = (): CSSProperties => ({
     backgroundColor: "white",
     border: `1px solid ${isDragging ? "#f0f0f0" : "white"}`,
-    transform: transform
+    transform: transform && isDragging
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : undefined,
-    // paddingBottom: "1rem",
-
+    transition,
+    paddingLeft: `${depth}rem`,
   });
 
-  const label = componentData?.label || "Unnamed component";
-  return <Collapsible.Root asChild open={showChildren && !isDragging} onOpenChange={setShowChildren}>
-    <div
-      ref={setDraggableRef}
-      style={itemStyle()}
-      {...listeners}
-      {...attributes}
-    >
-      {!isRoot && (
-        <header>
-          <Collapsible.Trigger>
-            {componentChildren.length > 0
-              ? itemIcons.open
-              : itemIcons.noChildren}
-          </Collapsible.Trigger>
-          {label}
-        </header>
-      )}
-      <Collapsible.Content asChild >
-        <section
-          ref={setDroppableRef}
-          style={childrenSectionStyle(isOver && !isDragging)}
-        >
-          {componentChildren.map((component) => (
-            <ComponentTreeItem
-              key={component.id}
-              componentId={component.id}
-              treeData={treeData}
-            />
-          ))}
-        </section>
-      </Collapsible.Content>
-    </div>
-    </Collapsible.Root>
+  const placeHolderStyle = {
+    marginLeft: `${depth}rem`,
+    height: '2px',
+    backGroundColor: 'black',
+  }
+
+  return (
+    <>
+      <div ref={setNodeRef} style={itemStyle()} {...listeners} {...attributes}>
+        {childrenComponents.length > 0 ? itemIcons.open : itemIcons.noChildren}
+        {label} - {depth}
+      </div>
+      {isOver && <hr style={placeHolderStyle} />}
+    </>
+  );
 };

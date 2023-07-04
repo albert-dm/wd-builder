@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
-    "esModuleInterop": true,
-    "target": "ES6",
-    "module": "CommonJS",
     "declaration": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "module": "CommonJS",
     "outDir": "./dist",
     "strict": true,
-    "jsx": "react",
+    "target": "ES2016",
+    "types": ["vite/client"],
+    "useDefineForClassFields": true,
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*"
+  ]
 }

@@ -3,7 +3,7 @@ import React, { ReactNode } from "react"
 export type ComponentData = {
   label: string
   id: string
-  parent?: string
+  parentId?: string
   droppable: boolean
   data: {
     componentCollection: string,

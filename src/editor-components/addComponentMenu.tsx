@@ -19,7 +19,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
       id: Math.random().toString(),
       droppable: true,
       label: 'New ' + componentName,
-      parent: '0',
+      parentId: '0',
       data: {
         componentName,
         componentCollection,

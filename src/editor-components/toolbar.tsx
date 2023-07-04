@@ -27,7 +27,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const handleComponentAdd = (componentData: ComponentData) => {
     const newComponent: ComponentData = {
       ...componentData,
-      parent: selectedComponentId,
+      parentId: selectedComponentId,
     };
     setTree([...tree, newComponent]);
   };
