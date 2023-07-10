@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   CanvasComponentList,
   ComponentData,
@@ -8,6 +8,7 @@ import { AddComponentMenu } from "./addComponentMenu";
 import { ComponentTreeDisplay } from "./componentTree/componentTreeDisplay";
 import { toolbarWrapper, aside } from "./toolbar.style";
 import { button } from "../wd-components/button.style";
+import { EditionModal } from "./componentEditionModal";
 
 interface ToolbarProps {
   components: CanvasComponentList;
@@ -23,6 +24,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   className,
 }) => {
   const [selectedComponentId, setSelectedComponentId] = useState<string>("0");
+  const [showEditionModal, setShowEditionModal] = useState(false);
 
   const handleComponentAdd = (componentData: ComponentData) => {
     const newComponent: ComponentData = {
@@ -30,6 +32,25 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       parentId: selectedComponentId,
     };
     setTree([...tree, newComponent]);
+  };
+
+  const selectedComponentData = useMemo(() => {
+    return tree.find((c) => c.id === selectedComponentId);
+  }, [selectedComponentId, tree]);
+
+  const selectedComponentMeta = useMemo(() => {
+    if (!selectedComponentData) return null;
+    return components[selectedComponentData.data.componentCollection][selectedComponentData.data.componentName] || null;
+  }, [components, selectedComponentData]);
+
+  const handleChangeComponent = (component: ComponentData) => {
+    const newTree = tree.map((c) => {
+      if (c.id === component.id) {
+        return component;
+      }
+      return c;
+    });
+    setTree(newTree);
   };
 
   return (
@@ -44,8 +65,19 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           setTreeData={setTree}
           selectedComponentId={selectedComponentId}
           setSelectedComponentId={setSelectedComponentId}
+          editComponent={(id) => {
+            setSelectedComponentId(id);
+            setShowEditionModal(true);
+          }}
         />
       </div>
+      <EditionModal
+        componentData={selectedComponentData!}
+        componentSchema={selectedComponentMeta?.zodSchema}
+        open={showEditionModal}
+        onClose={() => setShowEditionModal(false)}
+        setComponent={handleChangeComponent}
+        />
     </aside>
   );
 };

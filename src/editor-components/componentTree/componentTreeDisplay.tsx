@@ -21,6 +21,7 @@ interface ComponentTreeDisplayProps {
   setTreeData: (tree: ComponentTree) => void;
   selectedComponentId: string;
   setSelectedComponentId: (id: string) => void;
+  editComponent: (id: string) => void;
 }
 
 export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
@@ -28,6 +29,7 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
   setTreeData,
   selectedComponentId,
   setSelectedComponentId,
+  editComponent,
 }) => {
   const depthMap = useMemo(() => {
     return treeData.reduce<{ [compId: string]: number }>((acc, comp) => {
@@ -93,6 +95,7 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
                 key={'0'}
                 componentId={'0'}
                 treeData={treeData}
+                editComponent={editComponent}
               />
         </ComponentTreeRoot>
       </DndContext>

@@ -17,11 +17,6 @@ const itemIcons = {
   noChildren: <DotFilledIcon width={18} height={18} />,
 };
 
-interface ComponentTreeItemProps {
-  componentId: ComponentData["id"];
-  treeData: ComponentTree;
-}
-
 const treeItemWrapper: CSSProperties = {
   display: "flex",
   flexDirection: "row",
@@ -30,7 +25,11 @@ const treeItemWrapper: CSSProperties = {
   border: "1px solid black",
 };
 
-const childrenSectionStyle = (show: Boolean, isOver: Boolean, isActive: Boolean): CSSProperties => ({
+const childrenSectionStyle = (
+  show: Boolean,
+  isOver: Boolean,
+  isActive: Boolean
+): CSSProperties => ({
   paddingLeft: "1rem",
   paddingTop: isActive ? ".2rem" : 0,
   paddingBottom: isActive ? ".8rem" : 0,
@@ -40,9 +39,16 @@ const childrenSectionStyle = (show: Boolean, isOver: Boolean, isActive: Boolean)
   flexDirection: "column",
 });
 
+interface ComponentTreeItemProps {
+  componentId: ComponentData["id"];
+  treeData: ComponentTree;
+  editComponent: (id: string) => void;
+}
+
 export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
   componentId,
   treeData,
+  editComponent,
 }) => {
   const [collapsed, setCollapsed] = React.useState(false);
   const {
@@ -70,8 +76,8 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
         ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
         : undefined,
     transition,
-    marginBottom: '0.5rem',
-    marginTop: '0.5rem',
+    marginBottom: "0.5rem",
+    marginTop: "0.5rem",
   });
 
   const { label } = useMemo(() => {
@@ -89,30 +95,38 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
       <div style={itemStyle()}>
         {!isRoot && (
           <section style={treeItemWrapper}>
-            <button onClick={
-              () => {
+            <button
+              onClick={() => {
                 setCollapsed(!collapsed);
-              }
-            }>
-            {componentChildren.length > 0
-              ? itemIcons.open
-              : itemIcons.noChildren}
+              }}
+            >
+              {componentChildren.length > 0
+                ? itemIcons.open
+                : itemIcons.noChildren}
             </button>
 
-            <header {...listeners} {...attributes} style={{flex: 1}}>
+            <header {...listeners} {...attributes} style={{ flex: 1 }}>
               {label}
             </header>
+            <button onClick={() => editComponent(componentId)}>
+              <Pencil2Icon width={18} height={18} />
+            </button>
           </section>
         )}
         <section
           ref={setDroppableRef}
-          style={childrenSectionStyle(!collapsed && !isDragging, isOverDroppable, Boolean(active))}
+          style={childrenSectionStyle(
+            !collapsed && !isDragging,
+            isOverDroppable,
+            Boolean(active)
+          )}
         >
           {componentChildren.map((component) => (
             <ComponentTreeItem
               key={component.id}
               componentId={component.id}
               treeData={treeData}
+              editComponent={editComponent}
             />
           ))}
         </section>

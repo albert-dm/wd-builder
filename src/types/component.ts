@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react"
+import { ZodObject } from "zod"
 
 export type ComponentData = {
   label: string
@@ -14,8 +15,13 @@ export type ComponentData = {
 
 export type ComponentTree = ComponentData[]
 
+export type ExtendedComponent = (React.FC<any> | ReactNode | Element | React.Component) & {
+  defaultProps?: ComponentData['data']['props'],
+  zodSchema?: ZodObject<any, any, any>,
+};
+
 export interface CanvasComponentList {
   [CollectionName: string]: {
-    [key: string]: (React.FC<any> | ReactNode | Element | React.Component) & {defaultProps?: ComponentData['data']['props']};
+    [key: string]: ExtendedComponent;
   };
 }
