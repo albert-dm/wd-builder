@@ -6,9 +6,11 @@ import {
 } from "../types/component";
 import { AddComponentMenu } from "./addComponentMenu";
 import { ComponentTreeDisplay } from "./componentTree/componentTreeDisplay";
-import { toolbarWrapper, aside } from "./toolbar.style";
-import { button } from "../wd-components/button.style";
 import { EditionModal } from "./componentEditionModal";
+import * as Portal from '@radix-ui/react-portal';
+
+import style from "./toolbar.module.css";
+import buttonStyle from "../wd-components/button.module.css";
 
 interface ToolbarProps {
   components: CanvasComponentList;
@@ -54,10 +56,10 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   };
 
   return (
-    <aside className={className} style={aside}>
-      <div style={toolbarWrapper()}>
+    <Portal.Root>
+      <div className={`${className || ''} ${style.toolbarWrapper}`}>
         <AddComponentMenu components={components} onAdd={handleComponentAdd} />
-        <button style={button('primary')} name="export-tree" onClick={() => console.log(tree)}>
+        <button className={buttonStyle.buttonWrapper} name="export-tree" onClick={() => console.log(tree)}>
           Export Tree
         </button>
         <ComponentTreeDisplay
@@ -78,6 +80,6 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         onClose={() => setShowEditionModal(false)}
         setComponent={handleChangeComponent}
         />
-    </aside>
+    </Portal.Root>
   );
 };

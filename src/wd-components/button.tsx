@@ -1,6 +1,6 @@
 import React from "react";
-import { button } from "./button.style";
 import { z } from "zod";
+import style from "./button.module.css";
 
 interface LinkButtonProps {
   href: string;
@@ -9,7 +9,7 @@ interface LinkButtonProps {
 
 export const LinkButton = ({ href, label }: LinkButtonProps) => {
   return (
-      <a href={href} style={button("primary")}>{label}</a>
+      <a href={href} className={style.buttonWrapper}>{label}</a>
   );
 }
 

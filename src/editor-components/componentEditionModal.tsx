@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ComponentData, ExtendedComponent } from '../types/component';
+import * as Portal from '@radix-ui/react-portal';
+
 import { BasicPropEditor } from './basicPropEditor';
 
 type EditionModalProps = {
@@ -51,7 +53,8 @@ export const EditionModal = ({
     onClose();
   }
 
-  return <dialog open={open} style={{
+  return <Portal.Root>
+    <dialog open={open} style={{
     position: 'fixed',
     margin: 'auto',
     minWidth: '300px',
@@ -62,4 +65,5 @@ export const EditionModal = ({
     <button onClick={handleSave}>Save</button>
     <button onClick={handleCancel} >Cancel</button>
   </dialog>
+  </Portal.Root>
 }

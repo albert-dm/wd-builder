@@ -1,0 +1,40 @@
+.treeItemWrapper {
+  background-color: var(--color-background, white);
+  border: 1px solid vat(--color-text, black);
+}
+
+.treeItemWrapper[data-dragging="true"] {
+  border-color: var(--color-accent);
+}
+
+.treeItemSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid black;
+}
+
+.childrenSection {
+  padding-left: 1rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: white;
+  gap: 0.5rem;
+  display: none;
+  flex-direction: column;
+}
+
+.childrenSection[data-active="true"] {
+  background-color: lightGrey;
+  padding-top: .2rem;
+  padding-bottom: .8rem;
+}
+
+.childrenSection[data-over="true"] {
+  background-color: lightGrey;
+}
+
+.childrenSection[data-show="true"] {
+  display: flex;
+}

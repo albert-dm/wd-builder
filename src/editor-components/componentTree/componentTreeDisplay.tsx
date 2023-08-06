@@ -85,7 +85,6 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
 
   return (
     <>
-      <h3>Component Tree</h3>
       <DndContext
         onDragEnd={handleDragEnd}
         sensors={sensors}

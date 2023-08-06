@@ -1,0 +1,11 @@
+.previewArea {
+  width: 100%;
+  height: 100%;
+}
+
+.renderPreview {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  isolation: isolate;
+}

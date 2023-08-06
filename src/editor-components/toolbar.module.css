@@ -1,0 +1,7 @@
+.toolbarWrapper {
+  min-width: 220px;
+  flex: 1;
+  position: fixed;
+  top: 100px;
+  left: 100px;
+}
