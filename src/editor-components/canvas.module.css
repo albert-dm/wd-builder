@@ -1,11 +1,8 @@
 .canvasWrapper {
   position: relative;
   width: 100dvw;
+  height: 100%;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto;
-  gap: 1rem;
 }
 
 .canvas {

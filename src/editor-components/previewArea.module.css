@@ -9,3 +9,34 @@
   overflow: auto;
   isolation: isolate;
 }
+
+.tabWrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+.tabItems {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  top: 30%;
+}
+
+.tabItems button {
+  display: flex;
+  flex-direction: row;
+  justify-items: flex-start;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.tabItems button p{
+  display: none;
+}
+
+.tabItems button:hover p{
+  display: inline-block;
+}
+

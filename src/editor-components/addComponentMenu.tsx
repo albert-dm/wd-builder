@@ -2,7 +2,7 @@ import React from "react";
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 // import { PlusIcon } from "@radix-ui/react-icons";
 import { CanvasComponentList, ComponentData } from "../types/component";
-import { button } from "../wd-components/button.style";
+import buttonStyle from "../wd-components/button/button.module.css";
 
 interface AddComponentMenuProps {
   components: CanvasComponentList;
@@ -39,7 +39,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button style={button('primary')}>
+        <button className={buttonStyle.buttonWrapper}>
           Add Component {/* <PlusIcon /> */}
         </button>
       </DropdownMenu.Trigger>
@@ -52,7 +52,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
           {Object.keys(components).map((componentCollection) => (
             <>
               <DropdownMenu.Sub>
-                <DropdownMenu.SubTrigger style={button('primary')}>
+                <DropdownMenu.SubTrigger className={buttonStyle.buttonWrapper}>
                   {componentCollection}
                 </DropdownMenu.SubTrigger>
                 <DropdownMenu.Portal>
@@ -61,7 +61,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
                       (componentName) => (
                         <DropdownMenu.Item
                           key={componentName}
-                          style={button('primary')}
+                          className={buttonStyle.buttonWrapper}
                           onClick={() =>
                             handleComponentAdd(componentCollection, componentName)
                           }

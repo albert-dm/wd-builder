@@ -5,6 +5,7 @@ import { createCanvas } from "../helpers/canvas.helper";
 import { componentToJsx, getImports } from "../helpers/editor.helper";
 import style from './previewArea.module.css';
 import { CanvasComponentList, ComponentTree } from '../types/component';
+import { Text } from '../wd-components';
 
 type PreviewAreaProps = {
   tree: ComponentTree;
@@ -31,13 +32,13 @@ export const PreviewArea = ({ tree, setTreeData, components }: PreviewAreaProps)
   }, [code, components]);
 
   return (
-    <Tabs.Root value={currentTab} onValueChange={setCurrentTab}>
-      <Tabs.List>
+    <Tabs.Root value={currentTab} onValueChange={setCurrentTab} className={style.tabWrapper}>
+      <Tabs.List className={style.tabItems}>
         <Tabs.Trigger value="code">
-          <CodeIcon width={24} /> Código
+          <CodeIcon width={24} /><Text value='Código' />
         </Tabs.Trigger>
         <Tabs.Trigger value="render">
-          <EyeOpenIcon width={24} /> Preview
+          <EyeOpenIcon width={24} /><Text value='Previsualização' />
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content

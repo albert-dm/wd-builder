@@ -34,7 +34,6 @@ export const Editor = () => {
       'Layout': {
         Section,
         Article,
-        Button,
       },
       // 'WebDrops': {
       //   Logo,

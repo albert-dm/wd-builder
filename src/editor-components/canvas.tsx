@@ -1,5 +1,5 @@
 // import "./styles.scss";
-import React, { RefObject, useEffect, useRef, useState } from "react";
+import React from "react";
 
 import { Toolbar } from "./toolbar";
 import { CanvasComponentList, ComponentTree } from "../types/component";

@@ -3,14 +3,15 @@ import {
   CanvasComponentList,
   ComponentData,
   ComponentTree,
-} from "../types/component";
-import { AddComponentMenu } from "./addComponentMenu";
-import { ComponentTreeDisplay } from "./componentTree/componentTreeDisplay";
-import { EditionModal } from "./componentEditionModal";
+} from "../../types/component";
+import { AddComponentMenu } from "../addComponentMenu";
+import { ComponentTreeDisplay } from "../componentTree/componentTreeDisplay";
+import { EditionModal } from "../componentEditionModal";
 import * as Portal from '@radix-ui/react-portal';
 
 import style from "./toolbar.module.css";
-import buttonStyle from "../wd-components/button.module.css";
+import buttonStyle from "../../wd-components/button/button.module.css";
+import { Handle } from "./handle";
 
 interface ToolbarProps {
   components: CanvasComponentList;
@@ -27,6 +28,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
   const [selectedComponentId, setSelectedComponentId] = useState<string>("0");
   const [showEditionModal, setShowEditionModal] = useState(false);
+  const [postion, setPosition] = useState({ left: 200, top: 200 });
 
   const handleComponentAdd = (componentData: ComponentData) => {
     const newComponent: ComponentData = {
@@ -57,7 +59,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   return (
     <Portal.Root>
-      <div className={`${className || ''} ${style.toolbarWrapper}`}>
+      <div className={`${className || ''} ${style.toolbarWrapper}`} style={{
+        left: postion.left,
+        top: postion.top,
+      }}>
+        <Handle setPosition={(left, top) => setPosition({ left, top })} />
         <AddComponentMenu components={components} onAdd={handleComponentAdd} />
         <button className={buttonStyle.buttonWrapper} name="export-tree" onClick={() => console.log(tree)}>
           Export Tree
