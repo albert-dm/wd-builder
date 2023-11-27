@@ -12,6 +12,12 @@ Install it as a dependency:
 npm install wd-builder
 ```
 
+## Run local example
+
+``` shell
+npm run dev
+```
+
 ## How to develop
 
 1. Clone this repo
