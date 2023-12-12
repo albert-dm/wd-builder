@@ -17,10 +17,14 @@ export const Canvas: React.FC<CanvasProps> = ({
   setTreeData,
   components = {},
 }) => {
+  const showToolbarState = React.useState(false);
+  const [showToolbar, setShowToolbar] = showToolbarState;
   return (
     <section className={style.canvasWrapper}>
-      <Toolbar components={components} tree={tree} setTree={setTreeData}/>
-      <PreviewArea tree={tree} setTreeData={setTreeData} components={components}/>
+      {
+        showToolbar && <Toolbar components={components} hideToolbar={() => setShowToolbar(false)} tree={tree} setTree={setTreeData}/>
+      }
+      <PreviewArea tree={tree} setTreeData={setTreeData} components={components} showToolbarState={showToolbarState}/>
     </section>
   );
 };

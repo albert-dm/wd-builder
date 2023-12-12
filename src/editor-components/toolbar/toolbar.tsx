@@ -7,7 +7,7 @@ import {
 import { AddComponentMenu } from "../addComponentMenu";
 import { ComponentTreeDisplay } from "../componentTree/componentTreeDisplay";
 import { EditionModal } from "../componentEditionModal";
-import * as Portal from '@radix-ui/react-portal';
+import * as Portal from "@radix-ui/react-portal";
 
 import style from "./toolbar.module.css";
 import buttonStyle from "../../wd-components/button/button.module.css";
@@ -18,6 +18,7 @@ interface ToolbarProps {
   tree: ComponentTree;
   setTree: (tree: ComponentTree) => void;
   className?: string;
+  hideToolbar: () => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -25,6 +26,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   tree,
   setTree,
   className,
+  hideToolbar
 }) => {
   const [selectedComponentId, setSelectedComponentId] = useState<string>("0");
   const [showEditionModal, setShowEditionModal] = useState(false);
@@ -44,7 +46,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   const selectedComponentMeta = useMemo(() => {
     if (!selectedComponentData) return null;
-    return components[selectedComponentData.data.componentCollection][selectedComponentData.data.componentName] || null;
+    return (
+      components[selectedComponentData.data.componentCollection][
+        selectedComponentData.data.componentName
+      ] || null
+    );
   }, [components, selectedComponentData]);
 
   const handleChangeComponent = (component: ComponentData) => {
@@ -59,14 +65,28 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
   return (
     <Portal.Root>
-      <div className={`${className || ''} ${style.toolbarWrapper}`} style={{
-        left: postion.left,
-        top: postion.top,
-      }}>
+      <div
+        className={`${className || ""} ${style.toolbarWrapper}`}
+        style={{
+          left: postion.left,
+          top: postion.top,
+        }}
+      >
         <Handle setPosition={(left, top) => setPosition({ left, top })} />
         <AddComponentMenu components={components} onAdd={handleComponentAdd} />
-        <button className={buttonStyle.buttonWrapper} name="export-tree" onClick={() => console.log(tree)}>
+        <button
+          className={buttonStyle.buttonWrapper}
+          name="export-tree"
+          onClick={() => console.log(tree)}
+        >
           Export Tree
+        </button>
+        <button
+          className={buttonStyle.buttonWrapper}
+          name="export-tree"
+          onClick={() => hideToolbar()}
+        >
+          X
         </button>
         <ComponentTreeDisplay
           treeData={tree}
@@ -79,13 +99,13 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           }}
         />
       </div>
-      <EditionModal
+      {showEditionModal && <EditionModal
         componentData={selectedComponentData!}
         componentSchema={selectedComponentMeta?.zodSchema}
         open={showEditionModal}
         onClose={() => setShowEditionModal(false)}
         setComponent={handleChangeComponent}
-        />
+      />}
     </Portal.Root>
   );
 };

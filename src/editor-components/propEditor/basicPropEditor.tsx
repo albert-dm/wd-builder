@@ -1,14 +1,8 @@
 import React, { useEffect } from "react";
-import { Stack } from "../wd-components";
+import { Stack } from "../../wd-components";
+import { PropEditorInterface } from "./propEditor";
 
-type BasicPropEditorProps = {
-  value: any;
-  onChange: (value: any) => void;
-  error: string | null;
-  setError: (error: string | null) => void;
-}
-
-export const BasicPropEditor = ({ value, onChange, error, setError }: any) => {
+export const BasicPropEditor = ({ value, onChange, error, setError }: PropEditorInterface<any>) => {
   const [stringVal, setStringVal] = React.useState(JSON.stringify(value));
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setStringVal(e.target.value);
@@ -20,7 +14,8 @@ export const BasicPropEditor = ({ value, onChange, error, setError }: any) => {
 
   useEffect(() => {
     try {
-      onChange(JSON.parse(stringVal));
+      const newValue = JSON.parse(stringVal)
+      onChange(newValue);
       setError(null);
     } catch (e: any) {
       setError(e.message);

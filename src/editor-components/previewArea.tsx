@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as Tabs from "@radix-ui/react-tabs";
-import { CodeIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import { CodeIcon, EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { createCanvas } from "../helpers/canvas.helper";
 import { componentToJsx, getImports } from "../helpers/editor.helper";
 import style from './previewArea.module.css';
@@ -11,11 +11,14 @@ type PreviewAreaProps = {
   tree: ComponentTree;
   setTreeData: (tree: ComponentTree) => void;
   components?: CanvasComponentList;
+  showToolbarState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+
 }
 
-export const PreviewArea = ({ tree, setTreeData, components }: PreviewAreaProps) => {
+export const PreviewArea = ({ tree, setTreeData, components, showToolbarState }: PreviewAreaProps) => {
   const canvasElement = useRef<HTMLDivElement | null>(null);
   const editor = useRef<ReturnType<typeof createCanvas> | null>(null);
+  const [showToolbar, setShowToolbar] = showToolbarState;
 
   const [currentTab, setCurrentTab] = useState<string>('render');
 
@@ -40,6 +43,9 @@ export const PreviewArea = ({ tree, setTreeData, components }: PreviewAreaProps)
         <Tabs.Trigger value="render">
           <EyeOpenIcon width={24} /><Text value='Previsualização' />
         </Tabs.Trigger>
+        { !showToolbar && <button onClick={() => setShowToolbar(true)}>
+          <Pencil2Icon width={24} /><Text value='Ferramentas' />
+        </button>}
       </Tabs.List>
       <Tabs.Content
         value="code"
