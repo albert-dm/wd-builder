@@ -64,3 +64,29 @@ export function getProjected(
     return newParent ?? undefined;
   }
 }
+
+export const getOrderedList = (treeData: ComponentTree, rootComponent: ComponentData ) => {
+  let newTreeData: ComponentTree = [];
+  newTreeData.push(rootComponent);
+  const children = getComponentChildren(treeData, rootComponent.id);
+  if (children.length === 0) {
+    return newTreeData;
+  }
+  children.forEach((child) => {
+    const nextComponents = getOrderedList(treeData, child);
+    newTreeData = [...newTreeData, ...nextComponents];
+  });
+
+  return newTreeData;
+}
+
+export const deleteComponentWithChildren = (treeData: ComponentTree, componentId: string) => {
+  const componentChildren = getComponentChildren(treeData, componentId);
+  if (componentChildren.length === 0) {
+    return treeData.filter(comp => comp.id !== componentId);
+  }
+  componentChildren.forEach((child) => {
+    treeData = deleteComponentWithChildren(treeData, child.id);
+  });
+  return treeData.filter(comp => comp.id !== componentId);
+}

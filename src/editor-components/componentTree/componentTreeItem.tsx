@@ -1,14 +1,13 @@
-import React, { CSSProperties, useMemo } from "react";
-import { ComponentData, ComponentTree } from "../../types/component";
+import React, { useMemo } from "react";
+import { ComponentData } from "../../types/component";
 import { useSortable } from "@dnd-kit/sortable";
 import {
   MinusCircledIcon,
   PlusCircledIcon,
   Pencil2Icon,
   DotFilledIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons";
-import { getComponentChildren } from "../../helpers/tree.helper";
-import { useDroppable } from "@dnd-kit/core";
 import style from "./componentTreeItem.module.css";
 
 const itemIcons = {
@@ -17,33 +16,45 @@ const itemIcons = {
   noChildren: <DotFilledIcon width={18} height={18} />,
 };
 interface ComponentTreeItemProps {
-  componentId: ComponentData["id"];
-  treeData: ComponentTree;
+  component: ComponentData;
   editComponent: (id: string) => void;
+  hasChildren: boolean;
+  depth: number;
+  selected: boolean;
+  collapsed: boolean;
+  disabled: boolean;
+  selectComponent: () => void;
+  deleteComponent: () => void;
+  toggleCollapseComponent: () => void;
 }
 
 export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
-  componentId,
-  treeData,
+  component,
   editComponent,
+  hasChildren,
+  depth,
+  selected,
+  collapsed,
+  disabled,
+  selectComponent,
+  deleteComponent,
+  toggleCollapseComponent
 }) => {
-  const [collapsed, setCollapsed] = React.useState(false);
+  const { label, id } = component;
   const {
     attributes,
     listeners,
     setNodeRef: setSortableRef,
     isDragging,
     transform,
-    isOver,
+    // isOver,
     transition,
-    active,
-  } = useSortable({ id: componentId.toString() });
+    // active,
 
-  const { isOver: isOverDroppable, setNodeRef: setDroppableRef } = useDroppable(
-    {
-      id: componentId.toString(),
-    }
-  );
+
+  } = useSortable({ id });
+
+  const isRoot = useMemo(() => !component.parentId, [component.parentId]);
 
   const itemStyle = {
     transform:
@@ -51,58 +62,30 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
         ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
         : undefined,
     transition,
+    marginLeft: `${depth * 10}px`,
   };
 
-  const { label } = useMemo(() => {
-    return treeData.find((comp) => comp.id === componentId)!;
-  }, [treeData, componentId]);
-
-  const componentChildren = useMemo(() => {
-    return getComponentChildren(treeData, componentId);
-  }, [treeData, componentId]);
-
-  const isRoot = componentId === "0";
-
   return (
-    <div ref={setSortableRef}>
-      <div style={itemStyle} className={style.treeItemWrapper} data-dragging={isDragging}>
-        <section className={style.treeItemSection}>
+    <div ref={setSortableRef} >
+      <div onClick={selectComponent} style={itemStyle} className={style.treeItemWrapper} data-dragging={isDragging}>
+        <section className={style.treeItemSection} data-selected={selected} data-disabled={disabled}>
           <button
-            onClick={() => {
-              setCollapsed(!collapsed);
-            }}
+            onClick={hasChildren ? toggleCollapseComponent : undefined}
           >
-            {componentChildren.length > 0
-              ? itemIcons.open
+            {hasChildren
+              ? collapsed ? itemIcons.closed : itemIcons.open
               : itemIcons.noChildren}
           </button>
 
-          {!isRoot ? (
           <header {...listeners} {...attributes} style={{ flex: 1 }}>
             {label}
           </header>
-            ) : <header style={{ flex: 1 }}>
-            Component Tree
-          </header>}
-          <button onClick={() => editComponent(componentId)}>
+          <button onClick={() => editComponent(id)}>
             <Pencil2Icon width={18} height={18} />
           </button>
-        </section>
-        <section
-          ref={setDroppableRef}
-          className={style.childrenSection}
-          data-active={active}
-          data-over={isOverDroppable}
-          data-show={!collapsed && !isDragging}
-        >
-          {componentChildren.map((component) => (
-            <ComponentTreeItem
-              key={component.id}
-              componentId={component.id}
-              treeData={treeData}
-              editComponent={editComponent}
-            />
-          ))}
+          {!isRoot && <button onClick={() => deleteComponent()}>
+            <TrashIcon width={18} height={18} />
+          </button>}
         </section>
       </div>
     </div>

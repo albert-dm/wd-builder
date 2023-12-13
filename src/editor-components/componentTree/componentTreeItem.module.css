@@ -15,6 +15,14 @@
   border: 1px solid black;
 }
 
+.treeItemSection[data-selected="true"] {
+  border-width: 3px;
+}
+
+.treeItemSection[data-disabled="true"] {
+  opacity: 0.4;
+}
+
 .childrenSection {
   padding-left: 1rem;
   padding-top: 0;
