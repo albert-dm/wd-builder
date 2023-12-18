@@ -26,7 +26,7 @@ npm run dev
 
 Build files will be in `dist` folder.
 
-You can link it to your project by running `npm link` in on root folder and `npm link wd-builder` in your project folder.
+You can link it to your project by running `npm link` on root folder and `npm link wd-builder` in your project's folder.
 
 You can run`npm build:watch` to watch for changes and rebuild automatically.
 
