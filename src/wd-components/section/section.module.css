@@ -1,0 +1,14 @@
+.breakout {
+  grid-column: breakout;
+}
+
+.full {
+  grid-column: full-width;
+
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.full > * {
+  grid-column: content;
+}

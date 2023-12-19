@@ -1,6 +1,6 @@
 .cavasWrapper {
   display: flex;
   width: 100vdw;
-  height: 100vdh;
+  min-height: 100vdh;
   overflow: hidden;
 }

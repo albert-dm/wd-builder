@@ -3,15 +3,16 @@ import React from "react";
 interface StackProps {
   children: React.ReactNode;
   fullWidth?: boolean;
+  gap?: number;
 }
 
-export const Stack = ({ children, fullWidth }: StackProps) => {
+export const Stack = ({ children, fullWidth, gap }: StackProps) => {
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: "1rem",
+        gap: gap + "rem",
         width: fullWidth ? "100%" : "auto",
       }}
     >
@@ -22,4 +23,5 @@ export const Stack = ({ children, fullWidth }: StackProps) => {
 
 Stack.defaultProps = {
   fullWidth: false,
+  gap: 1,
 };

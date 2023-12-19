@@ -1,6 +1,6 @@
 {
-  "name": "wd-builder",
-  "version": "0.0.1",
+  "name": "@webdrops/wd-builder",
+  "version": "0.2.0",
   "description": "Dynamic page builder using tree based page organization",
   "main": "dist/index.js",
   "scripts": {
@@ -10,8 +10,15 @@
     "dev": "vite",
     "serve": "vite preview"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albert-dm/wd-builder.git"
+  },
   "author": "albert-dm",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/albert-dm/wd-builder/issues"
+  },
   "dependencies": {
     "@babel/standalone": "^7.21.3",
     "@dnd-kit/core": "^6.0.8",
@@ -40,6 +47,13 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.1.3",
-    "vite": "^4.3.9"
-  }
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^3.6.4"
+  },
+  "homepage": "https://github.com/albert-dm/wd-builder#readme",
+  "keywords": [
+    "builder",
+    "react",
+    "lowcode"
+  ]
 }

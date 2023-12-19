@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   build: {
@@ -12,6 +13,12 @@ export default defineConfig({
     rollupOptions: {
       external: ["react", "react-dom", "react-dom/client"],
     },
-    emptyOutDir: false,
+    emptyOutDir: true,
   },
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+      outputDir: 'dist/types'
+    })
+  ],
 });
