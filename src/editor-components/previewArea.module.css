@@ -12,8 +12,8 @@
 
 .tabWrapper {
   position: relative;
-  overflow: hidden;
   height: 100dvh;
+  overflow: auto;
 }
 
 .tabItems {

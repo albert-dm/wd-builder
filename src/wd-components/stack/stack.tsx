@@ -1,4 +1,7 @@
+import clsx from "clsx";
 import React from "react";
+
+import style from "./stack.module.css";
 
 interface StackProps {
   children: React.ReactNode;
@@ -8,13 +11,14 @@ interface StackProps {
 
 export const Stack = ({ children, fullWidth, gap }: StackProps) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: gap + "rem",
-        width: fullWidth ? "100%" : "auto",
-      }}
+    <div className={clsx({
+      [style['stack-wrapper']]: true,
+      [style['stack-full-width']]: fullWidth,
+    })}
+
+    style={{
+      gap: `${gap}rem`,
+    }}
     >
       {children}
     </div>

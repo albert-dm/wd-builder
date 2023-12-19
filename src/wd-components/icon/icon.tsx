@@ -1,12 +1,28 @@
-import { MenuIconSVG } from './menu-icon';
+import React from 'react';
+import * as Icons from './icons';
 import style from './icon.module.css';
+import { z } from 'zod';
+import { ExtendedComponent } from '../../types/component';
 
-type IconProps = {
-  className?: string;
-};
+const iconNames = [...Object.keys(Icons)] as const;
 
-export const Icon = ({ className }: IconProps) => {
+const IconZodSchema = z.object({
+  className: z.string().optional(),
+  icon: z.string().refine((icon) => iconNames.includes(icon)),
+});
+
+type IconProps = z.infer<typeof IconZodSchema>;
+
+export const Icon: ExtendedComponent = ({ className, icon }: IconProps) => {
+  const IconSvgComponent = Icons[icon as keyof typeof Icons];
   return <i className={`${className} ${style.icon}`}>
-    <MenuIconSVG />
+    <IconSvgComponent />
   </i>
 };
+
+Icon.zodSchema = IconZodSchema;
+
+Icon.defaultProps = {
+  className: '',
+  icon: 'MenuIconSVG'
+} as IconProps;

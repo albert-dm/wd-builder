@@ -17,7 +17,7 @@ export type ComponentTree = ComponentData[]
 
 export type ExtendedComponent = (React.FC<any> | ReactNode | Element | React.Component) & {
   defaultProps?: ComponentData['data']['props'],
-  zodSchema?: ZodObject<any, any, any>,
+  zodSchema?: ZodObject<any>,
 };
 
 export interface CanvasComponentList {

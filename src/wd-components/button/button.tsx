@@ -2,10 +2,12 @@ import React from "react";
 import { z } from "zod";
 import style from "./button.module.css";
 
-interface LinkButtonProps {
-  href: string;
-  label: string;
-}
+const LinkButtonZodSchema = z.object({
+  href: z.string().url().optional().or(z.literal('')).or(z.literal('#')),
+  label: z.string(),
+});
+
+type LinkButtonProps = z.infer<typeof LinkButtonZodSchema>;
 
 export const LinkButton = ({ href, label }: LinkButtonProps) => {
   return (
@@ -18,7 +20,4 @@ LinkButton.defaultProps = {
   label: "Link",
 };
 
-LinkButton.zodSchema = z.object({
-  href: z.string().url().optional().or(z.literal('')).or(z.literal('#')),
-  label: z.string(),
-});
+LinkButton.zodSchema = LinkButtonZodSchema

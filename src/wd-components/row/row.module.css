@@ -1,0 +1,33 @@
+.row-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem,
+}
+
+.row-full-height {
+  height: 100%;
+}
+
+.row-vertical-center {
+  align-items: center;
+}
+
+.row-vertical-top {
+  align-items: flex-start;
+}
+
+.row-vertical-bottom {
+  align-items: flex-end;
+}
+
+.row-horizontal-left {
+  justify-content: flex-start;
+}
+
+.row-horizontal-right {
+  justify-content: flex-end;
+}
+
+.row-horizontal-center {
+  justify-content: center;
+}

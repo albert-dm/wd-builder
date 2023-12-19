@@ -33,6 +33,7 @@
     "@types/escodegen": "^0.0.7",
     "@types/object-path": "^0.11.1",
     "acorn": "^8.10.0",
+    "clsx": "^2.1.1",
     "debounce": "^2.0.0",
     "escodegen": "^2.0.0",
     "object-path": "^0.11.8",
