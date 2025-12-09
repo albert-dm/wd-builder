@@ -7,7 +7,7 @@ export const BasicPropEditor = ({
   onChange,
   error,
   setError,
-}: PropEditorInterface<any>) => {
+}: PropEditorInterface<unknown>) => {
   const [stringVal, setStringVal] = React.useState(JSON.stringify(value));
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setStringVal(e.target.value);
@@ -22,8 +22,8 @@ export const BasicPropEditor = ({
       const newValue = JSON.parse(stringVal);
       onChange(newValue);
       setError(null);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : String(e));
     }
   }, [stringVal, onChange, setError]);
 

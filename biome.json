@@ -7,7 +7,12 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"]
+    "includes": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.jsx"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -19,19 +24,23 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": "warn"
+        "noExplicitAny": "error"
       },
       "complexity": {
         "noForEach": "off"
       },
       "style": {
-        "noNonNullAssertion": "warn",
-        "useImportType": "warn"
+        "noNonNullAssertion": "error",
+        "useImportType": "error"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn",
-        "noUnusedImports": "warn",
-        "noUnusedVariables": "warn"
+        "useExhaustiveDependencies": "error",
+        "noUnusedImports": "error",
+        "noUnusedVariables": "error"
+      },
+      "performance": {
+        "noAccumulatingSpread": "error",
+        "noDynamicNamespaceImportAccess": "error"
       }
     }
   },

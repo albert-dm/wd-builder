@@ -10,19 +10,20 @@ export type ComponentData = {
   data: {
     componentCollection: string;
     componentName: string;
-    props?: { [prop: string]: any };
+    props?: { [prop: string]: unknown };
   };
 };
 
 export type ComponentTree = ComponentData[];
 
 export type ExtendedComponent = (
-  | React.FC<any>
+  | React.FC<Record<string, unknown>>
   | ReactNode
   | Element
   | React.Component
 ) & {
   defaultProps?: ComponentData["data"]["props"];
+  // biome-ignore lint/suspicious/noExplicitAny: ZodObject requires any for generic schema types
   zodSchema?: ZodObject<any>;
 };
 

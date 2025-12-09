@@ -84,11 +84,8 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
           .map((comp) => comp.parentId)
           .filter((parentId): parentId is string => parentId !== undefined),
       ]);
-      componentChildren = componentChildren.reduce<ComponentData[]>(
-        (acc, comp) => {
-          return [...acc, ...getComponentChildren(treeData, comp.id)];
-        },
-        [],
+      componentChildren = componentChildren.flatMap((comp) =>
+        getComponentChildren(treeData, comp.id),
       );
     }
 

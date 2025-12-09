@@ -8,8 +8,21 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import type { CanvasComponentList } from "../types/component";
 
-// TODO: type this function
-function isReactNode(node: any) {
+interface AstNode {
+  type: string;
+  expression?: {
+    callee?: {
+      object?: { name?: string };
+      property?: { name?: string };
+    };
+  };
+}
+
+interface Ast {
+  body: AstNode[];
+}
+
+function isReactNode(node: AstNode) {
   const type = node.type; //"ExpressionStatement"
   const obj = ObjPath.get(node, "expression.callee.object.name");
   const func = ObjPath.get(node, "expression.callee.property.name");
@@ -20,8 +33,7 @@ function isReactNode(node: any) {
   );
 }
 
-// TODO: type this function
-export function findReactNode(ast: any) {
+export function findReactNode(ast: Ast) {
   const { body } = ast;
   return body.find(isReactNode);
 }
@@ -47,7 +59,7 @@ export function createCanvas(
         babelTransform(code, { presets: ["es2015", "react"] }).code || "";
 
       // 2. get AST
-      const ast: any = Acorn.parse(tcode, { ecmaVersion: 6 });
+      const ast = Acorn.parse(tcode, { ecmaVersion: 6 }) as unknown as Ast;
 
       // 3. find React.createElement expression in the body of program
       const rnode = findReactNode(ast);
@@ -69,9 +81,10 @@ export function createCanvas(
 
       // 6. create a new wrapper function with all dependency as parameters
       return new Function("React", "render", "require", generateJs(ast));
-    } catch (ex: any) {
+    } catch (ex: unknown) {
       // in case of exception render the exception message
-      render(<pre style={{ color: "red" }}>{ex.message}</pre>);
+      const message = ex instanceof Error ? ex.message : String(ex);
+      render(<pre style={{ color: "red" }}>{message}</pre>);
     }
   }
 
@@ -87,8 +100,9 @@ export function createCanvas(
       if (runner) {
         try {
           runner(React, render, require);
-        } catch (ex: any) {
-          render(<pre style={{ color: "red" }}>{ex.message}</pre>);
+        } catch (ex: unknown) {
+          const message = ex instanceof Error ? ex.message : String(ex);
+          render(<pre style={{ color: "red" }}>{message}</pre>);
         }
       }
     },
