@@ -1,9 +1,9 @@
-import React from 'react';
-import { ExtendedComponent } from '../../types/component';
+import type React from "react";
+import type { ExtendedComponent } from "../../types/component";
 
-import style from './section.module.css';
+import style from "./section.module.css";
 
-type ContainerType = 'default' | 'full' | 'breakout';
+type ContainerType = "default" | "full" | "breakout";
 
 export interface SectionProps {
   containerType: ContainerType;
@@ -11,8 +11,12 @@ export interface SectionProps {
   className?: string;
 }
 
-export const Section: ExtendedComponent = ({ containerType, children, className }: SectionProps) => {
-  const containerClassName = style[containerType] ?? '';
+export const Section: ExtendedComponent = ({
+  containerType,
+  children,
+  className,
+}: SectionProps) => {
+  const containerClassName = style[containerType] ?? "";
 
   return (
     <section className={`${className} ${containerClassName}`}>
@@ -22,5 +26,5 @@ export const Section: ExtendedComponent = ({ containerType, children, className 
 };
 
 Section.defaultProps = {
-  containerType: 'default',
+  containerType: "default",
 };

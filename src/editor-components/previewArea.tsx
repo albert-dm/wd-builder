@@ -1,30 +1,38 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import * as Tabs from "@radix-ui/react-tabs";
 import { CodeIcon, EyeOpenIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import * as Tabs from "@radix-ui/react-tabs";
+import type React from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { createCanvas } from "../helpers/canvas.helper";
 import { componentToJsx, getImports } from "../helpers/editor.helper";
-import style from './previewArea.module.css';
-import { CanvasComponentList, ComponentTree } from '../types/component';
-import { Text } from '../wd-components';
+import type { CanvasComponentList, ComponentTree } from "../types/component";
+import { Text } from "../wd-components";
+import style from "./previewArea.module.css";
 
 type PreviewAreaProps = {
   tree: ComponentTree;
   setTreeData: (tree: ComponentTree) => void;
   components?: CanvasComponentList;
-  showToolbarState: [boolean, React.Dispatch<React.SetStateAction<boolean>>]
+  showToolbarState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+};
 
-}
-
-export const PreviewArea = ({ tree, setTreeData, components, showToolbarState }: PreviewAreaProps) => {
+export const PreviewArea = ({
+  tree,
+  setTreeData,
+  components,
+  showToolbarState,
+}: PreviewAreaProps) => {
   const canvasElement = useRef<HTMLDivElement | null>(null);
   const editor = useRef<ReturnType<typeof createCanvas> | null>(null);
   const [showToolbar, setShowToolbar] = showToolbarState;
 
-  const [currentTab, setCurrentTab] = useState<string>('render');
+  const [currentTab, setCurrentTab] = useState<string>("render");
 
-  const rootComp = useMemo(() => tree.find((c) => c.id === '0'), [tree]);
+  const rootComp = useMemo(() => tree.find((c) => c.id === "0"), [tree]);
 
-  const code = useMemo(() => getImports(tree) + componentToJsx(rootComp!, tree), [tree, rootComp]);
+  const code = useMemo(() => {
+    if (!rootComp) return "";
+    return getImports(tree) + componentToJsx(rootComp, tree);
+  }, [tree, rootComp]);
 
   useEffect(() => {
     if (!canvasElement.current) throw new Error("Canvas element not found");
@@ -35,17 +43,26 @@ export const PreviewArea = ({ tree, setTreeData, components, showToolbarState }:
   }, [code, components]);
 
   return (
-    <Tabs.Root value={currentTab} onValueChange={setCurrentTab} className={style.tabWrapper}>
+    <Tabs.Root
+      value={currentTab}
+      onValueChange={setCurrentTab}
+      className={style.tabWrapper}
+    >
       <Tabs.List className={style.tabItems}>
         <Tabs.Trigger value="code">
-          <CodeIcon width={24} /><Text value='Código' />
+          <CodeIcon width={24} />
+          <Text value="Código" />
         </Tabs.Trigger>
         <Tabs.Trigger value="render">
-          <EyeOpenIcon width={24} /><Text value='Previsualização' />
+          <EyeOpenIcon width={24} />
+          <Text value="Previsualização" />
         </Tabs.Trigger>
-        { !showToolbar && <button onClick={() => setShowToolbar(true)}>
-          <Pencil2Icon width={24} /><Text value='Ferramentas' />
-        </button>}
+        {!showToolbar && (
+          <button type="button" onClick={() => setShowToolbar(true)}>
+            <Pencil2Icon width={24} />
+            <Text value="Ferramentas" />
+          </button>
+        )}
       </Tabs.List>
       <Tabs.Content
         value="code"
@@ -58,15 +75,8 @@ export const PreviewArea = ({ tree, setTreeData, components, showToolbarState }:
           onChange={(e) => setTreeData(JSON.parse(e.target.value))}
         />
       </Tabs.Content>
-      <Tabs.Content
-        value="render"
-        forceMount
-        hidden={currentTab !== "render"}
-      >
-        <div
-          className={style.renderPreview}
-          ref={(div) => (canvasElement.current = div)}
-        />
+      <Tabs.Content value="render" forceMount hidden={currentTab !== "render"}>
+        <div className={style.renderPreview} ref={canvasElement} />
       </Tabs.Content>
     </Tabs.Root>
   );

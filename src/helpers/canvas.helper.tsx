@@ -1,13 +1,12 @@
 /* eslint-disable */
+
+import { transform as babelTransform } from "@babel/standalone";
+import * as Acorn from "acorn";
+import { generate as generateJs } from "escodegen";
+import ObjPath from "object-path";
 import React from "react";
 import { createRoot } from "react-dom/client";
-import ObjPath from 'object-path';
-
-import * as Acorn from "acorn";
-
-import { generate as generateJs } from 'escodegen';
-import { transform as babelTransform } from "@babel/standalone";
-import { CanvasComponentList } from "../types/component";
+import type { CanvasComponentList } from "../types/component";
 
 // TODO: type this function
 function isReactNode(node: any) {
@@ -27,7 +26,10 @@ export function findReactNode(ast: any) {
   return body.find(isReactNode);
 }
 
-export function createCanvas(domElement: HTMLElement, components: CanvasComponentList) {
+export function createCanvas(
+  domElement: HTMLElement,
+  components: CanvasComponentList,
+) {
   const root = createRoot(domElement);
 
   function render(node: JSX.Element) {
@@ -41,7 +43,8 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
   function getWrapperFunction(code: string) {
     try {
       // 1. transform code
-      const tcode = babelTransform(code, { presets: ["es2015", "react"] }).code || '';
+      const tcode =
+        babelTransform(code, { presets: ["es2015", "react"] }).code || "";
 
       // 2. get AST
       const ast: any = Acorn.parse(tcode, { ecmaVersion: 6 });
@@ -49,7 +52,7 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
       // 3. find React.createElement expression in the body of program
       const rnode = findReactNode(ast);
 
-      console.log({rnode});
+      console.log({ rnode });
 
       if (rnode) {
         const nodeIndex = ast.body.indexOf(rnode);
@@ -57,7 +60,9 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
         const createElSrc = generateJs(rnode).slice(0, -1);
         // 5. transform React.createElement(...) to render(React.createElement(...)),
         // where render is a callback passed from outside
-        const renderCallAst = Acorn.Parser.parse(`render(${createElSrc})`, {ecmaVersion: 6});
+        const renderCallAst = Acorn.Parser.parse(`render(${createElSrc})`, {
+          ecmaVersion: 6,
+        });
 
         ast.body[nodeIndex] = renderCallAst;
       }
@@ -78,11 +83,11 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
 
     // compiles and invokes the wrapper function
     run(code: string) {
-      const runner = this.compile(code)
+      const runner = this.compile(code);
       if (runner) {
         try {
           runner(React, render, require);
-        }catch(ex: any) {
+        } catch (ex: any) {
           render(<pre style={{ color: "red" }}>{ex.message}</pre>);
         }
       }
@@ -90,6 +95,6 @@ export function createCanvas(domElement: HTMLElement, components: CanvasComponen
 
     getCompiledCode(code: string) {
       return getWrapperFunction(code)?.toString();
-    }
+    },
   };
 }

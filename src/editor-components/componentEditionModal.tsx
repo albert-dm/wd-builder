@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ComponentData, ExtendedComponent } from '../types/component';
-import * as Portal from '@radix-ui/react-portal';
-import debounce from 'debounce';
+import * as Portal from "@radix-ui/react-portal";
+import debounce from "debounce";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { ComponentData, ExtendedComponent } from "../types/component";
 
-import { BasicPropEditor } from './propEditor/basicPropEditor';
+import { BasicPropEditor } from "./propEditor/basicPropEditor";
 
 type EditionModalProps = {
   open: boolean;
   onClose: () => void;
   setComponent: (component: ComponentData) => void;
   componentData: ComponentData;
-  componentSchema: ExtendedComponent['zodSchema'];
-}
+  componentSchema: ExtendedComponent["zodSchema"];
+};
 
 export const EditionModal = ({
   open,
@@ -21,7 +21,9 @@ export const EditionModal = ({
   componentSchema,
 }: EditionModalProps) => {
   const [newProps, setNewProps] = useState(componentData.data.props || {});
-  const [newComponentLabel, setNewComponentLabel] = useState(componentData.label);
+  const [newComponentLabel, setNewComponentLabel] = useState(
+    componentData.label,
+  );
   const [error, setError] = useState<string | null>(null);
   const selectedComponent = useRef(componentData.data.componentName);
 
@@ -30,23 +32,20 @@ export const EditionModal = ({
     if (selectedComponent.current !== componentData.data.componentName) {
       setNewProps(componentData.data.props || {});
       setNewComponentLabel(componentData.label);
-      selectedComponent.current = componentData.data.componentName
+      selectedComponent.current = componentData.data.componentName;
     }
-  }, [componentData]);
+  }, [componentData, open]);
 
-  useEffect(() => {
-    if (!open) return;
-    debounce(handleSave, 1000)();
-  }, [newProps, newComponentLabel]);
-
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     const parsedPropsData = componentSchema?.safeParse(newProps);
 
     if (parsedPropsData && !parsedPropsData.success) {
       return setError(parsedPropsData.error.message);
     }
 
-    const safePropsData = parsedPropsData?.success ? parsedPropsData.data : newProps;
+    const safePropsData = parsedPropsData?.success
+      ? parsedPropsData.data
+      : newProps;
 
     setComponent({
       ...componentData,
@@ -54,21 +53,51 @@ export const EditionModal = ({
       data: {
         ...componentData.data,
         props: safePropsData,
-      }
+      },
     });
-  }
+  }, [
+    componentData,
+    componentSchema,
+    newComponentLabel,
+    newProps,
+    setComponent,
+  ]);
 
-  return <Portal.Root>
-    <dialog open={open} style={{
-    position: 'absolute',
-    top: '200px',
-    margin: 'auto',
-    minWidth: '300px',
-  }}>
-    <h1>Component Edition</h1>
-    <input name="component-label" type="text" value={newComponentLabel} onChange={(e) => setNewComponentLabel(e.target.value)} />
-    <BasicPropEditor value={newProps} onChange={setNewProps} error={error} setError={setError} />
-    <button onClick={onClose} >Close</button>
-  </dialog>
-  </Portal.Root>
-}
+  useEffect(() => {
+    if (!open) return;
+    const debouncedSave = debounce(handleSave, 1000);
+    debouncedSave();
+    return () => debouncedSave.clear();
+  }, [open, handleSave]);
+
+  return (
+    <Portal.Root>
+      <dialog
+        open={open}
+        style={{
+          position: "absolute",
+          top: "200px",
+          margin: "auto",
+          minWidth: "300px",
+        }}
+      >
+        <h1>Component Edition</h1>
+        <input
+          name="component-label"
+          type="text"
+          value={newComponentLabel}
+          onChange={(e) => setNewComponentLabel(e.target.value)}
+        />
+        <BasicPropEditor
+          value={newProps}
+          onChange={setNewProps}
+          error={error}
+          setError={setError}
+        />
+        <button type="button" onClick={onClose}>
+          Close
+        </button>
+      </dialog>
+    </Portal.Root>
+  );
+};

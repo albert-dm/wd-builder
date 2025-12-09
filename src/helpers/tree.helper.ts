@@ -1,30 +1,42 @@
 import { arrayMove } from "@dnd-kit/sortable";
-import { ComponentData, ComponentTree } from "../types/component"
+import type { ComponentData, ComponentTree } from "../types/component";
 
-export const getComponentChildren = (tree: ComponentTree, componentId: string): ComponentData[] => {
-  const componentChildren = tree.filter(comp => comp.parentId === componentId);
+export const getComponentChildren = (
+  tree: ComponentTree,
+  componentId: string,
+): ComponentData[] => {
+  const componentChildren = tree.filter(
+    (comp) => comp.parentId === componentId,
+  );
   return componentChildren;
 };
 
-export const getComponentDepth = (tree: ComponentTree, componentId: string): number => {
-  let parentCount = 0
-  let componentParentId = tree.find(comp => comp.id === componentId)?.parentId;
-  while(componentParentId !== undefined) {
+export const getComponentDepth = (
+  tree: ComponentTree,
+  componentId: string,
+): number => {
+  let parentCount = 0;
+  let componentParentId = tree.find(
+    (comp) => comp.id === componentId,
+  )?.parentId;
+  while (componentParentId !== undefined) {
     parentCount++;
-    componentParentId = tree.find(comp => comp.id === componentParentId)?.parentId;
+    componentParentId = tree.find(
+      (comp) => comp.id === componentParentId,
+    )?.parentId;
   }
   return parentCount;
-}
+};
 
 export function getProjected(
   items: ComponentTree,
   activeId: string,
   overId: string,
   dragOffset: number,
-  indentationWidth: number
+  indentationWidth: number,
 ) {
-  const overItemIndex = items.findIndex(({id}) => id === overId);
-  const activeItemIndex = items.findIndex(({id}) => id === activeId);
+  const overItemIndex = items.findIndex(({ id }) => id === overId);
+  const activeItemIndex = items.findIndex(({ id }) => id === activeId);
   const activeItemDepth = getComponentDepth(items, activeId);
   const newItems = arrayMove(items, activeItemIndex, overItemIndex);
   const previousItem = newItems[overItemIndex - 1];
@@ -41,7 +53,7 @@ export function getProjected(
     depth = minDepth;
   }
 
-  return {depth, maxDepth, minDepth, parentId: getParentId()};
+  return { depth, maxDepth, minDepth, parentId: getParentId() };
 
   function getParentId() {
     if (depth === 0 || !previousItem) {
@@ -65,7 +77,10 @@ export function getProjected(
   }
 }
 
-export const getOrderedList = (treeData: ComponentTree, rootComponent: ComponentData ) => {
+export const getOrderedList = (
+  treeData: ComponentTree,
+  rootComponent: ComponentData,
+) => {
   let newTreeData: ComponentTree = [];
   newTreeData.push(rootComponent);
   const children = getComponentChildren(treeData, rootComponent.id);
@@ -78,15 +93,18 @@ export const getOrderedList = (treeData: ComponentTree, rootComponent: Component
   });
 
   return newTreeData;
-}
+};
 
-export const deleteComponentWithChildren = (treeData: ComponentTree, componentId: string) => {
+export const deleteComponentWithChildren = (
+  treeData: ComponentTree,
+  componentId: string,
+) => {
   const componentChildren = getComponentChildren(treeData, componentId);
   if (componentChildren.length === 0) {
-    return treeData.filter(comp => comp.id !== componentId);
+    return treeData.filter((comp) => comp.id !== componentId);
   }
   componentChildren.forEach((child) => {
     treeData = deleteComponentWithChildren(treeData, child.id);
   });
-  return treeData.filter(comp => comp.id !== componentId);
-}
+  return treeData.filter((comp) => comp.id !== componentId);
+};

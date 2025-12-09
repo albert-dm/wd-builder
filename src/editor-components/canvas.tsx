@@ -1,10 +1,9 @@
 // import "./styles.scss";
 import React from "react";
-
-import { Toolbar } from "./toolbar";
-import { CanvasComponentList, ComponentTree } from "../types/component";
+import type { CanvasComponentList, ComponentTree } from "../types/component";
 import style from "./canvas.module.css";
 import { PreviewArea } from "./previewArea";
+import { Toolbar } from "./toolbar";
 
 interface CanvasProps {
   tree: ComponentTree;
@@ -21,10 +20,20 @@ export const Canvas: React.FC<CanvasProps> = ({
   const [showToolbar, setShowToolbar] = showToolbarState;
   return (
     <section className={style.canvasWrapper}>
-      {
-        showToolbar && <Toolbar components={components} hideToolbar={() => setShowToolbar(false)} tree={tree} setTree={setTreeData}/>
-      }
-      <PreviewArea tree={tree} setTreeData={setTreeData} components={components} showToolbarState={showToolbarState}/>
+      {showToolbar && (
+        <Toolbar
+          components={components}
+          hideToolbar={() => setShowToolbar(false)}
+          tree={tree}
+          setTree={setTreeData}
+        />
+      )}
+      <PreviewArea
+        tree={tree}
+        setTreeData={setTreeData}
+        components={components}
+        showToolbarState={showToolbarState}
+      />
     </section>
   );
 };

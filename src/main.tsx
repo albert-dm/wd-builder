@@ -1,8 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
-
 import { Editor } from "./editor";
-import { ComponentTree } from "./types/component";
+import type { ComponentTree } from "./types/component";
 
 const initialTree: ComponentTree = [
   {
@@ -138,7 +135,8 @@ const initialTree: ComponentTree = [
   },
 ];
 
-import { createRoot } from 'react-dom/client';
-const container = document.getElementById('app');
+import { createRoot } from "react-dom/client";
+
+const container = document.getElementById("app");
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(<Editor initialTree={initialTree} />);

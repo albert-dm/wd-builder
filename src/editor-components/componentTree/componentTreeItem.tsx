@@ -1,13 +1,14 @@
-import React, { useMemo } from "react";
-import { ComponentData } from "../../types/component";
 import { useSortable } from "@dnd-kit/sortable";
 import {
-  MinusCircledIcon,
-  PlusCircledIcon,
-  Pencil2Icon,
   DotFilledIcon,
+  MinusCircledIcon,
+  Pencil2Icon,
+  PlusCircledIcon,
   TrashIcon,
 } from "@radix-ui/react-icons";
+import type React from "react";
+import { useMemo } from "react";
+import type { ComponentData } from "../../types/component";
 import style from "./componentTreeItem.module.css";
 
 const itemIcons = {
@@ -38,7 +39,7 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
   disabled,
   selectComponent,
   deleteComponent,
-  toggleCollapseComponent
+  toggleCollapseComponent,
 }) => {
   const { label, id } = component;
   const {
@@ -47,11 +48,7 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
     setNodeRef: setSortableRef,
     isDragging,
     transform,
-    // isOver,
     transition,
-    // active,
-
-
   } = useSortable({ id });
 
   const isRoot = useMemo(() => !component.parentId, [component.parentId]);
@@ -65,29 +62,51 @@ export const ComponentTreeItem: React.FC<ComponentTreeItemProps> = ({
     marginLeft: `${depth * 10}px`,
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      selectComponent();
+    }
+  };
+
   return (
-    <div ref={setSortableRef} >
-      <div onClick={selectComponent} style={itemStyle} className={style.treeItemWrapper} data-dragging={isDragging}>
-        <section className={style.treeItemSection} data-selected={selected} data-disabled={disabled}>
+    <div ref={setSortableRef}>
+      <button
+        type="button"
+        onClick={selectComponent}
+        onKeyDown={handleKeyDown}
+        style={itemStyle}
+        className={style.treeItemWrapper}
+        data-dragging={isDragging}
+      >
+        <section
+          className={style.treeItemSection}
+          data-selected={selected}
+          data-disabled={disabled}
+        >
           <button
+            type="button"
             onClick={hasChildren ? toggleCollapseComponent : undefined}
           >
             {hasChildren
-              ? collapsed ? itemIcons.closed : itemIcons.open
+              ? collapsed
+                ? itemIcons.closed
+                : itemIcons.open
               : itemIcons.noChildren}
           </button>
 
           <header {...listeners} {...attributes} style={{ flex: 1 }}>
             {label}
           </header>
-          <button onClick={() => editComponent(id)}>
+          <button type="button" onClick={() => editComponent(id)}>
             <Pencil2Icon width={18} height={18} />
           </button>
-          {!isRoot && <button onClick={() => deleteComponent()}>
-            <TrashIcon width={18} height={18} />
-          </button>}
+          {!isRoot && (
+            <button type="button" onClick={() => deleteComponent()}>
+              <TrashIcon width={18} height={18} />
+            </button>
+          )}
         </section>
-      </div>
+      </button>
     </div>
   );
 };
