@@ -1,6 +1,7 @@
 {
   "name": "@webdrops/wd-builder",
   "version": "0.2.0",
+  "type": "module",
   "description": "Dynamic page builder using tree based page organization",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

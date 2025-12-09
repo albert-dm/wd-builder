@@ -32,7 +32,7 @@ export const Row = ({
   // TODO: geração do estilo dessa forma nao tá funcionando
   const verticalAlignmentClass = style[`row-vertical-${verticalAlignment}`];
   const horizontalAlignmentClass =
-    style[`row-horizontal-${horizontalAlignment}}`];
+    style[`row-horizontal-${horizontalAlignment}`];
   return (
     <div
       className={clsx({
@@ -54,7 +54,7 @@ Row.defaultProps = {
   verticalAlignment: "top",
   horizontalAlignment: "left",
   gap: 1,
-  pageHeight: false,
+  fullHeight: false,
 };
 
 Row.zodSchema = RowZodSchema;
