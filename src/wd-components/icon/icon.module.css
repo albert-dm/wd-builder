@@ -1,3 +1,11 @@
-.icon svg{
-  fill: var(--color-text);
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
 }

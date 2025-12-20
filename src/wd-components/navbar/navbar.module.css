@@ -1,0 +1,18 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar a {
+  color: var(--wd-text-color);
+  margin-right: 20px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover {
+  cursor: pointer;
+  color: var(--wd-accent);
+}

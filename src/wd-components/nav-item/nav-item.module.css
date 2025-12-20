@@ -1,0 +1,26 @@
+.navItem {
+  padding: 4px 36px;
+  color: var(--wd-text-color);
+  text-decoration: none;
+  padding-right: 0px;
+  width: 275px;
+  font-size: 1.2rem;
+  display: block;
+}
+
+.navItem::before {
+  content: '|';
+  margin-right: 8px;
+  color: var(--wd-accent);
+  visibility: hidden;
+  font-size: 1.5rem;
+}
+
+.navItem:hover::before,
+.active::before {
+  visibility: visible;
+}
+
+.navItem:hover {
+  color: var(--wd-accent);
+}

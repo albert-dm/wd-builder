@@ -1,0 +1,18 @@
+.sideBar {
+  padding-block: 2rem;
+  padding-top: 20vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.sideBar::after {
+  content: '';
+  width: 2px;
+  height: 15%;
+  background: var(--wd-text-color);
+  position: absolute;
+  top: 42.5%;
+  right: 0;
+}

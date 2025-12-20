@@ -1,0 +1,55 @@
+.input {
+  border: 0;
+  padding: 0;
+  outline: 0;
+  padding-bottom: 4px;
+  background-color: var(--wd-background-color);
+  font-size: 18px;
+  border-bottom: solid 1px var(--wd-accent-dark);
+  width: 100%;
+  color: var(--wd-text-color);
+}
+
+.input::placeholder {
+  color: var(--wd-accent-dark);
+}
+
+.input:focus,
+.input:active {
+  border-bottom: solid 2px var(--wd-accent);
+}
+
+.input.hasIconLeft {
+  padding-left: 34px;
+}
+
+.input.hasIconRight {
+  padding-right: 34px;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.inputWrapper svg {
+  font-size: 24px;
+  fill: var(--wd-accent-dark);
+}
+
+.inputWrapper .input:focus ~ i svg,
+.inputWrapper .input:active ~ i svg {
+  fill: var(--wd-accent);
+}
+
+.iconLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.iconRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+}

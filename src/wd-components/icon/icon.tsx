@@ -2,11 +2,31 @@ import type { FC } from "react";
 import { z } from "zod";
 import type { ExtendedComponent } from "../../types/component";
 import style from "./icon.module.css";
-import { MenuIconSVG } from "./icons";
+import {
+  DropIconSVG,
+  FigmaIconSVG,
+  GithubIconSVG,
+  LinkedinIconSVG,
+  MenuIconSVG,
+  MoonIconSVG,
+  PictureIconSVG,
+  SunIconSVG,
+  WdIconSVG,
+} from "./icons";
 
 const IconMap: Record<string, FC> = {
   MenuIconSVG,
+  GithubIconSVG,
+  LinkedinIconSVG,
+  FigmaIconSVG,
+  DropIconSVG,
+  MoonIconSVG,
+  SunIconSVG,
+  WdIconSVG,
+  PictureIconSVG,
 };
+
+export type IconName = keyof typeof IconMap;
 
 const iconNames = Object.keys(IconMap);
 
