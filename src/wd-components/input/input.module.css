@@ -37,8 +37,8 @@
   fill: var(--wd-accent-dark);
 }
 
-.inputWrapper .input:focus ~ i svg,
-.inputWrapper .input:active ~ i svg {
+.inputWrapper .input:focus~i svg,
+.inputWrapper .input:active~i svg {
   fill: var(--wd-accent);
 }
 

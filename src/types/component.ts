@@ -1,5 +1,4 @@
 import type React from "react";
-import type { ReactNode } from "react";
 import type { ZodObject } from "zod";
 
 export type ComponentData = {
@@ -16,12 +15,8 @@ export type ComponentData = {
 
 export type ComponentTree = ComponentData[];
 
-export type ExtendedComponent = (
-  | React.FC<Record<string, unknown>>
-  | ReactNode
-  | Element
-  | React.Component
-) & {
+// biome-ignore lint/suspicious/noExplicitAny: ExtendedComponent needs to accept any props shape
+export type ExtendedComponent<P = any> = React.FC<P> & {
   defaultProps?: ComponentData["data"]["props"];
   // biome-ignore lint/suspicious/noExplicitAny: ZodObject requires any for generic schema types
   zodSchema?: ZodObject<any>;

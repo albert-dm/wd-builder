@@ -5,7 +5,7 @@ import { Icon, type IconName } from "../icon";
 import style from "./input.module.css";
 
 const InputZodSchema = z.object({
-  name: z.string(),
+  name: z.string().optional(),
   value: z.string().optional(),
   placeholder: z.string().optional(),
   type: z
@@ -19,9 +19,9 @@ const InputZodSchema = z.object({
 type InputProps = z.infer<typeof InputZodSchema>;
 
 export const Input: ExtendedComponent = ({
-  name,
+  name = "input",
   value,
-  placeholder,
+  placeholder = "",
   type = "text",
   iconLeft,
   iconRight,

@@ -90,7 +90,9 @@ export const EditionModal = ({
         />
         <BasicPropEditor
           value={newProps}
-          onChange={setNewProps}
+          onChange={(value) =>
+            setNewProps(value as { [prop: string]: unknown })
+          }
           error={error}
           setError={setError}
         />
