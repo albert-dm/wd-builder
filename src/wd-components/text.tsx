@@ -1,6 +1,6 @@
 interface TextProps {
   value: string;
-  type: "h1" | "h2" | "h3" | "p";
+  type: "h1" | "h2" | "h3" | "h4" | "p" | "span";
 }
 
 export const Text = ({ value, type }: TextProps) => {

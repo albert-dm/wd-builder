@@ -264,7 +264,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "DropIconSVG",
+        icon: "DropIconSVG",
       },
     },
     parentId: "feature-1",
@@ -301,7 +301,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "FigmaIconSVG",
+        icon: "FigmaIconSVG",
       },
     },
     parentId: "feature-2",
@@ -338,7 +338,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "GithubIconSVG",
+        icon: "GithubIconSVG",
       },
     },
     parentId: "feature-3",
@@ -663,7 +663,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "MenuIconSVG",
+        icon: "MenuIconSVG",
       },
     },
     parentId: "icons-row",
@@ -676,7 +676,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "GithubIconSVG",
+        icon: "GithubIconSVG",
       },
     },
     parentId: "icons-row",
@@ -689,7 +689,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "LinkedinIconSVG",
+        icon: "LinkedinIconSVG",
       },
     },
     parentId: "icons-row",
@@ -702,7 +702,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "FigmaIconSVG",
+        icon: "FigmaIconSVG",
       },
     },
     parentId: "icons-row",
@@ -715,7 +715,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "DropIconSVG",
+        icon: "DropIconSVG",
       },
     },
     parentId: "icons-row",
@@ -728,7 +728,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "MoonIconSVG",
+        icon: "MoonIconSVG",
       },
     },
     parentId: "icons-row",
@@ -741,7 +741,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "SunIconSVG",
+        icon: "SunIconSVG",
       },
     },
     parentId: "icons-row",
@@ -754,7 +754,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "WDIconSVG",
+        icon: "WdIconSVG",
       },
     },
     parentId: "icons-row",
@@ -767,7 +767,7 @@ const initialTree: ComponentTree = [
       componentCollection: "WdComponents",
       componentName: "Icon",
       props: {
-        iconName: "PictureIconSVG",
+        icon: "PictureIconSVG",
       },
     },
     parentId: "icons-row",

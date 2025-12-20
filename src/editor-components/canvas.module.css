@@ -1,12 +1,13 @@
 .canvasWrapper {
-  position: relative;
+  display: flex;
+  flex-direction: row;
   width: 100dvw;
-  height: 100%;
+  height: 100dvh;
   overflow: hidden;
 }
 
 .canvas {
-  width: 100%;
+  flex: 1;
   height: 100%;
+  overflow: auto;
 }
-

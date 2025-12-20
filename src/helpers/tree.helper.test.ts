@@ -2,9 +2,11 @@ import { describe, expect, test } from "vitest";
 import type { ComponentData, ComponentTree } from "../types/component";
 import {
   deleteComponentWithChildren,
+  flatTreeToNested,
   getComponentChildren,
   getComponentDepth,
   getOrderedList,
+  nestedTreeToFlat,
 } from "./tree.helper";
 
 const tree: ComponentTree = [
@@ -157,6 +159,108 @@ describe("Tree Helper", () => {
       expect(result).toHaveLength(4);
       expect(result.find((c) => c.id === "3")).toBeDefined();
       expect(result.find((c) => c.id === "4")).toBeDefined();
+    });
+  });
+
+  describe("flatTreeToNested", () => {
+    test("should convert flat tree to nested structure", () => {
+      const nested = flatTreeToNested(tree);
+
+      expect(nested).toHaveLength(1);
+      expect(nested[0].id).toBe("0");
+      expect(nested[0].children).toHaveLength(1);
+      expect(nested[0].children[0].id).toBe("1");
+      expect(nested[0].children[0].children).toHaveLength(3);
+    });
+
+    test("should preserve component data in nested items", () => {
+      const nested = flatTreeToNested(tree);
+
+      expect(nested[0].label).toBe("Layout da Pagina");
+      expect(nested[0].data.componentName).toBe("Section");
+      expect(nested[0].droppable).toBe(true);
+    });
+
+    test("should handle empty tree", () => {
+      const nested = flatTreeToNested([]);
+
+      expect(nested).toHaveLength(0);
+    });
+
+    test("should handle multiple root items", () => {
+      const multiRootTree: ComponentTree = [
+        {
+          id: "root1",
+          label: "Root 1",
+          droppable: true,
+          data: { componentCollection: "Test", componentName: "A" },
+        },
+        {
+          id: "root2",
+          label: "Root 2",
+          droppable: true,
+          data: { componentCollection: "Test", componentName: "B" },
+        },
+      ];
+
+      const nested = flatTreeToNested(multiRootTree);
+
+      expect(nested).toHaveLength(2);
+      expect(nested[0].id).toBe("root1");
+      expect(nested[1].id).toBe("root2");
+    });
+  });
+
+  describe("nestedTreeToFlat", () => {
+    test("should convert nested tree back to flat structure", () => {
+      const nested = flatTreeToNested(tree);
+      const flat = nestedTreeToFlat(nested);
+
+      expect(flat).toHaveLength(5);
+    });
+
+    test("should preserve parentId relationships", () => {
+      const nested = flatTreeToNested(tree);
+      const flat = nestedTreeToFlat(nested);
+
+      const stackComponent = flat.find((c) => c.id === "1");
+      expect(stackComponent?.parentId).toBe("0");
+
+      const buttonComponent = flat.find((c) => c.id === "2");
+      expect(buttonComponent?.parentId).toBe("1");
+    });
+
+    test("should not have parentId on root items", () => {
+      const nested = flatTreeToNested(tree);
+      const flat = nestedTreeToFlat(nested);
+
+      const rootComponent = flat.find((c) => c.id === "0");
+      expect(rootComponent?.parentId).toBeUndefined();
+    });
+
+    test("should preserve component data", () => {
+      const nested = flatTreeToNested(tree);
+      const flat = nestedTreeToFlat(nested);
+
+      const firstButton = flat.find((c) => c.id === "2");
+      expect(firstButton?.label).toBe("First Button");
+      expect(firstButton?.data.componentName).toBe("Button");
+      expect(firstButton?.data.props?.label).toBe("First Button");
+    });
+
+    test("roundtrip should preserve all data", () => {
+      const nested = flatTreeToNested(tree);
+      const flat = nestedTreeToFlat(nested);
+
+      // Check all original items exist
+      for (const originalItem of tree) {
+        const flatItem = flat.find((c) => c.id === originalItem.id);
+        expect(flatItem).toBeDefined();
+        expect(flatItem?.label).toBe(originalItem.label);
+        expect(flatItem?.droppable).toBe(originalItem.droppable);
+        expect(flatItem?.data).toEqual(originalItem.data);
+        expect(flatItem?.parentId).toBe(originalItem.parentId);
+      }
     });
   });
 });
