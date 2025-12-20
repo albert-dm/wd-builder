@@ -1,17 +1,17 @@
-import React, { useMemo, useState } from "react";
-import {
+import * as Portal from "@radix-ui/react-portal";
+import type React from "react";
+import { useMemo, useState } from "react";
+import type {
   CanvasComponentList,
   ComponentData,
   ComponentTree,
 } from "../../types/component";
-import { AddComponentMenu } from "../addComponentMenu";
-import { ComponentTreeDisplay } from "../componentTree/componentTreeDisplay";
-import { EditionModal } from "../componentEditionModal";
-import * as Portal from "@radix-ui/react-portal";
-
-import style from "./toolbar.module.css";
 import buttonStyle from "../../wd-components/button/button.module.css";
+import { AddComponentMenu } from "../addComponentMenu";
+import { EditionModal } from "../componentEditionModal";
+import { ComponentTreeDisplay } from "../componentTree/componentTreeDisplay";
 import { Handle } from "./handle";
+import style from "./toolbar.module.css";
 
 interface ToolbarProps {
   components: CanvasComponentList;
@@ -26,7 +26,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   tree,
   setTree,
   className,
-  hideToolbar
+  hideToolbar,
 }) => {
   const [selectedComponentId, setSelectedComponentId] = useState<string>("0");
   const [showEditionModal, setShowEditionModal] = useState(false);
@@ -75,6 +75,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Handle setPosition={(left, top) => setPosition({ left, top })} />
         <AddComponentMenu components={components} onAdd={handleComponentAdd} />
         <button
+          type="button"
           className={buttonStyle.buttonWrapper}
           name="export-tree"
           onClick={() => console.log(tree)}
@@ -82,8 +83,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           Export Tree
         </button>
         <button
+          type="button"
           className={buttonStyle.buttonWrapper}
-          name="export-tree"
+          name="close-toolbar"
           onClick={() => hideToolbar()}
         >
           X
@@ -99,13 +101,15 @@ export const Toolbar: React.FC<ToolbarProps> = ({
           }}
         />
       </div>
-      {showEditionModal && <EditionModal
-        componentData={selectedComponentData!}
-        componentSchema={selectedComponentMeta?.zodSchema}
-        open={showEditionModal}
-        onClose={() => setShowEditionModal(false)}
-        setComponent={handleChangeComponent}
-      />}
+      {showEditionModal && selectedComponentData && (
+        <EditionModal
+          componentData={selectedComponentData}
+          componentSchema={selectedComponentMeta?.zodSchema}
+          open={showEditionModal}
+          onClose={() => setShowEditionModal(false)}
+          setComponent={handleChangeComponent}
+        />
+      )}
     </Portal.Root>
   );
 };

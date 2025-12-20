@@ -1,6 +1,7 @@
 .previewArea {
-  width: 100%;
+  flex: 1;
   height: 100%;
+  overflow: hidden;
 }
 
 .renderPreview {
@@ -11,33 +12,46 @@
 }
 
 .tabWrapper {
-  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   height: 100dvh;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .tabItems {
   display: flex;
-  flex-direction: column;
-  position: fixed;
-  left: 0;
-  top: 30%;
-  z-index: 10;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--wd-light-grey, #f1f1f1);
+  border-bottom: 1px solid var(--wd-grey, #aab4ca);
 }
 
 .tabItems button {
   display: flex;
   flex-direction: row;
-  justify-items: flex-start;
-  width: fit-content;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: transparent;
   cursor: pointer;
+  color: var(--wd-text-color, #000);
+  transition: background-color 0.15s ease;
 }
 
-.tabItems button p{
-  display: none;
+.tabItems button:hover {
+  background-color: var(--wd-white, #fff);
 }
 
-.tabItems button:hover p{
-  display: inline-block;
+.tabItems button[data-state="active"] {
+  background-color: var(--wd-white, #fff);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.tabItems button p {
+  margin: 0;
+  font-size: 0.875rem;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 interface GridProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export const Grid = ({ children, fullWidth, columns }: GridProps) => {
       {children}
     </div>
   );
-}
+};
 
 Grid.defaultProps = {
   columns: 2,

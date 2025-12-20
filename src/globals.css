@@ -1,74 +1,227 @@
+/** CSS Reset **/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transition: none;
+  }
+}
+
+/** End of CSS Reset **/
+
 :root {
+  color-scheme: light dark;
+
+  /* Layout */
   --max-width: 1100px;
+  --navbar-height: 72px;
+
+  /* Typography */
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
+  /* Color Palette */
+  --wd-red: #be2d2d;
+  --wd-dark-red: #521414;
+  --wd-green: #008000;
+  --wd-dark-green: #003f00;
+  --wd-blue: #005480;
+  --wd-light-blue: #009cff;
+  --wd-dark-blue: #002539;
+  --wd-grey-blue: #87a1de;
+  --wd-black: #000000;
+  --wd-grey: #aab4ca;
+  --wd-light-grey: #f1f1f1;
+  --wd-white: #ffffff;
+
+  /* Legacy color aliases */
   --color-white: #F5F5F5;
   --color-black: #000000;
   --color-dark: #002539;
-
   --color-red: #FF0000;
   --color-green: #008000;
   --color-blue: #009CFF;
+
+  /* Semantic Colors */
+  --wd-accent: var(--wd-blue);
+  --wd-accent-dark: var(--wd-dark-blue);
+  --wd-accent-light: var(--wd-light-blue);
+
+  --wd-text-color: var(--wd-black);
+  --wd-background-color: var(--wd-white);
+
+  /* Legacy semantic aliases */
   --color-background: #F5F5F5;
-
-  --color-accent : var(--color-green);
-
+  --color-accent: var(--color-green);
   --color-text: var(--color-black);
+}
 
-  --navbar-height: 72px;
+/* Accent Color Modifiers */
+.accent-red {
+  --wd-accent: var(--wd-red);
+  --wd-accent-dark: var(--wd-dark-red);
+}
+
+.accent-blue {
+  --wd-accent: var(--wd-blue);
+  --wd-accent-dark: var(--wd-dark-blue);
+  --wd-accent-light: var(--wd-light-blue);
+}
+
+.accent-green {
+  --wd-accent: var(--wd-green);
+  --wd-accent-dark: var(--wd-dark-green);
 }
 
 *[data-elevation="1"] {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--color-dark);
-    --color-text: var(--color-white);
-  }
-} */
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 html,
 body {
+  height: 100%;
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--color-background);
-  color: var(--color-text);
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  text-align: left;
+  background-color: var(--wd-background-color);
+  color: var(--wd-text-color);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-mono);
+  line-height: 1.2;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2.25em;
+  font-weight: normal;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.75em;
+  font-weight: normal;
 }
 
 h3 {
-  font-size: 1.75rem;
+  font-size: 1.25em;
+  font-weight: bold;
 }
 
 h4 {
-  font-size: 1.5rem;
+  font-size: 1.25em;
+}
+
+small {
+  font-size: 0.75em;
+}
+
+strong,
+b {
+  font-weight: bold;
+}
+
+a {
+  color: var(--wd-accent);
+}
+
+a:hover {
+  color: var(--wd-accent-light);
+}
+
+li {
+  list-style-position: inside;
 }
 
 p {
-  font-size: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
-/* main {
-  margin-top: var(--navbar-height);
-} */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.sr-only {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  body {
+    font-size: 18px;
+  }
+}

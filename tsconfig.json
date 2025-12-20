@@ -3,13 +3,15 @@
     "declaration": true,
     "esModuleInterop": true,
     "isolatedModules": true,
-    "jsx": "react",
-    "module": "CommonJS",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "outDir": "./dist",
     "strict": true,
-    "target": "ES2016",
-    "types": ["vite/client"],
+    "target": "ES2020",
+    "types": ["vite/client", "vitest/globals"],
     "useDefineForClassFields": true,
+    "skipLibCheck": true
   },
   "include": [
     "src"

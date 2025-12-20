@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import style from "./toolbar.module.css";
 
 type HandleProps = {
@@ -6,28 +6,21 @@ type HandleProps = {
 };
 
 export const Handle = ({ setPosition }: HandleProps) => {
-  const handleRef = React.useRef<HTMLButtonElement>(null);
-  const [isDragging, setIsDragging] = React.useState(false);
+  const handleRef = useRef<HTMLButtonElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseDown = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = (
-    e: MouseEvent
-  ) => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
-  const handleMouseMove = (
-    e: MouseEvent
-  ) => {
-    if (isDragging) {
-      setPosition(e.clientX -70, e.clientY - 10);
-    }
-  };
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (isDragging) {
+        setPosition(e.clientX - 70, e.clientY - 10);
+      }
+    },
+    [isDragging, setPosition],
+  );
 
   useEffect(() => {
     if (isDragging) {
@@ -37,15 +30,16 @@ export const Handle = ({ setPosition }: HandleProps) => {
     return () => {
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mousemove", handleMouseMove);
-    }
-  }, [isDragging]);
+    };
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
     <button
+      type="button"
       className={style.handle}
       aria-label="handle"
       ref={handleRef}
-      onMouseDown={handleMouseDown}
+      onMouseDown={() => setIsDragging(true)}
     />
   );
 };

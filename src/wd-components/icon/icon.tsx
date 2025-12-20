@@ -1,10 +1,34 @@
-import React from 'react';
-import * as Icons from './icons';
-import style from './icon.module.css';
-import { z } from 'zod';
-import { ExtendedComponent } from '../../types/component';
+import type { FC } from "react";
+import { z } from "zod";
+import type { ExtendedComponent } from "../../types/component";
+import style from "./icon.module.css";
+import {
+  DropIconSVG,
+  FigmaIconSVG,
+  GithubIconSVG,
+  LinkedinIconSVG,
+  MenuIconSVG,
+  MoonIconSVG,
+  PictureIconSVG,
+  SunIconSVG,
+  WdIconSVG,
+} from "./icons";
 
-const iconNames = [...Object.keys(Icons)] as const;
+const IconMap: Record<string, FC> = {
+  MenuIconSVG,
+  GithubIconSVG,
+  LinkedinIconSVG,
+  FigmaIconSVG,
+  DropIconSVG,
+  MoonIconSVG,
+  SunIconSVG,
+  WdIconSVG,
+  PictureIconSVG,
+};
+
+export type IconName = keyof typeof IconMap;
+
+const iconNames = Object.keys(IconMap);
 
 const IconZodSchema = z.object({
   className: z.string().optional(),
@@ -14,15 +38,20 @@ const IconZodSchema = z.object({
 type IconProps = z.infer<typeof IconZodSchema>;
 
 export const Icon: ExtendedComponent = ({ className, icon }: IconProps) => {
-  const IconSvgComponent = Icons[icon as keyof typeof Icons];
-  return <i className={`${className} ${style.icon}`}>
-    <IconSvgComponent />
-  </i>
+  const IconSvgComponent = IconMap[icon];
+  if (!IconSvgComponent) {
+    return null;
+  }
+  return (
+    <i className={`${className} ${style.icon}`}>
+      <IconSvgComponent />
+    </i>
+  );
 };
 
 Icon.zodSchema = IconZodSchema;
 
 Icon.defaultProps = {
-  className: '',
-  icon: 'MenuIconSVG'
+  className: "",
+  icon: "MenuIconSVG",
 } as IconProps;

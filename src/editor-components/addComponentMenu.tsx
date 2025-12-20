@@ -1,7 +1,7 @@
-import React from "react";
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import type React from "react";
 // import { PlusIcon } from "@radix-ui/react-icons";
-import { CanvasComponentList, ComponentData } from "../types/component";
+import type { CanvasComponentList, ComponentData } from "../types/component";
 import buttonStyle from "../wd-components/button/button.module.css";
 
 interface AddComponentMenuProps {
@@ -10,47 +10,46 @@ interface AddComponentMenuProps {
 }
 
 const menuStyles = {
-  backgroundColor: 'white',
-  boxShadow: '0 0 10px rgba(0,0,0,.1)',
-  color: 'black',
+  backgroundColor: "white",
+  boxShadow: "0 0 10px rgba(0,0,0,.1)",
+  color: "black",
 };
 
 export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
   components,
   onAdd,
 }) => {
-  const handleComponentAdd = (componentCollection: string, componentName: string) => {
+  const handleComponentAdd = (
+    componentCollection: string,
+    componentName: string,
+  ) => {
     const component = components[componentCollection][componentName];
     const defaultComponentData: ComponentData = {
       id: Math.random().toString(),
       droppable: true,
-      label: 'New ' + componentName,
-      parentId: '0',
+      label: `New ${componentName}`,
+      parentId: "0",
       data: {
         componentName,
         componentCollection,
         props: component?.defaultProps || {},
       },
-    }
-
+    };
 
     onAdd(defaultComponentData);
-  }
+  };
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className={buttonStyle.buttonWrapper}>
+        <button type="button" className={buttonStyle.buttonWrapper}>
           Add Component {/* <PlusIcon /> */}
         </button>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <DropdownMenu.Content
-          style={menuStyles}
-          sideOffset={5}
-        >
+        <DropdownMenu.Content style={menuStyles} sideOffset={5}>
           {Object.keys(components).map((componentCollection) => (
-            <>
+            <div key={componentCollection}>
               <DropdownMenu.Sub>
                 <DropdownMenu.SubTrigger className={buttonStyle.buttonWrapper}>
                   {componentCollection}
@@ -63,12 +62,15 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
                           key={componentName}
                           className={buttonStyle.buttonWrapper}
                           onClick={() =>
-                            handleComponentAdd(componentCollection, componentName)
+                            handleComponentAdd(
+                              componentCollection,
+                              componentName,
+                            )
                           }
                         >
                           {componentName}
                         </DropdownMenu.Item>
-                      )
+                      ),
                     )}
                   </DropdownMenu.SubContent>
                 </DropdownMenu.Portal>
@@ -76,7 +78,7 @@ export const AddComponentMenu: React.FC<AddComponentMenuProps> = ({
 
               <DropdownMenu.Separator />
               <DropdownMenu.Arrow />
-            </>
+            </div>
           ))}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

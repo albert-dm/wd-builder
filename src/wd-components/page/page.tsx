@@ -1,7 +1,5 @@
-import React from "react";
-import { ExtendedComponent } from "../../types/component";
 import { z } from "zod";
-
+import type { ExtendedComponent } from "../../types/component";
 
 const PageZodSchema = z.object({
   children: z.any(),
@@ -11,15 +9,11 @@ const PageZodSchema = z.object({
 export type PageProps = z.infer<typeof PageZodSchema>;
 
 export const Page: ExtendedComponent = ({ children, className }: PageProps) => {
-  return (
-    <main className={className}>
-      {children}
-    </main>
-  );
-}
+  return <main className={className}>{children}</main>;
+};
 
 Page.defaultProps = {
   className: "",
 };
 
-Page.zodSchema = PageZodSchema
+Page.zodSchema = PageZodSchema;

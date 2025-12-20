@@ -1,23 +1,23 @@
-import React, { useMemo } from "react";
-import { ComponentData, ComponentTree } from "../../types/component.js";
-import { ComponentTreeItem } from "./componentTreeItem";
 import {
   DndContext,
-  DragEndEvent,
-  DragStartEvent,
+  type DragEndEvent,
+  type DragStartEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { ComponentTreeRoot } from "./componentTreeRoot.js";
+import { useMemo, useState } from "react";
 import {
   deleteComponentWithChildren,
   getComponentChildren,
   getComponentDepth,
   getOrderedList,
 } from "../../helpers/tree.helper.js";
+import type { ComponentData, ComponentTree } from "../../types/component.js";
+import { ComponentTreeItem } from "./componentTreeItem";
+import { ComponentTreeRoot } from "./componentTreeRoot.js";
 
 interface ComponentTreeDisplayProps {
   treeData: ComponentTree;
@@ -34,42 +34,39 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
   setSelectedComponentId,
   editComponent,
 }) => {
-  const [collapsedComponents, setCollapsedComponents] = React.useState<
-    Set<String>
-  >(new Set());
-  const [disabledComponents, setDisabledComponents] = React.useState<
-    Set<String>
-  >(new Set());
-  const rootComponent = useMemo(() => treeData.find((comp) => !comp.parentId), [treeData]);
+  const [collapsedComponents, setCollapsedComponents] = useState<Set<string>>(
+    new Set(),
+  );
+  const [disabledComponents, setDisabledComponents] = useState<Set<string>>(
+    new Set(),
+  );
 
-  if (!rootComponent) {
-    return <strong>Invalid Tree</strong>;
-  }
+  const rootComponent = useMemo(
+    () => treeData.find((comp) => !comp.parentId),
+    [treeData],
+  );
 
   const depthMap = useMemo(() => {
-    return treeData.reduce<{ [compId: string]: number }>((acc, comp) => {
-      const newAcc = { ...acc };
-      newAcc[comp.id] = getComponentDepth(treeData, comp.id);
-      return newAcc;
-    }, {});
+    const result: { [compId: string]: number } = {};
+    for (const comp of treeData) {
+      result[comp.id] = getComponentDepth(treeData, comp.id);
+    }
+    return result;
   }, [treeData]);
 
   const childrenMap = useMemo(() => {
-    return treeData.reduce<{ [compId: string]: ComponentData[] }>(
-      (acc, comp) => {
-        const newAcc = { ...acc };
-        newAcc[comp.id] = getComponentChildren(treeData, comp.id);
-        return newAcc;
-      },
-      {}
-    );
+    const result: { [compId: string]: ComponentData[] } = {};
+    for (const comp of treeData) {
+      result[comp.id] = getComponentChildren(treeData, comp.id);
+    }
+    return result;
   }, [treeData]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 
   const handleDeleteComponent = (id: string) => {
@@ -78,22 +75,32 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
   };
 
   const handleToggleCollapseComponent = (id: string) => {
-    let allDescendants = new Set<String>();
+    let allDescendants = new Set<string>();
     let componentChildren = getComponentChildren(treeData, id);
     while (componentChildren.length > 0) {
-      allDescendants = new Set([...allDescendants, ...componentChildren.map((comp) => comp.parentId!)]);
-      componentChildren = componentChildren.reduce<ComponentData[]>((acc, comp) => {
-        return [...acc, ...getComponentChildren(treeData, comp.id)];
-      }, []);
+      allDescendants = new Set([
+        ...allDescendants,
+        ...componentChildren
+          .map((comp) => comp.parentId)
+          .filter((parentId): parentId is string => parentId !== undefined),
+      ]);
+      componentChildren = componentChildren.flatMap((comp) =>
+        getComponentChildren(treeData, comp.id),
+      );
     }
 
     if (collapsedComponents.has(id)) {
-
       setCollapsedComponents(
-        new Set([...collapsedComponents].filter((compId) => !allDescendants.has(compId)))
+        new Set(
+          [...collapsedComponents].filter(
+            (compId) => !allDescendants.has(compId),
+          ),
+        ),
       );
     } else {
-      setCollapsedComponents(new Set([...collapsedComponents, ...allDescendants]));
+      setCollapsedComponents(
+        new Set([...collapsedComponents, ...allDescendants]),
+      );
     }
   };
 
@@ -102,7 +109,9 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
 
     const activeComponent = treeData.find((comp) => comp.id === active.id);
 
-    const [_, ...allDescendants] = getOrderedList(treeData, activeComponent!);
+    if (!activeComponent) return;
+
+    const [, ...allDescendants] = getOrderedList(treeData, activeComponent);
 
     const allDescendantIds = allDescendants.map((comp) => comp.id);
 
@@ -111,6 +120,8 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over, delta } = event;
+
+    if (!rootComponent) return;
 
     if (over && active.id !== over.id) {
       const oldIndex = treeData.findIndex((comp) => comp.id === active.id);
@@ -127,53 +138,63 @@ export const ComponentTreeDisplay: React.FC<ComponentTreeDisplayProps> = ({
       }
 
       const newTreeData = arrayMove(treeData, oldIndex, overIndex + 1);
-      const orderedTreeData = getOrderedList(newTreeData.map((comp) => {
-        if (comp.id === active.id) {
-          return {
-            ...comp,
-            parentId: newParentId,
-          };
-        }
-        return comp;
-      }), rootComponent);
+      const orderedTreeData = getOrderedList(
+        newTreeData.map((comp) => {
+          if (comp.id === active.id) {
+            return {
+              ...comp,
+              parentId: newParentId,
+            };
+          }
+          return comp;
+        }),
+        rootComponent,
+      );
 
       setTreeData(orderedTreeData);
-
     }
     setDisabledComponents(new Set());
   };
 
+  if (!rootComponent) {
+    return <strong>Invalid Tree</strong>;
+  }
+
   return (
-    <>
-      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
-        <ComponentTreeRoot tree={treeData}>
-          {treeData.map((comp) => {
-            const isCollapsed = comp.parentId ? collapsedComponents.has(comp.parentId) : false;
-            if (isCollapsed) {
-              return null;
-            }
-            return (
-              <ComponentTreeItem
-                key={comp.id}
-                component={comp}
-                editComponent={editComponent}
-                hasChildren={childrenMap[comp.id].length > 0}
-                depth={depthMap[comp.id]}
-                selected={selectedComponentId === comp.id}
-                selectComponent={() => setSelectedComponentId(comp.id)}
-                collapsed={collapsedComponents.has(comp.id)}
-                disabled={disabledComponents.has(comp.id)}
-                deleteComponent={() => {
-                  handleDeleteComponent(comp.id);
-                }}
-                toggleCollapseComponent={() => {
-                  handleToggleCollapseComponent(comp.id);
-                }}
-              />
-            );
-          })}
-        </ComponentTreeRoot>
-      </DndContext>
-    </>
+    <DndContext
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      sensors={sensors}
+    >
+      <ComponentTreeRoot tree={treeData}>
+        {treeData.map((comp) => {
+          const isCollapsed = comp.parentId
+            ? collapsedComponents.has(comp.parentId)
+            : false;
+          if (isCollapsed) {
+            return null;
+          }
+          return (
+            <ComponentTreeItem
+              key={comp.id}
+              component={comp}
+              editComponent={editComponent}
+              hasChildren={childrenMap[comp.id].length > 0}
+              depth={depthMap[comp.id]}
+              selected={selectedComponentId === comp.id}
+              selectComponent={() => setSelectedComponentId(comp.id)}
+              collapsed={collapsedComponents.has(comp.id)}
+              disabled={disabledComponents.has(comp.id)}
+              deleteComponent={() => {
+                handleDeleteComponent(comp.id);
+              }}
+              toggleCollapseComponent={() => {
+                handleToggleCollapseComponent(comp.id);
+              }}
+            />
+          );
+        })}
+      </ComponentTreeRoot>
+    </DndContext>
   );
 };
