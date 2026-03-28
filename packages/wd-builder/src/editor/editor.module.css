@@ -1,0 +1,7 @@
+.canvasWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+}

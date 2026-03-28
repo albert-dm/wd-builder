@@ -12,7 +12,6 @@ coverage
 npm-debug.log*
 
 # IDE
-.vscode
 .idea
 *.swp
 *.swo
@@ -29,3 +28,4 @@ Thumbs.db
 # Cache
 .cache
 *.tsbuildinfo
+.turbo

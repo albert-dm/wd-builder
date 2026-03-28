@@ -1,2 +1,2 @@
 npx biome check --write .
-npm run lint
+npx turbo lint
