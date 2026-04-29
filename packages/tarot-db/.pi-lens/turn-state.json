@@ -1,0 +1,67 @@
+{
+  "files": {
+    "vite.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 26
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:23:05.710Z"
+    },
+    "vitest.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 10
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:23:05.711Z"
+    },
+    "drizzle.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 10
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:29:52.840Z"
+    },
+    "src/index.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 2
+        }
+      ],
+      "importsChanged": false,
+      "lastEdit": "2026-04-28T02:23:05.712Z"
+    },
+    "src/schema.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 174
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T00:35:41.751Z"
+    },
+    "src/seed-cards.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 52
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T00:01:23.706Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-04-29T00:35:41.751Z"
+}

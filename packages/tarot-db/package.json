@@ -1,0 +1,38 @@
+{
+  "name": "@webdrops/tarot-db",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Webdrops tarot database package — Drizzle schema, migrations, and repository contracts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "build:watch": "vite build -w",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check src/",
+    "seed:cards": "npx tsx src/seed-cards.ts"
+  },
+  "dependencies": {
+    "@webdrops/auth-core": "workspace:*",
+    "@webdrops/payments-core": "workspace:*",
+    "@webdrops/tarot-core": "workspace:*",
+    "drizzle-orm": "^0.45.2",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@vitest/coverage-v8": "^4.1.5",
+    "drizzle-kit": "^0.31.10",
+    "postgres": "^3.4.9",
+    "typescript": "^5.1.3",
+    "vite": "^6.0.1",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^4.1.5"
+  },
+  "license": "ISC"
+}

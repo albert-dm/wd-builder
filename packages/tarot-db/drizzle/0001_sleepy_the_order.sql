@@ -1,0 +1,1 @@
+ALTER TYPE "public"."chat_role" ADD VALUE 'Tool';

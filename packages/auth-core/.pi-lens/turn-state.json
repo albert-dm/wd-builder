@@ -1,0 +1,37 @@
+{
+  "files": {
+    "vite.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 19
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:23:05.700Z"
+    },
+    "vitest.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 10
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:23:05.701Z"
+    },
+    "src/index.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 48
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:23:05.705Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-04-28T02:23:05.705Z"
+}

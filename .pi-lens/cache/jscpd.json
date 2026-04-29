@@ -1,0 +1,264 @@
+{
+  "success": true,
+  "clones": [
+    {
+      "fileA": "packages/wd-builder/src/editor/editor-sidebar/editorSidebar.tsx",
+      "startA": 209,
+      "fileB": "packages/wd-builder/src/editor/toolbar/toolbar.tsx",
+      "startB": 40,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/wd-builder/src/editor/editor-sidebar/editorSidebar.tsx",
+      "startA": 218,
+      "fileB": "packages/wd-builder/src/editor/toolbar/toolbar.tsx",
+      "startB": 49,
+      "lines": 17,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/routes/market.tsx",
+      "startA": 13,
+      "fileB": "apps/tarot-web/src/routes/wallet.tsx",
+      "startB": 10,
+      "lines": 33,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/routes/market.tsx",
+      "startA": 64,
+      "fileB": "apps/tarot-web/src/routes/wallet.tsx",
+      "startB": 70,
+      "lines": 14,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/routes/market.tsx",
+      "startA": 109,
+      "fileB": "apps/tarot-web/src/routes/wallet.tsx",
+      "startB": 97,
+      "lines": 17,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/routes/market.tsx",
+      "startA": 272,
+      "fileB": "apps/tarot-web/src/routes/wallet.tsx",
+      "startB": 201,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/routes/auth.callback.tsx",
+      "startA": 38,
+      "fileB": "apps/tarot-web/src/routes/index.tsx",
+      "startB": 43,
+      "lines": 8,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/tarot.ts",
+      "startA": 141,
+      "fileB": "apps/tarot-web/src/lib/tarot.ts",
+      "startB": 39,
+      "lines": 25,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/tarot.ts",
+      "startA": 213,
+      "fileB": "apps/tarot-web/src/lib/tarot.ts",
+      "startB": 39,
+      "lines": 15,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/tarot.ts",
+      "startA": 266,
+      "fileB": "apps/tarot-web/src/lib/tarot.ts",
+      "startB": 103,
+      "lines": 18,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "startA": 24,
+      "fileB": "apps/tarot-web/src/lib/time.ts",
+      "startB": 15,
+      "lines": 11,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "startA": 607,
+      "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "startB": 347,
+      "lines": 14,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/payments.ts",
+      "startA": 159,
+      "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "startB": 56,
+      "lines": 26,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/payments.ts",
+      "startA": 249,
+      "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "startB": 409,
+      "lines": 12,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/payments.ts",
+      "startA": 294,
+      "fileB": "apps/tarot-web/src/lib/payments.ts",
+      "startB": 206,
+      "lines": 13,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/payments.ts",
+      "startA": 405,
+      "fileB": "apps/tarot-web/src/lib/payments.ts",
+      "startB": 221,
+      "lines": 14,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/auth.ts",
+      "startA": 400,
+      "fileB": "apps/tarot-web/src/lib/auth.ts",
+      "startB": 361,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/agent.server.ts",
+      "startA": 202,
+      "fileB": "apps/tarot-web/src/lib/agent.server.ts",
+      "startB": 170,
+      "lines": 15,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/lib/agent.server.ts",
+      "startA": 570,
+      "fileB": "apps/tarot-web/src/lib/agent.server.ts",
+      "startB": 456,
+      "lines": 22,
+      "tokens": 0
+    },
+    {
+      "fileA": "apps/tarot-web/src/components/ChatMessage.tsx",
+      "startA": 13,
+      "fileB": "apps/tarot-web/src/routes/reading.tsx",
+      "startB": 40,
+      "lines": 15,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/src/schema.ts",
+      "startA": 109,
+      "fileB": "packages/tarot-db/src/schema.ts",
+      "startB": 63,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/src/schema.ts",
+      "startA": 175,
+      "fileB": "packages/tarot-db/src/schema.ts",
+      "startB": 132,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/src/schema.ts",
+      "startA": 240,
+      "fileB": "packages/tarot-db/src/schema.ts",
+      "startB": 63,
+      "lines": 8,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/src/schema.ts",
+      "startA": 240,
+      "fileB": "packages/tarot-db/src/schema.ts",
+      "startB": 132,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/src/schema.ts",
+      "startA": 299,
+      "fileB": "packages/tarot-db/src/schema.ts",
+      "startB": 192,
+      "lines": 10,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/wd-builder/vite.config.ts.timestamp-1773018788420-5c9da114625f9.mjs",
+      "startA": 5,
+      "fileB": "packages/wd-ui/vite.config.ts.timestamp-1773018788512-cb039ae5d13ce.mjs",
+      "startB": 5,
+      "lines": 15,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/wd-builder/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 18,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-db/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 15,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-core/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 14,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/tarot-ai/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 14,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/payments-core/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 18,
+      "tokens": 0
+    },
+    {
+      "fileA": "packages/auth-core/vite.config.ts",
+      "startA": 1,
+      "fileB": "packages/wd-ui/vite.config.ts",
+      "startB": 1,
+      "lines": 19,
+      "tokens": 0
+    }
+  ],
+  "duplicatedLines": 448,
+  "totalLines": 11637,
+  "percentage": 3.85
+}

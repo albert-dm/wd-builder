@@ -1,0 +1,11 @@
+{
+  "items": [
+    {
+      "type": "TODO",
+      "message": "geração do estilo dessa forma nao tá funcionando",
+      "file": "packages/wd-ui/src/components/row/row.tsx",
+      "line": 32,
+      "column": 5
+    }
+  ]
+}

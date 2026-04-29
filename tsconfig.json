@@ -13,7 +13,25 @@
       "path": "./packages/wd-builder"
     },
     {
+      "path": "./packages/auth-core"
+    },
+    {
+      "path": "./packages/payments-core"
+    },
+    {
+      "path": "./packages/tarot-core"
+    },
+    {
+      "path": "./packages/tarot-ai"
+    },
+    {
+      "path": "./packages/tarot-db"
+    },
+    {
       "path": "./apps/playground"
+    },
+    {
+      "path": "./apps/tarot-web"
     }
   ],
   "include": [],

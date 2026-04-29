@@ -1,0 +1,87 @@
+{
+  "files": {
+    "src/index.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 31
+        }
+      ],
+      "importsChanged": false,
+      "lastEdit": "2026-04-28T02:21:36.570Z"
+    },
+    "vite.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 23
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.571Z"
+    },
+    "vitest.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 20
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.572Z"
+    },
+    "src/schemas.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 58
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.573Z"
+    },
+    "src/tarot-deck.test.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 36
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.573Z"
+    },
+    "src/reading-session.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 37
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.574Z"
+    },
+    "src/reading-session.test.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 47
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.575Z"
+    },
+    "src/tarot-deck.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 157
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:21:36.575Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-04-28T02:21:36.575Z"
+}

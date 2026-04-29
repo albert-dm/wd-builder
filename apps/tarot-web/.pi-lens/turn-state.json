@@ -1,0 +1,321 @@
+{
+  "files": {
+    "src/router.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 67
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:37:31.833Z"
+    },
+    "vite.config.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 21
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:30:04.736Z"
+    },
+    "src/routes/index.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 110
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:35:47.926Z"
+    },
+    "src/routes/profile.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 208
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:36:19.755Z"
+    },
+    "src/routes/reading.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 301
+        },
+        {
+          "start": 316,
+          "end": 317
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T02:10:36.864Z"
+    },
+    "src/routes/__root.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 80
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T02:25:25.335Z"
+    },
+    "src/routes/market.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 292
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:36:41.242Z"
+    },
+    "src/routes/auth.callback.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 76
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:36:02.144Z"
+    },
+    "src/routes/wallet.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 254
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:36:53.653Z"
+    },
+    "src/lib/time.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 59
+        }
+      ],
+      "importsChanged": false,
+      "lastEdit": "2026-04-28T22:16:53.666Z"
+    },
+    "src/lib/db.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 40
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:47:51.848Z"
+    },
+    "src/lib/auth.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 406
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:48:03.121Z"
+    },
+    "src/lib/tarot.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 841
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T01:56:49.501Z"
+    },
+    "src/lib/payments.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 415
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:48:08.343Z"
+    },
+    "src/lib/agent.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 309
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T22:41:34.692Z"
+    },
+    "src/components/Navigation.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 68
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T01:16:53.539Z"
+    },
+    "src/components/ChatInput.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 63
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T01:17:10.349Z"
+    },
+    "src/components/ChatMessage.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 312
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T01:58:30.771Z"
+    },
+    "src/components/index.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 4
+        }
+      ],
+      "importsChanged": false,
+      "lastEdit": "2026-04-28T22:20:18.440Z"
+    },
+    "src/lib/webhooks.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 255
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T22:44:24.185Z"
+    },
+    "src/routes/api/webhooks/abacatepay.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 207
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T22:43:29.261Z"
+    },
+    "src/routes/api/webhooks/abacatepay.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 194
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T22:44:33.996Z"
+    },
+    "src/lib/guards.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 68
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:22:36.663Z"
+    },
+    "src/routes/api/webhooks/-abacatepay.ts": {
+      "modifiedRanges": [
+        {
+          "start": 12,
+          "end": 12
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:46:21.762Z"
+    },
+    "src/lib/webhooks.server.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 173
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:48:26.558Z"
+    },
+    "src/lib/db.server.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 42
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-28T23:47:05.876Z"
+    },
+    "src/lib/tarot-helpers.server.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 627
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T02:09:58.813Z"
+    },
+    "src/lib/agent.server.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 610
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T00:48:05.532Z"
+    },
+    "src/routes/api/tarot/stream.tsx": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 93
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T00:50:44.432Z"
+    },
+    "src/routes/api/tarot/stream.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 85
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T00:51:10.433Z"
+    },
+    "src/routes/api/webhooks/simulate.ts": {
+      "modifiedRanges": [
+        {
+          "start": 1,
+          "end": 34
+        }
+      ],
+      "importsChanged": true,
+      "lastEdit": "2026-04-29T02:17:37.973Z"
+    }
+  },
+  "turnCycles": 0,
+  "maxCycles": 3,
+  "lastUpdated": "2026-04-29T02:17:37.973Z"
+}

@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": ["vite/client", "node"],
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "baseUrl": ".",
+    "paths": {
+      "@webdrops/auth-core": ["../../packages/auth-core/dist/index.d.ts"],
+      "@webdrops/payments-core": ["../../packages/payments-core/dist/index.d.ts"],
+      "@webdrops/tarot-ai": ["../../packages/tarot-ai/dist/index.d.ts"],
+      "@webdrops/tarot-core": ["../../packages/tarot-core/dist/index.d.ts"],
+      "@webdrops/tarot-db": ["../../packages/tarot-db/dist/index.d.ts"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
