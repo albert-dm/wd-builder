@@ -181,7 +181,7 @@ a {
 .app-shell {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100dvh;
 }
 
 .entry-shell {
@@ -208,8 +208,6 @@ a {
     background: rgba(17, 17, 37, 0.8);
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 20px rgba(20, 184, 166, 0.15);
-    position: sticky;
-    top: 0;
     z-index: 100;
 }
 
@@ -326,6 +324,7 @@ a {
     width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .app-canvas-with-nav {
@@ -526,6 +525,7 @@ a {
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .chat-history {
@@ -534,6 +534,8 @@ a {
     overflow-y: auto;
     margin-bottom: var(--spacing-md);
     scroll-behavior: smooth;
+
+    overflow-x: hidden;
 }
 
 /* ========================================================================== */
@@ -888,7 +890,6 @@ a {
 /* Chat Input — Stitch Design                                                  */
 /* ========================================================================== */
 .chat-composer {
-    position: sticky;
     bottom: 2rem;
 }
 

@@ -302,7 +302,7 @@ function ReadingPage() {
             ))}
           </div>
 
-          <footer className="chat-composer ritual-composer">
+          <footer className="chat-composer ritual-composer glass-panel">
             {error && (
               <p className="error-text" role="alert">
                 {error}
