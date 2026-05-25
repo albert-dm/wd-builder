@@ -1,2 +1,0 @@
-npx biome check --write .
-npx turbo lint

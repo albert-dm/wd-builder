@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { BottomNav, TopBar } from "../components";
+import { TopBar } from "../components";
 
 export const Route = createFileRoute("/market")({
   component: MarketPage,

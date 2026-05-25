@@ -16,7 +16,7 @@ import {
   readings,
 } from "@webdrops/tarot-db";
 import { and, desc, eq } from "drizzle-orm";
-import { formatCardForTool, runChatTurn } from "./agent.server";
+import { formatCardForTool } from "./agent.server";
 import { getDb } from "./db.server";
 
 const SAO_PAULO_TZ = "America/Sao_Paulo";
@@ -27,14 +27,11 @@ export function nowSaoPauloRfc3339(): string {
     .replace(" ", "T")}-03:00`;
 }
 
-export function todaySaoPauloString(): string {
+function todaySaoPauloString(): string {
   return new Date().toLocaleDateString("sv-SE", { timeZone: SAO_PAULO_TZ });
 }
 
-export function isSameSaoPauloDay(
-  left: Date | null,
-  right: Date | null,
-): boolean {
+function isSameSaoPauloDay(left: Date | null, right: Date | null): boolean {
   if (!left || !right) return false;
   const leftStr = left.toLocaleDateString("sv-SE", { timeZone: SAO_PAULO_TZ });
   const rightStr = right.toLocaleDateString("sv-SE", {
@@ -43,13 +40,13 @@ export function isSameSaoPauloDay(
   return leftStr === rightStr;
 }
 
-export function drawRandomCard(): TarotCard {
+function drawRandomCard(): TarotCard {
   const deck = getAllTarotCards();
   const index = Math.floor(Math.random() * deck.length);
   return deck[index];
 }
 
-export function formatCurrencyCents(cents: number): string {
+function formatCurrencyCents(cents: number): string {
   return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
 }
 
@@ -106,7 +103,7 @@ export async function refreshDailyIfNeeded(
   return refreshed[0];
 }
 
-export async function getTodayEntitlement(userId: string) {
+async function getTodayEntitlement(userId: string) {
   const db = getDb();
   const today = todaySaoPauloString();
 
@@ -192,9 +189,7 @@ export interface DrawCardResult {
   carta: Record<string, unknown>;
 }
 
-export async function drawAvailableCard(
-  userId: string,
-): Promise<DrawCardResult> {
+async function drawAvailableCard(userId: string): Promise<DrawCardResult> {
   const db = getDb();
   let session = await getOrCreateSession(userId);
   session = await refreshDailyIfNeeded(session);
@@ -653,4 +648,4 @@ export function buildSessionResponse(
   };
 }
 
-export { getTarotCardById, formatCardForTool, runChatTurn };
+export { getTarotCardById };

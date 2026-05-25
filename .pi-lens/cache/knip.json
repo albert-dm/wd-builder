@@ -1,9 +1,337 @@
 {
-  "success": false,
-  "issues": [],
-  "unusedExports": [],
+  "success": true,
+  "issues": [
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-accordion",
+      "file": "packages/wd-builder/package.json",
+      "line": 27
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-collapsible",
+      "file": "packages/wd-builder/package.json",
+      "line": 29
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-radio-group",
+      "file": "packages/wd-builder/package.json",
+      "line": 34
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-switch",
+      "file": "packages/wd-builder/package.json",
+      "line": 36
+    },
+    {
+      "type": "dependency",
+      "name": "clsx",
+      "file": "packages/wd-builder/package.json",
+      "line": 39
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/react",
+      "file": "packages/wd-builder/package.json",
+      "line": 52
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/babel__core",
+      "file": "packages/wd-builder/package.json",
+      "line": 53
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/jest-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 31
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/react",
+      "file": "packages/wd-ui/package.json",
+      "line": 32
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 34
+    },
+    {
+      "type": "devDependency",
+      "name": "react-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 38
+    },
+    {
+      "type": "export",
+      "name": "runChatTurn",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 404
+    },
+    {
+      "type": "export",
+      "name": "ToolHandlers",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 75
+    },
+    {
+      "type": "export",
+      "name": "ToolExecution",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 81
+    },
+    {
+      "type": "export",
+      "name": "ChatResult",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 86
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-ai",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/db.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/auth.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/payments.ts",
+      "line": 8
+    },
+    {
+      "type": "export",
+      "name": "DrawCardResult",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 183
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot.ts",
+      "line": 26
+    },
+    {
+      "type": "export",
+      "name": "getProjected",
+      "file": "packages/wd-builder/src/helpers/tree.helper.ts",
+      "line": 31
+    },
+    {
+      "type": "export",
+      "name": "findReactNode",
+      "file": "packages/wd-builder/src/helpers/canvas.helper.tsx",
+      "line": 34
+    },
+    {
+      "type": "export",
+      "name": "BaseFieldDescriptor",
+      "file": "packages/wd-builder/src/schema-form.ts",
+      "line": 25
+    }
+  ],
+  "unusedExports": [
+    {
+      "type": "export",
+      "name": "runChatTurn",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 404
+    },
+    {
+      "type": "export",
+      "name": "ToolHandlers",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 75
+    },
+    {
+      "type": "export",
+      "name": "ToolExecution",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 81
+    },
+    {
+      "type": "export",
+      "name": "ChatResult",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 86
+    },
+    {
+      "type": "export",
+      "name": "DrawCardResult",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 183
+    },
+    {
+      "type": "export",
+      "name": "getProjected",
+      "file": "packages/wd-builder/src/helpers/tree.helper.ts",
+      "line": 31
+    },
+    {
+      "type": "export",
+      "name": "findReactNode",
+      "file": "packages/wd-builder/src/helpers/canvas.helper.tsx",
+      "line": 34
+    },
+    {
+      "type": "export",
+      "name": "BaseFieldDescriptor",
+      "file": "packages/wd-builder/src/schema-form.ts",
+      "line": 25
+    }
+  ],
   "unusedFiles": [],
-  "unusedDeps": [],
-  "unlistedDeps": [],
-  "summary": "Failed to parse output"
+  "unusedDeps": [
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-accordion",
+      "file": "packages/wd-builder/package.json",
+      "line": 27
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-collapsible",
+      "file": "packages/wd-builder/package.json",
+      "line": 29
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-radio-group",
+      "file": "packages/wd-builder/package.json",
+      "line": 34
+    },
+    {
+      "type": "dependency",
+      "name": "@radix-ui/react-switch",
+      "file": "packages/wd-builder/package.json",
+      "line": 36
+    },
+    {
+      "type": "dependency",
+      "name": "clsx",
+      "file": "packages/wd-builder/package.json",
+      "line": 39
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/react",
+      "file": "packages/wd-builder/package.json",
+      "line": 52
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/babel__core",
+      "file": "packages/wd-builder/package.json",
+      "line": 53
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/jest-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 31
+    },
+    {
+      "type": "devDependency",
+      "name": "@testing-library/react",
+      "file": "packages/wd-ui/package.json",
+      "line": 32
+    },
+    {
+      "type": "devDependency",
+      "name": "@types/react-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 34
+    },
+    {
+      "type": "devDependency",
+      "name": "react-dom",
+      "file": "packages/wd-ui/package.json",
+      "line": 38
+    }
+  ],
+  "unlistedDeps": [
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-ai",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/agent.server.ts",
+      "line": 13
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/db.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/auth.ts",
+      "line": 10
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/payments.ts",
+      "line": 8
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 12
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot.ts",
+      "line": 26
+    }
+  ],
+  "summary": "Found 27 issues"
 }

@@ -5,7 +5,7 @@ export const Route = createFileRoute("/reading")({
 });
 
 import { useEffect, useRef, useState } from "react";
-import { BottomNav, ChatInput, ChatMessageBubble, TopBar } from "../components";
+import { ChatInput, ChatMessageBubble, TopBar } from "../components";
 import { useAuthGuard } from "../lib/guards";
 import { ensureTarotSession, streamTarotMessage } from "../lib/tarot";
 
@@ -91,7 +91,7 @@ function ReadingPage() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [session]);
+  }, []);
 
   const handleSend = async (message: string) => {
     if (!session) return;

@@ -196,7 +196,7 @@ async function callDeepSeek(
  * Call DeepSeek API with streaming support.
  * Returns an async generator that yields text chunks.
  */
-export async function* callDeepSeekStream(
+async function* callDeepSeekStream(
   messages: ChatMessage[],
   tools?: ToolDefinition[],
 ): AsyncGenerator<{ content: string; done: boolean; toolCalls?: ToolCall[] }> {

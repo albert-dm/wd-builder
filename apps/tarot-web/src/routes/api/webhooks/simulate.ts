@@ -21,7 +21,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { creditCardPurchase } from "../../../lib/webhooks.server";
 
-export const simulatePaymentWebhook = createServerFn({ method: "POST" })
+const simulatePaymentWebhook = createServerFn({ method: "POST" })
   .inputValidator((data: { externalPaymentId: string }) => data)
   .handler(async ({ data }) => {
     const { externalPaymentId } = data;

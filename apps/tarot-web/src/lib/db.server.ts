@@ -18,7 +18,7 @@ function getDatabaseUrl(): string {
   );
 }
 
-export function getClient(): ReturnType<typeof postgres> {
+function getClient(): ReturnType<typeof postgres> {
   if (!client) {
     client = postgres(getDatabaseUrl());
   }
@@ -32,7 +32,7 @@ export function getDb(): ReturnType<typeof drizzle<typeof schema>> {
   return db;
 }
 
-export function closeDb(): void {
+function closeDb(): void {
   if (client) {
     client.end();
     client = null;

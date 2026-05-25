@@ -59,41 +59,17 @@
     },
     {
       "fileA": "apps/tarot-web/src/lib/tarot.ts",
-      "startA": 141,
-      "fileB": "apps/tarot-web/src/lib/tarot.ts",
-      "startB": 39,
-      "lines": 25,
-      "tokens": 0
-    },
-    {
-      "fileA": "apps/tarot-web/src/lib/tarot.ts",
-      "startA": 213,
+      "startA": 124,
       "fileB": "apps/tarot-web/src/lib/tarot.ts",
       "startB": 39,
       "lines": 15,
       "tokens": 0
     },
     {
-      "fileA": "apps/tarot-web/src/lib/tarot.ts",
-      "startA": 266,
-      "fileB": "apps/tarot-web/src/lib/tarot.ts",
-      "startB": 103,
-      "lines": 18,
-      "tokens": 0
-    },
-    {
       "fileA": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startA": 24,
-      "fileB": "apps/tarot-web/src/lib/time.ts",
-      "startB": 15,
-      "lines": 11,
-      "tokens": 0
-    },
-    {
-      "fileA": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startA": 607,
+      "startA": 602,
       "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startB": 347,
+      "startB": 342,
       "lines": 14,
       "tokens": 0
     },
@@ -101,7 +77,7 @@
       "fileA": "apps/tarot-web/src/lib/payments.ts",
       "startA": 159,
       "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startB": 56,
+      "startB": 53,
       "lines": 26,
       "tokens": 0
     },
@@ -109,7 +85,7 @@
       "fileA": "apps/tarot-web/src/lib/payments.ts",
       "startA": 249,
       "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startB": 409,
+      "startB": 404,
       "lines": 12,
       "tokens": 0
     },
@@ -258,7 +234,7 @@
       "tokens": 0
     }
   ],
-  "duplicatedLines": 448,
-  "totalLines": 11637,
-  "percentage": 3.85
+  "duplicatedLines": 397,
+  "totalLines": 11359,
+  "percentage": 3.5
 }

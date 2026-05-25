@@ -31,7 +31,7 @@ export interface AbacateWebhookEvent {
   };
 }
 
-export function isPaidLikeStatus(status: string): boolean {
+function isPaidLikeStatus(status: string): boolean {
   return ["PAID", "APPROVED", "REDEEMED"].includes(status.trim().toUpperCase());
 }
 
@@ -113,9 +113,7 @@ export async function creditCardPurchase(
   );
 }
 
-export async function processWebhookEvent(
-  event: AbacateWebhookEvent,
-): Promise<void> {
+async function processWebhookEvent(event: AbacateWebhookEvent): Promise<void> {
   switch (event.event) {
     case "transparent.completed": {
       const transparent = event.data.transparent;

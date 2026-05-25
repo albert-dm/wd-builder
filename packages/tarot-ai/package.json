@@ -17,7 +17,6 @@
     "lint": "biome check src/"
   },
   "dependencies": {
-    "@webdrops/tarot-core": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {

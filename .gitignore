@@ -29,3 +29,5 @@ Thumbs.db
 .cache
 *.tsbuildinfo
 .turbo
+
+.fallow

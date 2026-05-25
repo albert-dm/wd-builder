@@ -57,9 +57,6 @@ importers:
 
   apps/tarot-web:
     dependencies:
-      '@tanstack/react-form':
-        specifier: ^1.29.1
-        version: 1.29.1(@tanstack/react-start@1.167.50(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@7.3.2(@types/node@24.10.2)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/react-router':
         specifier: ^1.168.25
         version: 1.168.25(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -69,21 +66,6 @@ importers:
       '@tanstack/react-start':
         specifier: ^1.167.50
         version: 1.167.50(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@7.3.2(@types/node@24.10.2)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0))
-      '@webdrops/auth-core':
-        specifier: workspace:*
-        version: link:../../packages/auth-core
-      '@webdrops/payments-core':
-        specifier: workspace:*
-        version: link:../../packages/payments-core
-      '@webdrops/tarot-ai':
-        specifier: workspace:*
-        version: link:../../packages/tarot-ai
-      '@webdrops/tarot-core':
-        specifier: workspace:*
-        version: link:../../packages/tarot-core
-      '@webdrops/tarot-db':
-        specifier: workspace:*
-        version: link:../../packages/tarot-db
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(postgres@3.4.9)
@@ -102,9 +84,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      zod:
-        specifier: ^4.3.6
-        version: 4.3.6
     devDependencies:
       '@types/node':
         specifier: ^24.10.1
@@ -177,9 +156,6 @@ importers:
 
   packages/tarot-ai:
     dependencies:
-      '@webdrops/tarot-core':
-        specifier: workspace:*
-        version: link:../tarot-core
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -230,21 +206,12 @@ importers:
 
   packages/tarot-db:
     dependencies:
-      '@webdrops/auth-core':
-        specifier: workspace:*
-        version: link:../auth-core
-      '@webdrops/payments-core':
-        specifier: workspace:*
-        version: link:../payments-core
       '@webdrops/tarot-core':
         specifier: workspace:*
         version: link:../tarot-core
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(postgres@3.4.9)
-      zod:
-        specifier: ^4.3.6
-        version: 4.3.6
     devDependencies:
       '@types/node':
         specifier: ^24.10.1
@@ -2035,30 +2002,9 @@ packages:
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
 
-  '@tanstack/devtools-event-client@0.4.3':
-    resolution: {integrity: sha512-OZI6QyULw0FI0wjgmeYzCIfbgPsOEzwJtCpa69XrfLMtNXLGnz3d/dIabk7frg0TmHo+Ah49w5I4KC7Tufwsvw==}
-    engines: {node: '>=18'}
-    hasBin: true
-
-  '@tanstack/form-core@1.29.1':
-    resolution: {integrity: sha512-NIYPO36eEu7nSWvMpbFDQaBWyVtnH/C8fsZ3/XpJUT4uOWgmxsiUvHGbTbDNIQTXAKIkhwEl0sUrqBNn2SfUnw==}
-
   '@tanstack/history@1.161.6':
     resolution: {integrity: sha512-NaOGLRrddszbQj9upGat6HG/4TKvXLvu+osAIgfxPYA+eIvYKv8GKDJOrY2D3/U9MRnKfMWD7bU4jeD4xmqyIg==}
     engines: {node: '>=20.19'}
-
-  '@tanstack/pacer-lite@0.1.1':
-    resolution: {integrity: sha512-y/xtNPNt/YeyoVxE/JCx+T7yjEzpezmbb+toK8DDD1P4m7Kzs5YR956+7OKexG3f8aXgC3rLZl7b1V+yNUSy5w==}
-    engines: {node: '>=18'}
-
-  '@tanstack/react-form@1.29.1':
-    resolution: {integrity: sha512-hVHk4g0phd0HxRsv2ry6Xt8BqmalT55Q3cokhJBCC1St0hcGZhgwJJbohm9atao45BPG9e55DGvtbwExqZe35g==}
-    peerDependencies:
-      '@tanstack/react-start': '*'
-      react: ^17.0.0 || ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      '@tanstack/react-start':
-        optional: true
 
   '@tanstack/react-router-devtools@1.166.13':
     resolution: {integrity: sha512-6yKRFFJrEEOiGp5RAAuGCYsl81M4XAhJmLcu9PKj+HZle4A3dsP60lwHoqQYWHMK9nKKFkdXR+D8qxzxqtQbEA==}
@@ -6240,27 +6186,7 @@ snapshots:
 
   '@standard-schema/spec@1.1.0': {}
 
-  '@tanstack/devtools-event-client@0.4.3': {}
-
-  '@tanstack/form-core@1.29.1':
-    dependencies:
-      '@tanstack/devtools-event-client': 0.4.3
-      '@tanstack/pacer-lite': 0.1.1
-      '@tanstack/store': 0.9.3
-
   '@tanstack/history@1.161.6': {}
-
-  '@tanstack/pacer-lite@0.1.1': {}
-
-  '@tanstack/react-form@1.29.1(@tanstack/react-start@1.167.50(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@7.3.2(@types/node@24.10.2)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@tanstack/form-core': 1.29.1
-      '@tanstack/react-store': 0.9.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react: 18.3.1
-    optionalDependencies:
-      '@tanstack/react-start': 1.167.50(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@7.3.2(@types/node@24.10.2)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0))
-    transitivePeerDependencies:
-      - react-dom
 
   '@tanstack/react-router-devtools@1.166.13(@tanstack/react-router@1.168.25(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@tanstack/router-core@1.168.17)(csstype@3.2.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
