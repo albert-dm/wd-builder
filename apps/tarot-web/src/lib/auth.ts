@@ -10,6 +10,7 @@ import { getRequest, setResponseHeader } from "@tanstack/react-start/server";
 import { authSessions, magicLinkTokens, users } from "@webdrops/tarot-db";
 import { eq } from "drizzle-orm";
 import { getDb } from "./db.server";
+import { magicLinkEmailHtml, magicLinkEmailText } from "./email-templates";
 
 const SESSION_COOKIE_NAME =
   process.env.AUTH_SESSION_COOKIE_NAME ?? "webdrops_auth";
@@ -22,7 +23,7 @@ const SESSION_TTL_DAYS = parseInt(
   10,
 );
 const EMAIL_FROM =
-  process.env.AUTH_EMAIL_FROM ?? "Webdrops Auth <login@example.com>";
+  process.env.AUTH_EMAIL_FROM ?? "Login Tarot <login@example.com>";
 const COOKIE_SECURE = process.env.AUTH_COOKIE_SECURE === "true";
 
 function hashSecret(secret: string): string {
@@ -85,9 +86,9 @@ async function sendMagicLinkEmail(
   const apiKey = process.env.RESEND_API_KEY;
 
   if (apiKey) {
-    const subject = "Seu link de acesso";
-    const html = `<p>Use o link abaixo para entrar na sua conta.</p><p><a href="${magicLink}">Entrar agora</a></p><p>Se voce nao solicitou este acesso, ignore esta mensagem.</p>`;
-    const text = `Use este link para entrar na sua conta: ${magicLink}\n\nSe voce nao solicitou este acesso, ignore esta mensagem.`;
+    const subject = "Link Mágico - Tarot";
+    const html = magicLinkEmailHtml({ magicLink });
+    const text = magicLinkEmailText({ magicLink });
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
