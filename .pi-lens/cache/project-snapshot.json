@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "projectRoot": "/home/albert-dm/code/webdrops/wd-builder",
+  "generatedAt": "2026-05-28T19:12:55.761Z",
+  "seq": 0,
+  "files": {},
+  "symbols": {},
+  "reverseDeps": {},
+  "cachedExports": [],
+  "projectRulesScan": {
+    "rules": [
+      {
+        "source": "root",
+        "name": "AGENTS.md",
+        "filePath": "/home/albert-dm/code/webdrops/wd-builder/AGENTS.md",
+        "relativePath": "AGENTS.md"
+      }
+    ],
+    "hasCustomRules": true
+  },
+  "projectIndex": {
+    "entryCount": 110
+  },
+  "startupScan": {
+    "cwd": "/home/albert-dm/code/webdrops/wd-builder",
+    "scanRoot": "/home/albert-dm/code/webdrops/wd-builder",
+    "projectRoot": "/home/albert-dm/code/webdrops/wd-builder",
+    "canWarmCaches": true,
+    "sourceFileCount": 123
+  },
+  "languageProfile": {
+    "present": {
+      "jsts": true,
+      "python": false,
+      "go": false,
+      "rust": false,
+      "cxx": false,
+      "cmake": false,
+      "fish": false,
+      "shell": false,
+      "json": false,
+      "markdown": false,
+      "css": false,
+      "yaml": false,
+      "sql": false,
+      "ruby": false,
+      "html": false,
+      "docker": false,
+      "php": false,
+      "powershell": false,
+      "prisma": false,
+      "csharp": false,
+      "fsharp": false,
+      "java": false,
+      "kotlin": false,
+      "swift": false,
+      "dart": false,
+      "lua": false,
+      "zig": false,
+      "haskell": false,
+      "elixir": false,
+      "gleam": false,
+      "ocaml": false,
+      "clojure": false,
+      "terraform": false,
+      "nix": false,
+      "toml": false
+    },
+    "configured": {
+      "jsts": true
+    },
+    "counts": {
+      "jsts": 124
+    },
+    "detectedKinds": [
+      "jsts"
+    ]
+  }
+}

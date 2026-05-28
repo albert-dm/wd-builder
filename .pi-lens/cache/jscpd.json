@@ -67,9 +67,9 @@
     },
     {
       "fileA": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startA": 602,
+      "startA": 632,
       "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startB": 342,
+      "startB": 372,
       "lines": 14,
       "tokens": 0
     },
@@ -85,7 +85,7 @@
       "fileA": "apps/tarot-web/src/lib/payments.ts",
       "startA": 249,
       "fileB": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "startB": 404,
+      "startB": 434,
       "lines": 12,
       "tokens": 0
     },
@@ -115,17 +115,17 @@
     },
     {
       "fileA": "apps/tarot-web/src/lib/agent.server.ts",
-      "startA": 202,
+      "startA": 227,
       "fileB": "apps/tarot-web/src/lib/agent.server.ts",
-      "startB": 170,
+      "startB": 195,
       "lines": 15,
       "tokens": 0
     },
     {
       "fileA": "apps/tarot-web/src/lib/agent.server.ts",
-      "startA": 570,
+      "startA": 604,
       "fileB": "apps/tarot-web/src/lib/agent.server.ts",
-      "startB": 456,
+      "startB": 490,
       "lines": 22,
       "tokens": 0
     },
@@ -235,6 +235,6 @@
     }
   ],
   "duplicatedLines": 397,
-  "totalLines": 11359,
-  "percentage": 3.5
+  "totalLines": 11449,
+  "percentage": 3.47
 }

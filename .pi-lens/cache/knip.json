@@ -45,6 +45,12 @@
     },
     {
       "type": "devDependency",
+      "name": "@commitlint/cli",
+      "file": "package.json",
+      "line": 33
+    },
+    {
+      "type": "devDependency",
       "name": "@testing-library/jest-dom",
       "file": "packages/wd-ui/package.json",
       "line": 31
@@ -69,27 +75,45 @@
     },
     {
       "type": "export",
+      "name": "DrawCardResult",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 183
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 12
+    },
+    {
+      "type": "export",
       "name": "runChatTurn",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 404
+      "line": 508
     },
     {
       "type": "export",
       "name": "ToolHandlers",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 75
+      "line": 76
     },
     {
       "type": "export",
       "name": "ToolExecution",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 81
+      "line": 83
     },
     {
       "type": "export",
       "name": "ChatResult",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 86
+      "line": 88
     },
     {
       "type": "unlisted",
@@ -122,24 +146,6 @@
       "line": 8
     },
     {
-      "type": "export",
-      "name": "DrawCardResult",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 183
-    },
-    {
-      "type": "unlisted",
-      "name": "@webdrops/tarot-core",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 7
-    },
-    {
-      "type": "unlisted",
-      "name": "@webdrops/tarot-db",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 12
-    },
-    {
       "type": "unlisted",
       "name": "@webdrops/tarot-db",
       "file": "apps/tarot-web/src/lib/tarot.ts",
@@ -167,33 +173,33 @@
   "unusedExports": [
     {
       "type": "export",
+      "name": "DrawCardResult",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 183
+    },
+    {
+      "type": "export",
       "name": "runChatTurn",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 404
+      "line": 508
     },
     {
       "type": "export",
       "name": "ToolHandlers",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 75
+      "line": 76
     },
     {
       "type": "export",
       "name": "ToolExecution",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 81
+      "line": 83
     },
     {
       "type": "export",
       "name": "ChatResult",
       "file": "apps/tarot-web/src/lib/agent.server.ts",
-      "line": 86
-    },
-    {
-      "type": "export",
-      "name": "DrawCardResult",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 183
+      "line": 88
     },
     {
       "type": "export",
@@ -260,6 +266,12 @@
     },
     {
       "type": "devDependency",
+      "name": "@commitlint/cli",
+      "file": "package.json",
+      "line": 33
+    },
+    {
+      "type": "devDependency",
       "name": "@testing-library/jest-dom",
       "file": "packages/wd-ui/package.json",
       "line": 31
@@ -284,6 +296,18 @@
     }
   ],
   "unlistedDeps": [
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-core",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 7
+    },
+    {
+      "type": "unlisted",
+      "name": "@webdrops/tarot-db",
+      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
+      "line": 12
+    },
     {
       "type": "unlisted",
       "name": "@webdrops/tarot-ai",
@@ -316,22 +340,10 @@
     },
     {
       "type": "unlisted",
-      "name": "@webdrops/tarot-core",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 7
-    },
-    {
-      "type": "unlisted",
-      "name": "@webdrops/tarot-db",
-      "file": "apps/tarot-web/src/lib/tarot-helpers.server.ts",
-      "line": 12
-    },
-    {
-      "type": "unlisted",
       "name": "@webdrops/tarot-db",
       "file": "apps/tarot-web/src/lib/tarot.ts",
       "line": 26
     }
   ],
-  "summary": "Found 27 issues"
+  "summary": "Found 28 issues"
 }

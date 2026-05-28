@@ -305,6 +305,36 @@ async function drawAvailableCard(userId: string): Promise<DrawCardResult> {
  * Tool handlers for the AI agent
  */
 export const toolHandlers = {
+  verificarSaldo: async (userId: string) => {
+    let session = await getOrCreateSession(userId);
+    session = await refreshDailyIfNeeded(session);
+
+    const latestReading = await getLatestReading(session.id);
+    const today = todaySaoPauloString();
+
+    // Check if free card was already used today
+    let freeCardAvailable = session.cardsRemainingToday > 0;
+    if (latestReading && latestReading.revealedAt) {
+      const readingDate = latestReading.revealedAt.toLocaleDateString("sv-SE", {
+        timeZone: SAO_PAULO_TZ,
+      });
+      if (readingDate === today && latestReading.source === "DailyFree") {
+        freeCardAvailable = false;
+      }
+    }
+
+    const totalAvailable =
+      (freeCardAvailable ? 1 : 0) + session.purchasedCardsAvailable;
+
+    return {
+      cardsRemainingToday: freeCardAvailable ? 1 : 0,
+      purchasedCardsAvailable: session.purchasedCardsAvailable,
+      totalAvailable,
+      freeCardUsedToday: !freeCardAvailable,
+      nextResetAt: "meia-noite no horario de Sao Paulo",
+    };
+  },
+
   sortearCarta: async (userId: string) => {
     return drawAvailableCard(userId);
   },
@@ -645,6 +675,89 @@ export function buildSessionResponse(
     lastResetAt: session.lastResetAt?.toISOString() ?? "",
     currentReading,
     chatHistory,
+  };
+}
+
+// ============================================================================
+// User Context for Deterministic Agent Behavior
+// ============================================================================
+
+export interface UserContext {
+  userId: string;
+  totalAvailable: number;
+  freeCardAvailable: boolean;
+  purchasedCardsAvailable: number;
+  pendingPayment: {
+    amountCents: number;
+    expiresAt: string;
+  } | null;
+  lastDrawnCard: {
+    name: string;
+    drawnAt: string;
+    source: string;
+  } | null;
+}
+
+export async function getUserContext(userId: string): Promise<UserContext> {
+  const db = getDb();
+  let session = await getOrCreateSession(userId);
+  session = await refreshDailyIfNeeded(session);
+
+  // Check if free card was already used today
+  const latestReading = await getLatestReading(session.id);
+  const today = todaySaoPauloString();
+
+  let freeCardAvailable = session.cardsRemainingToday > 0;
+  if (latestReading?.revealedAt) {
+    const readingDate = latestReading.revealedAt.toLocaleDateString("sv-SE", {
+      timeZone: SAO_PAULO_TZ,
+    });
+    if (readingDate === today && latestReading.source === "DailyFree") {
+      freeCardAvailable = false;
+    }
+  }
+
+  // Get pending payment
+  const pendingPurchases = await db
+    .select()
+    .from(pixPayments)
+    .where(
+      and(eq(pixPayments.userId, userId), eq(pixPayments.status, "pending")),
+    )
+    .orderBy(desc(pixPayments.createdAt))
+    .limit(1);
+
+  const pendingPayment =
+    pendingPurchases.length > 0
+      ? {
+          amountCents: pendingPurchases[0].amountCents,
+          expiresAt: pendingPurchases[0].expiresAt?.toISOString() ?? "",
+        }
+      : null;
+
+  // Get last drawn card info
+  let lastDrawnCard = null;
+  if (latestReading) {
+    const card = getTarotCardById(latestReading.cardId);
+    if (card) {
+      lastDrawnCard = {
+        name: card.name,
+        drawnAt: latestReading.revealedAt?.toISOString() ?? "",
+        source: latestReading.source,
+      };
+    }
+  }
+
+  const totalAvailable =
+    (freeCardAvailable ? 1 : 0) + session.purchasedCardsAvailable;
+
+  return {
+    userId,
+    totalAvailable,
+    freeCardAvailable,
+    purchasedCardsAvailable: session.purchasedCardsAvailable,
+    pendingPayment,
+    lastDrawnCard,
   };
 }
 

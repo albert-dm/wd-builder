@@ -172,6 +172,7 @@ export const streamTarotMessage = createServerFn({ method: "POST" })
       getChatHistory,
       appendChatMessage,
       toolHandlers,
+      getUserContext,
     } = await import("./tarot-helpers.server");
     const { runChatTurnStream } = await import("./agent.server");
     const { requireAuthenticatedUser } = await import("./auth");
@@ -188,6 +189,7 @@ export const streamTarotMessage = createServerFn({ method: "POST" })
 
     const session = await getOrCreateSession(authUser.id);
     const chatHistory = await getChatHistory(session.id);
+    const userContext = await getUserContext(authUser.id);
 
     await appendChatMessage(session.id, "User", message);
 
@@ -205,6 +207,7 @@ export const streamTarotMessage = createServerFn({ method: "POST" })
             authUser.id,
             chatHistory,
             toolHandlers,
+            userContext,
           )) {
             if (chunk.content) {
               fullResponse += chunk.content;

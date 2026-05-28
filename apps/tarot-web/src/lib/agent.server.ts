@@ -11,6 +11,7 @@
 import process from "node:process";
 import { TarotSystemPrompt } from "@webdrops/tarot-ai";
 import type { TarotCard } from "@webdrops/tarot-core";
+import type { UserContext } from "./tarot-helpers.server";
 
 // ============================================================================
 // Types
@@ -76,6 +77,7 @@ export interface ToolHandlers {
   sortearCarta: (userId: string) => Promise<unknown>;
   gerarPix: (userId: string) => Promise<unknown>;
   verificarPix: (userId: string) => Promise<unknown>;
+  verificarSaldo: (userId: string) => Promise<unknown>;
 }
 
 export interface ToolExecution {
@@ -152,7 +154,100 @@ const VERIFICAR_PIX_TOOL: ToolDefinition = {
   },
 };
 
-const AGENT_TOOLS = [SORTEAR_CARTA_TOOL, GERAR_PIX_TOOL, VERIFICAR_PIX_TOOL];
+// VERIFICAR_SALDO_TOOL removed - saldo is now injected deterministically into the prompt
+
+// Note: AGENT_TOOLS removed - tools are now filtered dynamically via getAvailableTools(userContext)
+
+// ============================================================================
+// Dynamic Prompt Builder
+// ============================================================================
+
+function formatCurrencyCents(cents: number): string {
+  return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
+}
+
+function buildUserContextBlock(userContext: UserContext): string {
+  const {
+    totalAvailable,
+    freeCardAvailable,
+    purchasedCardsAvailable,
+    pendingPayment,
+    lastDrawnCard,
+  } = userContext;
+
+  let context = `\n## DADOS REAIS DO CONSENTE (NAO INVENTAR - USE ESTES DADOS EXATOS)\n`;
+  context += `- ID do consulente: ${userContext.userId}\n`;
+  context += `- Cartas disponiveis: ${totalAvailable}\n`;
+  context += `  - Gratuita diaria: ${freeCardAvailable ? "DISPONIVEL" : "JA USADA HOJE"}\n`;
+  context += `  - Extras compradas: ${purchasedCardsAvailable}\n`;
+
+  if (pendingPayment) {
+    context += `- Pagamento pendente: SIM (${formatCurrencyCents(pendingPayment.amountCents)})\n`;
+  } else {
+    context += `- Pagamento pendente: NAO\n`;
+  }
+
+  if (lastDrawnCard) {
+    context += `- Ultima carta revelada: ${lastDrawnCard.name} (origem: ${lastDrawnCard.source})\n`;
+  } else {
+    context += `- Ultima carta revelada: NENHUMA (primeira vez)\n`;
+  }
+
+  return context;
+}
+
+function buildBehaviorRules(userContext: UserContext): string {
+  const { totalAvailable, pendingPayment, lastDrawnCard } = userContext;
+
+  if (totalAvailable === 0) {
+    let rules = `\n## COMPORTAMENTO OBRIGATORIO - CONSEMTE SEM CARTAS DISPONIVEIS\n`;
+    rules += `- Voce NAO pode sortear cartas agora - ha 0 cartas disponiveis\n`;
+    rules += `- NAO chame a ferramenta SortearCarta - ela nao esta disponivel\n`;
+
+    if (lastDrawnCard) {
+      rules += `- Se o consulente pedir uma leitura, fale sobre a ultima carta revelada: "${lastDrawnCard.name}"\n`;
+    } else {
+      rules += `- Se o consulente pedir uma leitura, explique que precisa de uma carta disponivel\n`;
+    }
+
+    if (pendingPayment) {
+      rules += `- Ha um PIX pendente de ${formatCurrencyCents(pendingPayment.amountCents)} - ofereca verificar o pagamento usando VerificarPixCartaExtra\n`;
+    }
+
+    rules += `- Ofereca comprar uma carta extra por R$ 5,00 usando GerarPixCartaExtra\n`;
+    rules += `- Explique que a carta gratuita diaria renova a meia-noite no horario de Sao Paulo\n`;
+
+    return rules;
+  } else {
+    let rules = `\n## COMPORTAMENTO OBRIGATORIO - CONSEMTE COM CARTAS DISPONIVEIS\n`;
+    rules += `- Voce TEM ${totalAvailable} carta(s) disponiveis\n`;
+    rules += `- Quando o consulente pedir para revelar uma carta, use SortearCarta IMEDIATAMENTE\n`;
+    rules += `- NAO ofereca compra de cartas extras - o consulente ja tem cartas\n`;
+
+    return rules;
+  }
+}
+
+function buildDynamicPrompt(userContext: UserContext): string {
+  const contextBlock = buildUserContextBlock(userContext);
+  const behaviorRules = buildBehaviorRules(userContext);
+
+  return TarotSystemPrompt + contextBlock + behaviorRules;
+}
+
+function getAvailableTools(userContext: UserContext): ToolDefinition[] {
+  const tools: ToolDefinition[] = [GERAR_PIX_TOOL, VERIFICAR_PIX_TOOL];
+
+  // Only include SortearCarta if user has cards available
+  if (userContext.totalAvailable > 0) {
+    tools.unshift(SORTEAR_CARTA_TOOL);
+  }
+
+  // VerificarSaldo is not needed - we already injected the data
+  // This prevents unnecessary tool calls and makes behavior deterministic
+
+  return tools;
+}
 
 // ============================================================================
 // DeepSeek API Service
@@ -286,7 +381,10 @@ async function* callDeepSeekStream(
           };
           return;
         }
-      } catch {}
+      } catch (parseError) {
+        // Skip malformed SSE chunks
+        console.debug("Skipping malformed chunk", parseError);
+      }
     }
   }
 
@@ -318,6 +416,10 @@ function summarizeToolOutput(toolName: string, output: string): string {
               : "Uma nova carta gratuita do dia foi revelada";
 
         return `Ferramenta SortearCarta: ${status}. Origem: ${parsed.origem ?? "gratis_diaria"}. Data: ${parsed.data}. Carta: ${parsed.carta?.nome}. Tipo: ${parsed.carta?.tipo}. Naipe: ${suit}. Palavras-chave: ${keywords}. Gratuita hoje: ${parsed.restantes_hoje}. Extras disponiveis: ${parsed.cartas_extras_disponiveis}. Use essa carta na interpretacao sem repetir JSON bruto.`;
+      }
+
+      case "VerificarSaldo": {
+        return `Ferramenta VerificarSaldo: Cartas gratuitas disponiveis hoje: ${parsed.cardsRemainingToday ?? 0}. Cartas extras compradas disponiveis: ${parsed.purchasedCardsAvailable ?? 0}. Total de cartas disponiveis: ${parsed.totalAvailable ?? 0}. Use esses dados para informar o consulente sobre seu saldo atual. Nao faca afirmacoes sobre saldo sem estes dados.`;
       }
 
       case "GerarPixCartaExtra":
@@ -379,6 +481,8 @@ async function executeTool(
       return handlers.gerarPix(toolArgs.user_id as string);
     case "VerificarPixCartaExtra":
       return handlers.verificarPix(toolArgs.user_id as string);
+    case "VerificarSaldo":
+      return handlers.verificarSaldo(toolArgs.user_id as string);
     default:
       throw new Error(`Unknown tool: ${toolName}`);
   }
@@ -406,10 +510,15 @@ export async function runChatTurn(
   userId: string,
   chatHistory: { role: string; content: string }[],
   toolHandlers: ToolHandlers,
+  userContext: UserContext,
 ): Promise<ChatResult> {
+  // Build dynamic prompt with injected user context
+  const systemPrompt = buildDynamicPrompt(userContext);
+  const availableTools = getAvailableTools(userContext);
+
   // Build messages: system + history + user
   const messages: ChatMessage[] = [
-    { role: "system", content: TarotSystemPrompt },
+    { role: "system", content: systemPrompt },
     ...historyToMessages(chatHistory),
     {
       role: "user",
@@ -417,8 +526,8 @@ export async function runChatTurn(
     },
   ];
 
-  // First API call with tools available
-  const response = await callDeepSeek(messages, AGENT_TOOLS);
+  // First API call with filtered tools
+  const response = await callDeepSeek(messages, availableTools);
   const choice = response.choices[0];
 
   if (!choice) {
@@ -506,13 +615,18 @@ export async function* runChatTurnStream(
   userId: string,
   chatHistory: { role: string; content: string }[],
   toolHandlers: ToolHandlers,
+  userContext: UserContext,
 ): AsyncGenerator<{
   content: string;
   done: boolean;
   toolExecution?: ToolExecution;
 }> {
+  // Build dynamic prompt with injected user context
+  const systemPrompt = buildDynamicPrompt(userContext);
+  const availableTools = getAvailableTools(userContext);
+
   const messages: ChatMessage[] = [
-    { role: "system", content: TarotSystemPrompt },
+    { role: "system", content: systemPrompt },
     ...historyToMessages(chatHistory),
     {
       role: "user",
@@ -523,8 +637,8 @@ export async function* runChatTurnStream(
   let collectedContent = "";
   let toolCalls: ToolCall[] | undefined;
 
-  // First streaming call
-  for await (const chunk of callDeepSeekStream(messages, AGENT_TOOLS)) {
+  // First streaming call with filtered tools
+  for await (const chunk of callDeepSeekStream(messages, availableTools)) {
     if (chunk.toolCalls) {
       toolCalls = chunk.toolCalls;
     }
@@ -589,10 +703,8 @@ export async function* runChatTurnStream(
   });
 
   // Second streaming call
-  let finalContent = "";
   for await (const chunk of callDeepSeekStream(messages)) {
     if (chunk.content) {
-      finalContent += chunk.content;
       yield { content: chunk.content, done: false };
     }
     if (chunk.done) {

@@ -628,14 +628,14 @@
     },
     "packages/tarot-ai/src/index.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-28T02:23:31.295Z",
-        "mi": 53.4,
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:18:35.732Z",
+        "mi": 42.9,
         "cognitive": 0,
         "nesting": 0,
-        "lines": 27,
+        "lines": 74,
         "maxCyclomatic": 1,
-        "entropy": 4.17
+        "entropy": 4.39
       },
       "history": [
         {
@@ -647,18 +647,38 @@
           "lines": 27,
           "maxCyclomatic": 1,
           "entropy": 4.17
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:30.928Z",
+          "mi": 47.5,
+          "cognitive": 0,
+          "nesting": 0,
+          "lines": 50,
+          "maxCyclomatic": 1,
+          "entropy": 4.21
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:18:35.732Z",
+          "mi": 42.9,
+          "cognitive": 0,
+          "nesting": 0,
+          "lines": 74,
+          "maxCyclomatic": 1,
+          "entropy": 4.39
         }
       ],
-      "trend": "stable"
+      "trend": "regressing"
     },
     "packages/tarot-db/src/schema.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-28T02:23:31.320Z",
-        "mi": 19.1,
+        "commit": "b9a24e6",
+        "timestamp": "2026-05-25T00:09:30.960Z",
+        "mi": 19,
         "cognitive": 0,
         "nesting": 1,
-        "lines": 305,
+        "lines": 306,
         "maxCyclomatic": 1,
         "entropy": 5.28
       },
@@ -670,6 +690,16 @@
           "cognitive": 0,
           "nesting": 1,
           "lines": 305,
+          "maxCyclomatic": 1,
+          "entropy": 5.28
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:30.960Z",
+          "mi": 19,
+          "cognitive": 0,
+          "nesting": 1,
+          "lines": 306,
           "maxCyclomatic": 1,
           "entropy": 5.28
         }
@@ -863,14 +893,14 @@
     },
     "apps/tarot-web/src/routes/reading.tsx": {
       "latest": {
-        "commit": "8a1e0c0",
-        "timestamp": "2026-05-24T22:12:37.126Z",
+        "commit": "b9a24e6",
+        "timestamp": "2026-05-25T00:09:35.350Z",
         "mi": 21.5,
         "cognitive": 95,
         "nesting": 7,
         "lines": 278,
         "maxCyclomatic": 56,
-        "entropy": 6.57
+        "entropy": 6.56
       },
       "history": [
         {
@@ -922,9 +952,19 @@
           "lines": 278,
           "maxCyclomatic": 56,
           "entropy": 6.57
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:35.350Z",
+          "mi": 21.5,
+          "cognitive": 95,
+          "nesting": 7,
+          "lines": 278,
+          "maxCyclomatic": 56,
+          "entropy": 6.56
         }
       ],
-      "trend": "regressing"
+      "trend": "improving"
     },
     "packages/tarot-db/drizzle.config.ts": {
       "latest": {
@@ -1198,8 +1238,8 @@
     },
     "packages/tarot-core/src/reading-session.test.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-28T22:13:35.132Z",
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:26:41.704Z",
         "mi": 44.8,
         "cognitive": 0,
         "nesting": 2,
@@ -1211,6 +1251,16 @@
         {
           "commit": "b5a9ad2",
           "timestamp": "2026-04-28T22:13:35.132Z",
+          "mi": 44.8,
+          "cognitive": 0,
+          "nesting": 2,
+          "lines": 45,
+          "maxCyclomatic": 2,
+          "entropy": 4.21
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:26:41.704Z",
           "mi": 44.8,
           "cognitive": 0,
           "nesting": 2,
@@ -1258,14 +1308,14 @@
     },
     "apps/tarot-web/src/lib/tarot.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-29T01:23:56.891Z",
-        "mi": 23.7,
-        "cognitive": 50,
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:23:58.952Z",
+        "mi": 27.1,
+        "cognitive": 42,
         "nesting": 5,
-        "lines": 282,
+        "lines": 210,
         "maxCyclomatic": 12,
-        "entropy": 6.11
+        "entropy": 6.2
       },
       "history": [
         {
@@ -1307,14 +1357,34 @@
           "lines": 282,
           "maxCyclomatic": 12,
           "entropy": 6.11
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:40.136Z",
+          "mi": 27.1,
+          "cognitive": 42,
+          "nesting": 5,
+          "lines": 210,
+          "maxCyclomatic": 12,
+          "entropy": 6.2
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:23:58.952Z",
+          "mi": 27.1,
+          "cognitive": 42,
+          "nesting": 5,
+          "lines": 210,
+          "maxCyclomatic": 12,
+          "entropy": 6.2
         }
       ],
       "trend": "improving"
     },
     "apps/tarot-web/src/lib/payments.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-28T23:45:02.032Z",
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:18:27.172Z",
         "mi": 18.6,
         "cognitive": 68,
         "nesting": 4,
@@ -1336,6 +1406,16 @@
         {
           "commit": "b5a9ad2",
           "timestamp": "2026-04-28T23:45:02.032Z",
+          "mi": 18.6,
+          "cognitive": 68,
+          "nesting": 4,
+          "lines": 367,
+          "maxCyclomatic": 26,
+          "entropy": 5.74
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:18:27.172Z",
           "mi": 18.6,
           "cognitive": 68,
           "nesting": 4,
@@ -1623,12 +1703,12 @@
     },
     "apps/tarot-web/src/lib/tarot-helpers.server.ts": {
       "latest": {
-        "commit": "8a1e0c0",
-        "timestamp": "2026-05-24T22:04:37.413Z",
-        "mi": 15.1,
-        "cognitive": 85,
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:18:27.215Z",
+        "mi": 14.6,
+        "cognitive": 96,
         "nesting": 5,
-        "lines": 551,
+        "lines": 570,
         "maxCyclomatic": 38,
         "entropy": 6.95
       },
@@ -1662,20 +1742,40 @@
           "lines": 551,
           "maxCyclomatic": 38,
           "entropy": 6.95
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:22.913Z",
+          "mi": 15.3,
+          "cognitive": 85,
+          "nesting": 5,
+          "lines": 546,
+          "maxCyclomatic": 38,
+          "entropy": 6.94
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:18:27.215Z",
+          "mi": 14.6,
+          "cognitive": 96,
+          "nesting": 5,
+          "lines": 570,
+          "maxCyclomatic": 38,
+          "entropy": 6.95
         }
       ],
-      "trend": "stable"
+      "trend": "regressing"
     },
     "apps/tarot-web/src/lib/agent.server.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-29T01:23:48.929Z",
-        "mi": 21.5,
-        "cognitive": 171,
+        "commit": "b807811",
+        "timestamp": "2026-05-28T19:18:31.623Z",
+        "mi": 20.3,
+        "cognitive": 178,
         "nesting": 8,
-        "lines": 507,
+        "lines": 536,
         "maxCyclomatic": 38,
-        "entropy": 6.7
+        "entropy": 6.67
       },
       "history": [
         {
@@ -1707,9 +1807,29 @@
           "lines": 507,
           "maxCyclomatic": 38,
           "entropy": 6.7
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:22.860Z",
+          "mi": 21.5,
+          "cognitive": 171,
+          "nesting": 8,
+          "lines": 507,
+          "maxCyclomatic": 38,
+          "entropy": 6.7
+        },
+        {
+          "commit": "b807811",
+          "timestamp": "2026-05-28T19:18:31.623Z",
+          "mi": 20.3,
+          "cognitive": 178,
+          "nesting": 8,
+          "lines": 536,
+          "maxCyclomatic": 38,
+          "entropy": 6.67
         }
       ],
-      "trend": "regressing"
+      "trend": "stable"
     },
     "packages/tarot-db/src/seed-cards.ts": {
       "latest": {
@@ -1773,14 +1893,14 @@
     },
     "apps/tarot-web/src/components/Navigation.tsx": {
       "latest": {
-        "commit": "8a1e0c0",
-        "timestamp": "2026-05-24T22:04:20.885Z",
-        "mi": 46.1,
-        "cognitive": 3,
+        "commit": "b9a24e6",
+        "timestamp": "2026-05-25T00:09:47.596Z",
+        "mi": 48.9,
+        "cognitive": 1,
         "nesting": 1,
-        "lines": 42,
+        "lines": 35,
         "maxCyclomatic": 2,
-        "entropy": 4.35
+        "entropy": 4.05
       },
       "history": [
         {
@@ -1802,6 +1922,16 @@
           "lines": 42,
           "maxCyclomatic": 2,
           "entropy": 4.35
+        },
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:47.596Z",
+          "mi": 48.9,
+          "cognitive": 1,
+          "nesting": 1,
+          "lines": 35,
+          "maxCyclomatic": 2,
+          "entropy": 4.05
         }
       ],
       "trend": "improving"
@@ -1905,7 +2035,32 @@
         }
       ],
       "trend": "stable"
+    },
+    "apps/tarot-web/src/lib/db.server.ts": {
+      "latest": {
+        "commit": "b9a24e6",
+        "timestamp": "2026-05-25T00:09:22.875Z",
+        "mi": 58.2,
+        "cognitive": 6,
+        "nesting": 2,
+        "lines": 35,
+        "maxCyclomatic": 3,
+        "entropy": 4.44
+      },
+      "history": [
+        {
+          "commit": "b9a24e6",
+          "timestamp": "2026-05-25T00:09:22.875Z",
+          "mi": 58.2,
+          "cognitive": 6,
+          "nesting": 2,
+          "lines": 35,
+          "maxCyclomatic": 3,
+          "entropy": 4.44
+        }
+      ],
+      "trend": "stable"
     }
   },
-  "capturedAt": "2026-05-24T22:12:42.126Z"
+  "capturedAt": "2026-05-28T19:26:46.704Z"
 }
