@@ -1113,8 +1113,8 @@
     },
     "apps/tarot-web/vite.config.ts": {
       "latest": {
-        "commit": "b5a9ad2",
-        "timestamp": "2026-04-28T22:13:55.257Z",
+        "commit": "248ed8f",
+        "timestamp": "2026-05-28T21:07:15.122Z",
         "mi": 56.4,
         "cognitive": 0,
         "nesting": 0,
@@ -1136,6 +1136,16 @@
         {
           "commit": "b5a9ad2",
           "timestamp": "2026-04-28T22:13:55.257Z",
+          "mi": 56.4,
+          "cognitive": 0,
+          "nesting": 0,
+          "lines": 19,
+          "maxCyclomatic": 1,
+          "entropy": 3.29
+        },
+        {
+          "commit": "248ed8f",
+          "timestamp": "2026-05-28T21:07:15.122Z",
           "mi": 56.4,
           "cognitive": 0,
           "nesting": 0,
@@ -2082,5 +2092,5 @@
       "trend": "stable"
     }
   },
-  "capturedAt": "2026-05-28T20:35:04.631Z"
+  "capturedAt": "2026-05-28T21:07:20.122Z"
 }

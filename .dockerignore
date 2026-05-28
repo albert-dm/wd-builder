@@ -1,0 +1,41 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs
+dist
+.output
+.turbo
+.tanstack
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docs and config
+*.md
+.github
+.pi
+.pi-lens
+
+# Env files (secrets - use docker env at runtime)
+.env
+.env.*
+
+# Fallow
+.fallow
+
+# Packages we don't need
+packages/wd-builder
+packages/wd-ui
+apps/playground
