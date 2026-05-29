@@ -7,7 +7,7 @@ RUN corepack enable && corepack prepare pnpm@10.14.0 --activate
 WORKDIR /app
 
 # Copy workspace config first (cache layer for deps)
-COPY pnpm-workspace.yaml pnpm-lock.yaml package.json turbo.json ./
+COPY pnpm-workspace.yaml pnpm-lock.yaml package.json turbo.json tsconfig.base.json tsconfig.json ./
 COPY packages/tarot-db/package.json packages/tarot-db/
 COPY packages/tarot-core/package.json packages/tarot-core/
 COPY packages/tarot-ai/package.json packages/tarot-ai/
@@ -55,8 +55,9 @@ COPY --from=builder /app/packages/tarot-ai/package.json packages/tarot-ai/
 COPY --from=builder /app/packages/auth-core/package.json packages/auth-core/
 COPY --from=builder /app/packages/payments-core/package.json packages/payments-core/
 
-# Install production dependencies only
-RUN pnpm install --frozen-lockfile --prod
+# Install production dependencies only (skip prepare/husky)
+ENV HUSKY=0
+RUN pnpm install --frozen-lockfile --prod --ignore-scripts
 
 # Copy node_modules for workspace packages (needed at runtime)
 COPY --from=builder /app/packages/tarot-db/node_modules/ packages/tarot-db/node_modules/

@@ -1,14 +1,64 @@
 import { createServer } from "node:http";
+import { readFile } from "node:fs/promises";
+import { join, extname } from "node:path";
 import server from "./server.js";
 
 const port = parseInt(process.env.PORT ?? "3010", 10);
 const host = process.env.HOST ?? "0.0.0.0";
+const CLIENT_DIR = join(process.cwd(), "dist", "client");
+
+const MIME_TYPES = {
+  ".css": "text/css; charset=utf-8",
+  ".js": "application/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".svg": "image/svg+xml",
+  ".ico": "image/x-icon",
+  ".woff": "font/woff",
+  ".woff2": "font/woff2",
+  ".ttf": "font/ttf",
+  ".webp": "image/webp",
+};
+
+async function serveStaticFile(pathname) {
+  // Only serve /assets/* paths
+  if (!pathname.startsWith("/assets/")) return null;
+
+  const filePath = join(CLIENT_DIR, pathname);
+  try {
+    const data = await readFile(filePath);
+    const ext = extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || "application/octet-stream";
+    return new Response(data, {
+      status: 200,
+      headers: {
+        "Content-Type": contentType,
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    });
+  } catch {
+    return null; // file not found, fall through to SSR
+  }
+}
 
 const httpServer = createServer(async (req, res) => {
   try {
     const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
-    const headers = new Headers();
 
+    // Try serving static files first
+    const staticResponse = await serveStaticFile(url.pathname);
+    if (staticResponse) {
+      res.writeHead(staticResponse.status, Object.fromEntries(staticResponse.headers.entries()));
+      const body = await staticResponse.arrayBuffer();
+      res.end(Buffer.from(body));
+      return;
+    }
+
+    // Fall through to TanStack Start handler
+    const headers = new Headers();
     for (const [key, value] of Object.entries(req.headers)) {
       if (value) {
         if (Array.isArray(value)) {
