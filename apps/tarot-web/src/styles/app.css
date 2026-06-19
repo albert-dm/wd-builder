@@ -5,10 +5,10 @@
    Font families: Manrope (body), Noto Serif (headlines), Material Symbols.
    ========================================================================== */
 
-/* ========================================================================== */
-/* Fonts                                                                       */
-/* ========================================================================== */
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,500;0,600;0,700;1,700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap");
+/* ==========================================================================
+   Fonts are preconnected + loaded via <link> tags in the document head
+   (see routes/__root.tsx) so they no longer block CSS parsing here.
+   ========================================================================== */
 
 /* ========================================================================== */
 /* CSS Variables                                                               */
@@ -63,14 +63,19 @@
     --spacing-margin: 20px;
     --spacing-gutter: 16px;
 
-    /* Font sizes */
-    --fs-label-caps: 12px;
-    --fs-body-md: 16px;
-    --fs-chat-bubble: 15px;
-    --fs-headline-sm: 20px;
-    --fs-headline-md: 24px;
-    --fs-headline-lg: 32px;
-    --fs-body-lg: 18px;
+    /* Font sizes — fluid so headlines scale smoothly across viewports */
+    --fs-label-caps: 11px;
+    --fs-body-md: 15px;
+    --fs-chat-bubble: 14px;
+    --fs-headline-sm: clamp(16px, 0.9rem + 0.5vw, 18px);
+    --fs-headline-md: clamp(18px, 1rem + 0.8vw, 21px);
+    --fs-headline-lg: clamp(22px, 1.2rem + 1.6vw, 27px);
+    --fs-body-lg: 17px;
+
+    /* Layout */
+    --app-max-width: 46rem;
+    --radius-panel: 1.5rem;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* ========================================================================== */
@@ -85,8 +90,27 @@
 html,
 body {
     margin: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
     color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+}
+
+/* Keyboard focus ring — visible for keyboard users, hidden for pointer */
+:focus-visible {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 body {
@@ -188,8 +212,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    padding: 1rem;
+    min-height: 100dvh;
+    padding: clamp(1rem, 4vw, 2rem);
 }
 
 .auth-shell {
@@ -269,66 +293,23 @@ a {
 }
 
 /* ========================================================================== */
-/* Bottom Navigation — Stitch Design                                          */
-/* ========================================================================== */
-.bottom-nav-shell {
-    display: flex;
-    justify-content: space-around;
-    padding: 0.75rem 1rem 1.5rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.2);
-    background: rgba(17, 17, 37, 0.9);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.5);
-    border-radius: 1.5rem 1.5rem 0 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-}
-
-.bottom-nav-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
-    color: var(--color-outline);
-    font-size: 0.75rem;
-    transition: all 0.3s;
-}
-
-.bottom-nav-link.is-active {
-    color: var(--color-primary);
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    transform: translateY(-2px);
-}
-
-.bottom-nav-label {
-    font-family: var(--font-headline);
-    font-size: 0.65rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* ========================================================================== */
 /* App Canvas                                                                  */
 /* ========================================================================== */
 .app-canvas {
     flex: 1;
+    min-height: 0;
     padding: var(--spacing-lg);
-    max-width: 42rem;
+    max-width: var(--app-max-width);
     margin: 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
     overflow: auto;
+    overflow-x: hidden;
 }
 
 .app-canvas-with-nav {
-    padding-bottom: 6rem;
+    padding-bottom: calc(var(--spacing-lg) + var(--safe-bottom));
 }
 
 /* ========================================================================== */
@@ -411,7 +392,7 @@ a {
 
 .metric-value {
     font-family: var(--font-headline);
-    font-size: 2rem;
+    font-size: 1.65rem;
     font-weight: 700;
     color: var(--color-primary);
     line-height: 1;
@@ -429,16 +410,53 @@ a {
 /* ========================================================================== */
 /* Oracle Layout                                                               */
 /* ========================================================================== */
+/* The summary (revealed card + shortcuts) only appears when there is room for
+   it beside the chat. Below that width it is hidden — the revealed card still
+   shows inline in the conversation — so the chat keeps the whole canvas and the
+   summary never eats vertical space stacked on top. */
 .oracle-summary-grid {
     display: none;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
 }
 
-@media (max-width: 720px) {
+@media (min-width: 1024px) {
+    .oracle-layout {
+        flex-direction: row;
+        align-items: stretch;
+        gap: var(--spacing-lg);
+        max-width: 72rem;
+        overflow: hidden;
+    }
+
+    .oracle-layout .chat-panel {
+        order: 1;
+        flex: 1;
+        min-width: 0;
+    }
+
+    /* Summary becomes a slim sidebar to the right of the chat. */
     .oracle-summary-grid {
-        grid-template-columns: 1fr;
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        width: 21rem;
+        flex-shrink: 0;
+        margin-bottom: 0;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(212, 175, 55, 0.35) transparent;
+    }
+
+    /* Stack the card art above its copy inside the narrow sidebar. */
+    .oracle-summary-grid .revealed-card-layout {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--spacing-md);
+    }
+
+    .oracle-summary-grid .card-keywords {
+        text-align: center;
     }
 }
 
@@ -474,7 +492,21 @@ a {
     border: 1px solid rgba(212, 175, 55, 0.4);
     padding: 4px;
     position: relative;
-    filter: grayscale(30%) brightness(90%);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        filter 0.3s ease;
+    filter: saturate(1.05);
+}
+
+.revealed-card-art:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 14px 34px rgba(212, 175, 55, 0.25);
+}
+
+.revealed-card-layout.is-empty .revealed-card-art {
+    filter: grayscale(60%) brightness(0.8);
 }
 
 .revealed-card-copy {
@@ -523,19 +555,35 @@ a {
 .chat-panel {
     padding: var(--spacing-lg);
     flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
 .chat-history {
     flex: 1;
+    min-height: 0;
     width: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     margin-bottom: var(--spacing-md);
     scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(212, 175, 55, 0.35) transparent;
+    scroll-padding-bottom: var(--spacing-md);
+}
 
-    overflow-x: hidden;
+.chat-history::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.3);
+    border-radius: 999px;
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 175, 55, 0.5);
 }
 
 /* ========================================================================== */
@@ -717,7 +765,8 @@ a {
     object-fit: cover;
     border-radius: 0.5rem;
     border: 1px solid rgba(212, 175, 55, 0.4);
-    filter: grayscale(30%) brightness(90%);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    filter: saturate(1.05);
 }
 
 .tool-card-seal {
@@ -890,7 +939,8 @@ a {
 /* Chat Input — Stitch Design                                                  */
 /* ========================================================================== */
 .chat-composer {
-    bottom: 2rem;
+    padding: var(--spacing-sm);
+    margin-top: auto;
 }
 
 .chat-input-bar {
@@ -1577,10 +1627,78 @@ a {
     }
 
     .hero-panel {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+
+    .chat-panel {
+        padding: var(--spacing-md);
     }
 
     .auth-card-entry {
         padding: 1.5rem;
+    }
+
+    /* Give chat bubbles a touch more room on narrow screens */
+    .chat-bubble {
+        max-width: 92%;
+    }
+}
+
+/* Prevent the top bar from overflowing on small phones: let the wordmark
+   truncate and keep the actions on a single tidy row. */
+@media (max-width: 480px) {
+    .brand-wordmark {
+        font-size: 1rem;
+        letter-spacing: 0.04em;
+        max-width: 9.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .top-app-actions {
+        gap: 0.5rem;
+    }
+
+    .top-balance-chip {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+    }
+
+    .top-icon-link {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .hero-metrics,
+    .metric-chip {
+        width: 100%;
+    }
+}
+
+/* Pointer-fine devices get the lift/scale hovers; touch devices skip them. */
+@media (hover: hover) {
+    .metric-chip {
+        transition:
+            transform 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .metric-chip:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.07);
+    }
+
+    .feature-card,
+    .history-item {
+        transition:
+            transform 0.25s ease,
+            border-color 0.25s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(212, 175, 55, 0.25);
     }
 }

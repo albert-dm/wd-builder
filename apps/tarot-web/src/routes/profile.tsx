@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { TopBar } from "../components";
 import { completeAuthProfile, logoutAuth } from "../lib/auth";
+import { friendlyError } from "../lib/errors";
 import { useAuthGuard } from "../lib/guards";
 
 export const Route = createFileRoute("/profile")({
@@ -39,7 +40,10 @@ function ProfilePage() {
       window.location.href = "/reading";
     } catch (err) {
       setError(
-        `Nao foi possivel concluir seu perfil: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(
+          err,
+          "Não conseguimos salvar seu perfil agora. Tente novamente.",
+        ),
       );
       setLoading(false);
     }
@@ -54,7 +58,10 @@ function ProfilePage() {
       window.location.href = "/";
     } catch (err) {
       setError(
-        `Nao foi possivel encerrar sua sessao: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(
+          err,
+          "Não conseguimos encerrar sua sessão agora. Tente novamente.",
+        ),
       );
       setLoggingOut(false);
     }

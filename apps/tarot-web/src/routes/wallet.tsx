@@ -6,61 +6,16 @@ export const Route = createFileRoute("/wallet")({
   component: WalletPage,
 });
 
+import { friendlyError } from "../lib/errors";
 import { useAuthGuard } from "../lib/guards";
 import { verifyExtraCardPurchase } from "../lib/payments";
+import {
+  type Dashboard,
+  formatBrlFromCents,
+  purchaseStatusClass,
+  purchaseStatusLabel,
+} from "../lib/purchases";
 import { loadTarotDashboard } from "../lib/tarot";
-
-interface Purchase {
-  pixId: string;
-  amountCents: number;
-  cardQuantity: number;
-  status: string;
-  brCode: string;
-  brCodeBase64: string;
-  expiresAt: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Dashboard {
-  session: {
-    cardsRemainingToday: number;
-    purchasedCardsAvailable: number;
-    pendingPaymentCount: number;
-  };
-  recentPurchases: Purchase[];
-}
-
-function formatBrlFromCents(amountCents: number): string {
-  const reais = Math.floor(amountCents / 100);
-  const cents = amountCents % 100;
-  return `R$ ${reais},${cents.toString().padStart(2, "0")}`;
-}
-
-function purchaseStatusLabel(status: string): string {
-  const labels: Record<string, string> = {
-    pending: "PIX pendente",
-    paid: "Pagamento confirmado",
-    expired: "PIX expirado",
-    cancelled: "PIX cancelado",
-    refunded: "PIX estornado",
-    pago_creditado_agora: "Pagamento confirmado agora",
-    pago_creditado: "Pagamento confirmado",
-  };
-  return labels[status] ?? "Movimento ritual";
-}
-
-function purchaseStatusClass(status: string): string {
-  if (["pending", "pago_creditado_agora", "pago_creditado"].includes(status)) {
-    return status === "pending"
-      ? "status-pill is-pending"
-      : "status-pill is-success";
-  }
-  if (["expired", "cancelled"].includes(status)) {
-    return "status-pill is-muted";
-  }
-  return "status-pill";
-}
 
 function WalletPage() {
   const { user, loading: authLoading, needsProfileCompletion } = useAuthGuard();
@@ -80,7 +35,10 @@ function WalletPage() {
         setDashboard(loaded as unknown as Dashboard);
       } catch (err) {
         setError(
-          `Nao foi possivel carregar sua carteira: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+          friendlyError(
+            err,
+            "Não conseguimos abrir sua carteira agora. Tente novamente em instantes.",
+          ),
         );
       }
     };
@@ -99,7 +57,7 @@ function WalletPage() {
       setDashboard(loaded as unknown as Dashboard);
     } catch (err) {
       setError(
-        `Nao foi possivel verificar o PIX atual: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(err, "Não conseguimos verificar seu PIX agora. Tente novamente."),
       );
     } finally {
       setBusy(false);

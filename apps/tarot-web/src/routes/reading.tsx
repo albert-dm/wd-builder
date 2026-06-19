@@ -6,6 +6,8 @@ export const Route = createFileRoute("/reading")({
 
 import { useEffect, useRef, useState } from "react";
 import { ChatInput, ChatMessageBubble, TopBar } from "../components";
+import { CARD_BACK_IMAGE, cardImagePath } from "../lib/cards";
+import { friendlyError } from "../lib/errors";
 import { useAuthGuard } from "../lib/guards";
 import { ensureTarotSession, streamTarotMessage } from "../lib/tarot";
 
@@ -40,17 +42,6 @@ interface ReadingSession {
   }[];
 }
 
-function cardImagePath(slug: string): string {
-  const imageMap: Record<string, string> = {
-    "a-sacerdotisa": "/assets/img/a-sacerdotisa.png",
-    "o-hierofante": "/assets/img/o-hierofante.png",
-    "o-imperador": "/assets/img/o-imperador.png",
-    "o-louco": "/assets/img/o-louco.png",
-    "o-mago": "/assets/img/o-mago.png",
-  };
-  return imageMap[slug] ?? "/assets/img/baralho_atras.png";
-}
-
 function ReadingPage() {
   const { user, loading: authLoading, needsProfileCompletion } = useAuthGuard();
   const [session, setSession] = useState<ReadingSession | null>(null);
@@ -81,17 +72,16 @@ function ReadingPage() {
         setTimeout(scrollToBottom, 100);
       } catch (err) {
         setError(
-          `Nao foi possivel carregar a leitura: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+          friendlyError(
+            err,
+            "Não conseguimos abrir sua leitura agora. Tente novamente em instantes.",
+          ),
         );
       }
     };
 
     loadSession();
   }, [user, authLoading, needsProfileCompletion]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, []);
 
   const handleSend = async (message: string) => {
     if (!session) return;
@@ -168,7 +158,10 @@ function ReadingPage() {
     } catch (err) {
       setSession(previousSession);
       setError(
-        `Falha ao consultar a Roda da Fortuna: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(
+          err,
+          "A Roda não respondeu desta vez. Aguarde um instante e tente de novo.",
+        ),
       );
     } finally {
       setLoading(false);
@@ -247,7 +240,7 @@ function ReadingPage() {
                 <div className="revealed-card-media">
                   <img
                     className="revealed-card-art"
-                    src="/assets/img/baralho_atras.png"
+                    src={CARD_BACK_IMAGE}
                     alt="Verso do baralho aguardando revelacao"
                   />
                 </div>

@@ -6,55 +6,19 @@ export const Route = createFileRoute("/market")({
   component: MarketPage,
 });
 
+import { friendlyError } from "../lib/errors";
 import { useAuthGuard } from "../lib/guards";
 import {
   prepareExtraCardPurchase,
   verifyExtraCardPurchase,
 } from "../lib/payments";
+import {
+  type Dashboard,
+  formatBrlFromCents,
+  type Purchase,
+  purchaseStatusLabel,
+} from "../lib/purchases";
 import { loadTarotDashboard } from "../lib/tarot";
-
-interface Purchase {
-  pixId: string;
-  amountCents: number;
-  cardQuantity: number;
-  status: string;
-  brCode: string;
-  brCodeBase64: string;
-  expiresAt: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Dashboard {
-  session: {
-    cardsRemainingToday: number;
-    purchasedCardsAvailable: number;
-    pendingPaymentCount: number;
-  };
-  recentPurchases: Purchase[];
-}
-
-function formatBrlFromCents(amountCents: number): string {
-  const reais = Math.floor(amountCents / 100);
-  const cents = amountCents % 100;
-  return `R$ ${reais},${cents.toString().padStart(2, "0")}`;
-}
-
-function purchaseStatusLabel(status: string): string {
-  const labels: Record<string, string> = {
-    pix_gerado: "PIX gerado",
-    pix_pendente_existente: "PIX pendente",
-    carta_extra_ja_disponivel: "Carta extra disponivel",
-    pago_creditado_agora: "Pagamento confirmado agora",
-    pago_creditado: "Pagamento confirmado",
-    pending: "Pagamento pendente",
-    paid: "Pagamento confirmado",
-    expired: "PIX expirado",
-    cancelled: "PIX cancelado",
-    refunded: "PIX estornado",
-  };
-  return labels[status] ?? "Movimento ritual";
-}
 
 function MarketPage() {
   const { user, loading: authLoading, needsProfileCompletion } = useAuthGuard();
@@ -74,7 +38,10 @@ function MarketPage() {
         setDashboard(loaded as unknown as Dashboard);
       } catch (err) {
         setError(
-          `Nao foi possivel carregar o mercado arcano: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+          friendlyError(
+            err,
+            "Não conseguimos abrir o mercado agora. Tente novamente em instantes.",
+          ),
         );
       }
     };
@@ -93,7 +60,10 @@ function MarketPage() {
       setDashboard(loaded as unknown as Dashboard);
     } catch (err) {
       setError(
-        `Nao foi possivel preparar o PIX da carta extra: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(
+          err,
+          "Não conseguimos gerar o PIX da carta extra. Tente novamente.",
+        ),
       );
     } finally {
       setBusy(false);
@@ -111,7 +81,7 @@ function MarketPage() {
       setDashboard(loaded as unknown as Dashboard);
     } catch (err) {
       setError(
-        `Nao foi possivel verificar o PIX atual: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(err, "Não conseguimos verificar seu PIX agora. Tente novamente."),
       );
     } finally {
       setBusy(false);

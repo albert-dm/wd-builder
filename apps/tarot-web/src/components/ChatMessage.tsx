@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { cardImagePath, tryParseJson } from "../lib/cards";
 
 interface ChatMessageData {
   role: "User" | "Assistant" | "System" | "Tool";
@@ -11,17 +12,6 @@ interface ChatMessageData {
 interface ChatMessageProps {
   message: ChatMessageData;
   isStreaming?: boolean;
-}
-
-function cardImagePath(slug: string): string {
-  const imageMap: Record<string, string> = {
-    "a-sacerdotisa": "/assets/img/a-sacerdotisa.png",
-    "o-hierofante": "/assets/img/o-hierofante.png",
-    "o-imperador": "/assets/img/o-imperador.png",
-    "o-louco": "/assets/img/o-louco.png",
-    "o-mago": "/assets/img/o-mago.png",
-  };
-  return imageMap[slug] ?? "/assets/img/baralho_atras.png";
 }
 
 interface SortearCartaOutput {
@@ -67,22 +57,6 @@ function parseToolMessage(
   const toolOutput = content.slice(position + 3).trim();
 
   return { toolName, toolOutput };
-}
-
-function parseSortearOutput(toolOutput: string): SortearCartaOutput | null {
-  try {
-    return JSON.parse(toolOutput);
-  } catch {
-    return null;
-  }
-}
-
-function parsePixOutput(toolOutput: string): PixOutput | null {
-  try {
-    return JSON.parse(toolOutput);
-  } catch {
-    return null;
-  }
 }
 
 function SortearCartaPanel({ payload }: { payload: SortearCartaOutput }) {
@@ -268,7 +242,7 @@ export function ChatMessageBubble({
     content = <LoadingIndicator />;
   } else if (toolMessage) {
     if (toolMessage.toolName === "SortearCarta") {
-      const payload = parseSortearOutput(toolMessage.toolOutput);
+      const payload = tryParseJson<SortearCartaOutput>(toolMessage.toolOutput);
       if (payload) {
         content = <SortearCartaPanel payload={payload} />;
       } else {
@@ -278,7 +252,7 @@ export function ChatMessageBubble({
       toolMessage.toolName === "GerarPixCartaExtra" ||
       toolMessage.toolName === "VerificarPixCartaExtra"
     ) {
-      const payload = parsePixOutput(toolMessage.toolOutput);
+      const payload = tryParseJson<PixOutput>(toolMessage.toolOutput);
       if (payload) {
         content = <PixPanel payload={payload} />;
       } else {

@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter, useSearch } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { consumeMagicLink } from "../lib/auth";
+import { friendlyError } from "../lib/errors";
 
 export const Route = createFileRoute("/auth/callback")({
   component: AuthCallbackPage,
@@ -15,7 +16,7 @@ function AuthCallbackPage() {
     const token = (search as { token?: string }).token;
 
     if (!token?.trim()) {
-      setError("O link de acesso esta incompleto ou invalido.");
+      setError("O link de acesso está incompleto ou inválido.");
       return;
     }
 
@@ -29,7 +30,10 @@ function AuthCallbackPage() {
         }
       } catch (err) {
         setError(
-          `Nao foi possivel validar este link de acesso: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+          friendlyError(
+            err,
+            "Não conseguimos validar este link de acesso. Ele pode ter expirado — solicite um novo para entrar.",
+          ),
         );
       }
     };

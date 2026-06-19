@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { requestMagicLink } from "../lib/auth";
+import { friendlyError } from "../lib/errors";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
@@ -33,9 +34,11 @@ function HomePage() {
 
       setNotice(`Link preparado para ${response.email}. ${deliveryHint}`);
     } catch (err) {
-      console.error("Magic link request error:", err);
       setError(
-        `Nao foi possivel preparar o acesso: ${err instanceof Error ? err.message : "Erro desconhecido"}`,
+        friendlyError(
+          err,
+          "Não conseguimos preparar seu acesso agora. Confira o email e tente novamente.",
+        ),
       );
     } finally {
       setLoading(false);
